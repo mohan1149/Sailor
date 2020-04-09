@@ -99,7 +99,8 @@
                             <h5 class="intro">
                                 <?php echo $$strings['forgotpwdtext']?>
                             </h5>
-                            <form action='/api/sent/password/reset/link' method="POST" class="w3-center">
+                            <form action='/sent/password/reset/link' method="POST" class="w3-center">
+                                @csrf
                                 <div class='form-group'>
                                     <span><i class='fa fa-envelope login-icons'></i></span>
                                     <input class="form-input"type='email' placeholder= "<?php echo $$strings['email']?>"name="reg-email">

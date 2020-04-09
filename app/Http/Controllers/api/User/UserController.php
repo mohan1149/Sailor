@@ -8,16 +8,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 //use Edujugon\PushNotification\PushNotification;
 
+use \Pusher\Pusher;
+
 session_start();
 class UserController extends Controller
 {
+    private $userController;
+    public function __constructor(){
+        $userController = new UserController();
+    }
     public function signUp(Request $request)
     {
         
-        $username  = $request['username'];
-        $phone     = $request['phone'];
-        $email     = $request['email'];
-        $password  = Hash::make( $request['password'] );
+        $username  = strip_tags($request['username']);
+        $phone     = strip_tags($request['phone']);
+        $email     = strip_tags($request['email']);
+        $password  = Hash::make( strip_tags($request['password']));
         try{
             $query = DB::table('users')
                 ->insertGetId([
@@ -34,28 +40,8 @@ class UserController extends Controller
         }
     }
     public function login(Request $request){
-        $email      = $request['email'];
-        $password   = $request['password'];
-        /*$firebase   = env('FIREBASE_API_KEY');
-        $token = 'dLDSGfJmXus:APA91bGwekQkig7g_AUeGDV30I9MT5UkDuXta9WrganoBrw3HonQZzk4NwPqjtNFdDYnElWqZ-Xpm8okEx-FBfbgzRN0DptW1Au7XDZL5MVvCuN-y0CHhF7AblqgPqGBF6wBH-D5dVuB';
-        $push = new PushNotification('fcm');
-        $resp = $push->setService('fcm')
-            ->setMessage([
-                'notification' => [
-                        'title'=>'This is the title',
-                        'body'=>'This is the message',
-                        'sound' => 'default'
-                        ],
-                'data' => [
-                        'extraPayLoad1' => 'value1',
-                        'extraPayLoad2' => 'value2'
-                        ]
-            ])
-            ->setApiKey('AAAAsAB2TDM:APA91bH9ASjefr2SdGzQKo05M6oiD31AEXmYIDuKBSefWPSTfjDw4uMgYPbNxbcj4ner4D40_WHwRW6baxUQg0GtpavPMlOFDzLIBba4s-VeIKTIC_Hy-IR8kK8ip1PJPE8ouwC1GJVK')
-            ->setDevicesToken($token)
-            ->send()
-            ->getFeedback();
-        print_r($resp);exit;*/
+        $email      = strip_tags($request['email']);
+        $password   = strip_tags($request['password']);
         try {
             $user = DB::table('users')
                 ->select(['id','password'])
@@ -76,5 +62,22 @@ class UserController extends Controller
         }catch (\Exception $e) {
             return  response()->json($e, 500);
         }
+    }
+
+
+
+
+
+    public function studentAccess(Request $request){
+        $socketId = $request->socket_id;
+        $channelName = $request->channel_name;
+
+        $pusher = new Pusher('ff793c35582f038e2bf0','15567ceb86ac0eea861e','978654',[
+            'cluster'=> 'ap2',
+            'encrypted'=> true,
+        ]);
+        $presence_data =  ['name'=>'Mohan'];
+        $key = $pusher->pressence_auth($channelName,$socketId,1,$presence_data);
+        return response($key);
     }
 }

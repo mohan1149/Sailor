@@ -48,7 +48,7 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/api/manage/schools">Institutes <i class="fa fa-arrow-right"></i></a></h4>
+                    <h4><a href="/manage/schools">Institutes <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item ">
@@ -58,7 +58,7 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="">Departments <i class="fa fa-arrow-right"></i></a></h4>
+                    <h4><a href="">Departments <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -68,7 +68,7 @@
                         <h3>152</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="">Staff <i class="fa fa-arrow-right"></i></a></h4>
+                    <h4><a href="/manage/staff">Staff <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -78,7 +78,7 @@
                         <h3>99</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="">Students <i class="fa fa-arrow-right"></i></a></h4>
+                    <h4><a href="">Students <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -88,7 +88,27 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="">Classes <i class="fa fa-arrow-right"></i></a></h4>
+                    <h4><a href="/manage/class">Classes<i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-edit w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>50</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/manage/class">Exams<i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-bar-chart w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>50</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/manage/class">Reports<i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
         </div>

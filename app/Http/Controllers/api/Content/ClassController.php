@@ -16,9 +16,9 @@ class ClassController extends Controller
         return view('addClass',['schools'=>$schools]);
     }
     public function storeClass(Request $request){
-        $className   = $request['className'];
-        $schoolId    = $request['school_id'];
-        $numSubjects = $request['subjects'];
+        $className   = strip_tags($request['className']);
+        $schoolId    = strip_tags($request['school_id']);
+        $numSubjects = strip_tags($request['subjects']);
         $query = '';
         try{
             $query = DB::table('class')
@@ -50,7 +50,7 @@ class ClassController extends Controller
             $viewData['class_id']  = $query;
             return view('addTimeTable',['viewData'=>$viewData]);
         }catch(\Exception $e){
-            return $e;
+            return response()->json($e->getMessage(),500);
         }
     }
     public function manageClass(){
@@ -96,9 +96,9 @@ class ClassController extends Controller
                 'friday'    => '{'.$st[4].'}',
                 'saturday'  => '{'.$st[5].'}',
             ]);
-            return redirect('/api/manage/class');
+            return redirect('/manage/class');
         }catch(\Exception $e){
-            return $e;
+            return response()->json($e->getMessage(),500);
         }
     }
     function getClasess(Request $request){

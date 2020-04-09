@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Add School</title>
+        <title>Sailor | Add Institute</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -58,13 +58,16 @@
                 padding:4px;
                 padding-left:10px;
                 margin-left:2px;
-                height:40px;
-                font-size:25;
+                height:50px;
+                font-size:20px;
             }
             .form-submit{
                 width:50%;
                 border-radius:30px;
                 background-color: rgb(61, 94, 161);
+            }
+            .form-group{
+                margin-bottom:5px;
             }
         </style>
     </head>
@@ -96,41 +99,46 @@
                     <div class="content">
                         <div class='signup-form'>
                             <h2 class="title"><?php echo $$strings['addschool']?></h2>
-                            <form action='/api/add/school' method="POST" class="w3-center" enctype="multipart/form-data">
+                            <form action='/add/school' method="POST" class="w3-center" enctype="multipart/form-data">
+                                @csrf
                                 <div class='form-group'>
-                                    <span><i class='fa fa-bank'></i></span>
+                                    <span><i class='fa fa-bank w3-xlarge'></i></span>
                                     <input class="form-input"placeholder="<?php echo $$strings['name']?>" type='text' name='name' required autofocus>
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-phone'></i></span>
+                                    <span><i class='fa fa-id-card w3-xlarge'></i></span>
+                                    <input class="form-input"placeholder="<?php echo $$strings['reg']?>" type='text' name='reg-num' required autofocus>
+                                </div>
+                                <div class='form-group'>
+                                    <span><i class='fa fa-phone w3-xlarge'></i></span>
                                     <input placeholder="<?php echo $$strings['phone']?>" type='tel' name='phone' class="form-input" required>
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-envelope'></i></span>
+                                    <span><i class='fa fa-envelope w3-xlarge'></i></span>
                                     <input placeholder="<?php echo $$strings['email']?>" type='email' name='email' class="form-input" >
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-globe'></i></span>
+                                    <span><i class='fa fa-globe w3-xlarge'></i></span>
                                     <input placeholder="<?php echo $$strings['website']?>" type='url' name='website' class="form-input">
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-map-marker'></i></span>
+                                    <span><i class='fa fa-map-marker w3-xlarge'></i></span>
                                     <input placeholder="<?php echo $$strings['address']?>" type='text' name='address' class="form-input">
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-clock-o'></i></span>
+                                    <span><i class='fa fa-clock-o w3-xlarge'></i></span>
                                     <input placeholder="<?php echo $$strings['numofprds']?>" type='tel' name='periods' class="form-input">
                                 </div>
                                 <div class="form-group">
-                                    <span><i class='fa fa-clock-o'></i></span>
+                                    <span><i class='fa fa-clock-o w3-xlarge'></i></span>
                                     <input placeholder="<?php echo $$strings['prdslen']?>" type='tel' name='period-length' class="form-input">
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-image'></i></span>
+                                    <span><i class='fa fa-image w3-xlarge'></i></span>
                                     <input type='file' name='logo'  accept="image/*" class="form-input">
                                 </div>
                                 <div class='form-group'>
-                                    <input class="form-submit w3-button" type='submit' value="<?php echo $$strings['add']?>">
+                                    <input class="form-submit w3-button w3-margin w3-xlarge" type='submit' value="<?php echo $$strings['add']?>">
                                 </div>
                             </form>
                         </div>

@@ -1,11 +1,26 @@
+<?php
+    include(app_path().'/translations/strings.php');
+    session_start();
+    $lang = 'en';
+    if(isset($_GET['lan'])){
+        $lang             = $_GET['lan'];
+        $_SESSION['lang'] = $lang;
+    }else{
+        $lang             = 'English';
+        $_SESSION['lang'] = $lang;
+    }
+    $strings = $_SESSION['lang'];
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Signup</title>
-
+        <title>Login to Sailor</title>
+        <!-- Scripts -->
+        <script type="text/javascript" src="<?php echo asset('jquery.min.js')?>"></script>
+        <script type="text/javascript" src="<?php echo asset('master.js')?>"></script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,7 +48,7 @@
                 margin-top:10px;
             }
             .right-container{
-                margin-top:10vh;
+                margin-top:20vh;
             }
             .title{
                 font-family: 'Nunito', sans-serif;
@@ -55,7 +70,7 @@
                 padding-left:10px;
                 margin-left:2px;
                 height:40px;
-                font-size:25;
+                
             }
             .form-submit{
                 width:50%;
@@ -87,33 +102,42 @@
                 </div>
             </div>
             <div class="w3-half right w3-dark-grey">
+                <select class="w3-right language" style="margin:5px;">
+                    <?php
+                        $languages = ['English','Arabic','Hindi'];
+                        foreach($languages as $lan){
+                            if($lan === $lang){
+                                ?>
+                                    <option selected value="<?php echo $lan?>"><?php echo $lan?></option>
+                                <?php
+                            }else{
+                                ?>
+                                    <option value="<?php echo $lan?>"><?php echo $lan?></option>
+                                <?php
+                            }
+                        }
+                    ?>
+                </select>
                 <div class="right-container">
                     <div class="content">
                         <div class='signup-form'>
-                            <h2 class="title">Welcome to Sailor</h2>
+                            <h2 class="title"><?php echo $$strings['title'];?></h2>
                             <h5 class="intro">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                                <?php echo $$strings['intro']?>
                             </h5>
-                            <form action='/signup' method="POST" class="w3-center">
+                            <form action='/login' method="POST" class="w3-center">
                                 @csrf
                                 <div class='form-group'>
-                                    <span><i class='fa fa-user'></i></span>
-                                    <input class="form-input" type='text' name='username' placeholder='username' autofocus>
+                                    <span><i class='fa fa-user w3-xlarge login-icons'></i></span>
+                                    <input class="form-input"type='text' placeholder="<?php echo 'Access code'?>" name='acces-code'>
                                 </div>
                                 <div class='form-group'>
-                                    <span><i class='fa fa-phone'></i></span>
-                                    <input class="form-input" type='tel' placeholder='phone' name='phone'>
+                                    <span><i class='fa fa-lock w3-xlarge login-icons'></i></span>
+                                    <input class="form-input" type='password' placeholder=<?php echo $$strings['password']?> name='password'>
                                 </div>
-                                <div class='form-group'>
-                                    <span><i class='fa fa-envelope'></i></span>
-                                    <input class="form-input" type='email' placeholder='email' name='email'>
-                                </div>
-                                <div class='form-group'>
-                                    <span><i class='fa fa-lock'></i></span>
-                                    <input class="form-input" type='password' placeholder='password' name='password'>
-                                </div>
-                                <div class='form-group'>
-                                    <input class="form-submit w3-button" type='submit' value="Sign Up">
+                                
+                                <div class='form-group' style='text-align:center'>
+                                    <input class="form-submit w3-button" type='submit' value="<?php echo $$strings['login']?>">
                                 </div>
                             </form>
                         </div>

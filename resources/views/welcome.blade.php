@@ -125,7 +125,8 @@
                             <h5 class="intro">
                                 <?php echo $$strings['intro']?>
                             </h5>
-                            <form action='api/login' method="POST" class="w3-center">
+                            <form action='/login' method="POST" class="w3-center">
+                                @csrf
                                 <div class='form-group'>
                                     <span><i class='fa fa-envelope login-icons'></i></span>
                                     <input class="form-input"type='email' placeholder="<?php echo $$strings['email'];?>" name='email'>

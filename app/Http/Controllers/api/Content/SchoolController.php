@@ -10,14 +10,15 @@ class SchoolController extends Controller
 {
     public function addSchool(Request $request)
     {
-        $school_owner_id = $_SESSION['user_id'];
-        $school_name     = $request['name'];
-        $school_phone    = $request['phone'];
-        $school_email    = $request['email'];
-        $school_website  = $request['website'];
-        $school_address  = $request['address'];
-        $periods         = $request['periods'];
-        $period_length   = $request['period-length'];
+        $school_owner_id = strip_tags($_SESSION['user_id']);
+        $school_name     = strip_tags($request['name']);
+        $school_phone    = strip_tags($request['phone']);
+        $school_email    = strip_tags($request['email']);
+        $school_website  = strip_tags($request['website']);
+        $school_address  = strip_tags($request['address']);
+        $periods         = strip_tags($request['periods']);
+        $period_length   = strip_tags($request['period-length']);
+        $reg_num         = strip_tags($request['reg-num']);
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
         move_uploaded_file($_FILES['logo']['tmp_name'],'school_logos/'.$hex.'.'.$imageFileType);
@@ -33,11 +34,12 @@ class SchoolController extends Controller
                     'logo_path'       => $request->getSchemeAndHttpHost().'/school_logos/'.$hex.'.'.$imageFileType,
                     'periods'         => $periods,
                     'period_length'   => $period_length,
+                    'reg_num'         => $reg_num,
                 ]
             );
         return redirect('/dashboard');
         }catch(\Exception $e){
-            return $e;
+            return $e->getMessage();
         }
     }
     public function manageSchools(){
@@ -58,13 +60,12 @@ class SchoolController extends Controller
         return view('editSchool',['schools'=>$schools]);
     }
     public function viewSchool(Request $request){
-        return view('viewSchool');
         $school_owner_id = $_SESSION['user_id'];
-        $schools = DB::table('school')
+        $school = DB::table('school')
             ->where('school_owner_id',$school_owner_id)
             ->where('id',$request['id'])
-            ->get();
-        return view('editSchool',['schools'=>$schools]);
+            ->first();
+        return view('viewSchool',['school'=>$school]);
     }
     public function deleteSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];
@@ -76,13 +77,14 @@ class SchoolController extends Controller
     }
     public function updateSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];
-        $school_name     = $request['name'];
-        $school_phone    = $request['phone'];
-        $school_email    = $request['email'];
-        $school_website  = $request['website'];
-        $school_address  = $request['address'];
-        $periods         = $request['periods'];
-        $period_length   = $request['period-length'];
+        $school_name     = strip_tags($request['name']);
+        $school_phone    = strip_tags($request['phone']);
+        $school_email    = strip_tags($request['email']);
+        $school_website  = strip_tags($request['website']);
+        $school_address  = strip_tags($request['address']);
+        $periods         = strip_tags($request['periods']);
+        $period_length   = strip_tags($request['period-length']);
+        $reg_num         = strip_tags($request['reg-num']);
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
         move_uploaded_file($_FILES['logo']['tmp_name'],'school_logos/'.$hex.'.'.$imageFileType);
@@ -99,11 +101,12 @@ class SchoolController extends Controller
                     'logo_path'       => $request->getSchemeAndHttpHost().'/school_logos/'.$hex.'.'.$imageFileType,
                     'periods'         => $periods,
                     'period_length'   => $period_length,
+                    'reg_num'         => $reg_num,
                 ]
             );
-        return redirect('/api/manage/schools');
+        return redirect('/manage/schools');
         }catch(\Exception $e){
-            return $e;
+            return $e->getMessage();
         }
     }
 }

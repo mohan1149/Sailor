@@ -78,22 +78,22 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Class</b></h5>
+            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Department</b></h5>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
                 <div class="instructions">
                     <h4>Instructions</h4>
                 </div>
-                    <form action='/add/time-table' method="POST" class="w3-center">
+                    <form action='/add/department' method="POST" class="w3-center">
                         @csrf
                         <div class='form-group'>
-                            <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input required type='text' class="form-input"autofocus name='className' placeholder='Ex: X-Spark' >
+                            <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
+                            <input required type='text' class="form-input"autofocus name='dept-name' placeholder='Eg: Science Department' >
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
-                            <select required class="form-input"name='school_id'>
+                            <select required class="form-input" name='school_id'>
                                 <?php
                                     foreach($schools as $school){
                                         ?>
@@ -102,16 +102,6 @@
                                     }
                                 ?>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input required type='tel' name='subjects' class="subjects form-input" placeholder='Number of subjects' >
-                        </div>
-                        <div class="w3-row">
-                            <div class="w3-half grid1">
-                            </div>
-                            <div class="w3-half grid2">
-                            </div>
                         </div>
                         <div class='form-group w3-center' >
                             <input class="w3-button form-input form-submit"type='submit' value="Next">

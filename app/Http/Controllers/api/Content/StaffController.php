@@ -17,13 +17,13 @@ class StaffController extends Controller
     }
     public function addStaff(Request $request)
     {
-        $staff_name              = $request['staffname'];
-        $staff_phone             = $request['phone'];
-        $staff_email             = $request['email'];
-        $staff_designation       = $request['designation'];
-        $staff_school            = $request['school_id'];
-        $staff_main_field        = $request['main_field'];
-        $staff_class_teacher_for = $request['class_teacher_for'];
+        $staff_name              = strip_tags($request['staffname']);
+        $staff_phone             = strip_tags($request['phone']);
+        $staff_email             = strip_tags($request['email']);
+        $staff_designation       = strip_tags($request['designation']);
+        $staff_school            = strip_tags($request['school_id']);
+        $staff_main_field        = strip_tags($request['main_field']);
+        $staff_class_teacher_for = strip_tags($request['class_teacher_for']);
         try{
             $query = DB::table('teacher')
                 ->insertGetId([
@@ -36,7 +36,7 @@ class StaffController extends Controller
                     'designation'       => $staff_designation,
                 ]
             );
-        return redirect('api/manage/staff');
+        return redirect('/manage/staff');
         }catch(\Exception $e){
             return $e;
         }
@@ -56,10 +56,5 @@ class StaffController extends Controller
                 ->get();
         }
         return view('manageStaff',['staff'=>$staff]);
-    }
-    function getStaff(Request $request){
-        $staff = DB::table('teacher')
-            ->get();
-        return response()->json($staff,200);
     }
 }

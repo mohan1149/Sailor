@@ -46,14 +46,14 @@ $(document).ready(function(){
                 for( i=1;i<=grid1;i++){
                     let str = "<div class='form-group dyn-fg'>";
                     str += "<span>Subject "+ i +"</span>";
-                    str += "<input type='text' name='subject"+ i+"'>";
+                    str += "<input class='form-input' type='text' name='subject"+ i+"'>";
                     str += "</div>";
                     $(".grid1").append(str);
                 }  
                 for( i=grid1+1;i<=num;i++){
                     let str = "<div class='form-group dyn-fg'>";
                     str += "<span>Subject "+ i +"</span>";
-                    str += "<input type='text' name='subject"+ i+"'>";
+                    str += "<input class='form-input' type='text' name='subject"+ i+"'>";
                     str += "</div>";
                     $(".grid2").append(str);
                 }
@@ -62,6 +62,10 @@ $(document).ready(function(){
                 $(".dyn-fg").remove();
             }  
         }
+    });
+    $('.data-item').click(function(){
+        $('.data-item').removeClass('active');
+        $(this).addClass('active');
     });
 }); 
 

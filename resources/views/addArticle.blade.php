@@ -65,7 +65,7 @@
       })
       .then(function(response){
         if(response.status === 200){
-          location.assign('/api/manage/articles');
+          location.assign('/manage/articles');
         }else{
           alert('Unabble to Publish the article. Please try again later');
         }
