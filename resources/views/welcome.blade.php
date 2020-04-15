@@ -52,7 +52,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:200;
                 text-align:center;
             }
             .intro{
@@ -70,7 +70,7 @@
                 padding-left:10px;
                 margin-left:2px;
                 height:40px;
-                
+
             }
             .form-submit{
                 width:50%;
@@ -81,7 +81,7 @@
     </head>
     <body>
         <div class="w3-row">
-            <div class="w3-half left w3-center">    
+            <div class="w3-half left w3-center">
                 <div class="left-container">
                     <svg width="300" viewBox="0 0 268.2120056152344 267.4739990234375">
                         <g>
@@ -135,12 +135,13 @@
                                     <span><i style="font-size:21px;"class='fa fa-lock login-icons'></i></span>
                                     <input class="form-input" type='password' placeholder=<?php echo $$strings['password']?> name='password'>
                                 </div>
-                                
+
                                 <div class='form-group' style='text-align:center'>
                                     <input class="form-submit w3-button" type='submit' value="<?php echo $$strings['login']?>">
                                 </div>
                             </form>
                             <a class="w3-right" href="/forgot/password" style="margin-right:20px;"><?php echo $$strings['forgotpwd']?></a>
+                            <a class="w3-left" href="/staff/login" style="margin-left:20px;"><?php echo 'Staff Login'?></a>
                         </div>
                     </div>
                 </div>

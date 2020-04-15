@@ -19,7 +19,7 @@ class UserController extends Controller
     }
     public function signUp(Request $request)
     {
-        
+
         $username  = strip_tags($request['username']);
         $phone     = strip_tags($request['phone']);
         $email     = strip_tags($request['email']);
@@ -53,6 +53,7 @@ class UserController extends Controller
             }else{
                 if(Hash::check($password, $user->password)){
                     $_SESSION['user_id'] = $user->id;
+                    $_SESSION['role']    = 0;
                     return redirect('/dashboard');
                 }else{
                     $msg = 'INCORRECT PASSWORD';
