@@ -24,9 +24,9 @@ Route::post('sent/password/reset/link','MailController@sendPasswordResetLink');
 Route::get('/staff/login',function(){ return view('staffLogin');});
 
 Route::group(['middleware' => ['app.access']], function() {
-
+    //dashboard related RouteServiceProvider
+    Route::get('data','api\Content\DashboardController@getDashboardData');
     Route::get('/dashboard',function(){ return view('dashboard');});
-    Route::get('/add/article',function() {return view('addArticle');});
     //school releated routes
     Route::get('/add/school',function(){ return view('addSchool');});
     Route::get('/add/institute',function(){ return view('addInstitute');});
@@ -50,6 +50,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('manage/class','api\Content\ClassController@manageClass');
     Route::post('add/timetable','api\Content\ClassController@storeTimetable');
     //Articles related routes
+    Route::get('/add/article',function() {return view('addArticle');});
     Route::post('publish/article','api\Content\ArticlesController@publishArticle');
     Route::get('manage/articles','api\Content\ArticlesController@manageArticles');
     //onlines classes

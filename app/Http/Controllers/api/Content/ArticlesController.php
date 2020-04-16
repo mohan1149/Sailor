@@ -20,7 +20,7 @@ class ArticlesController extends Controller
             $write    = fwrite($art_html, $data);
             $url      = $basepath.Storage::url('articles/'.$html_link);
         }catch(\Exception $e){
-            return response()->json('Internal Server Error',500);
+            return response()->json($e->getMessage(),500);
         }
         $user_id   = $_SESSION['user_id'];
         $likes     = 0;
@@ -38,10 +38,10 @@ class ArticlesController extends Controller
                 if($query){
                     response()->json('Article Published',200);
                 }else{
-                    return response()->json('Internal Server Error',500);
+                    return response()->json($e->getMessage(),500);
                 }
         }catch(\Exception $e){
-            return response()->json('Internal Server Error',500);
+            return response()->json($e->getMessage(),500);
         }
     }
     public function manageArticles(){

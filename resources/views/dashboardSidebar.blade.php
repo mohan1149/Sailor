@@ -26,8 +26,8 @@
                   <a href="/add/class" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-book fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['addclass']?></a>
                   <a href="/add/staff" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-user-plus fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['addstaff']?></a>
                   <a href="/add/student" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-user-plus fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['addstud']?></a>
-                  <a href="/add/school" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-clock-o fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['timetable']?></a>
-                  <a href="#" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-calendar fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['calendar']?></a>
+                  <!-- <a href="/add/school" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-clock-o fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['timetable']?></a>
+                  <a href="#" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-calendar fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['calendar']?></a> -->
                   <a href="/manage/articles" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-comment fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['articles']?></a>
                   <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-diamond fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['payments']?></a>
                   <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-user-secret fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Permissions'?></a>
@@ -59,8 +59,8 @@
               <div class="w3-bar-block sidenav">
                   <a href="/add/class" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-book fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['addclass']?></a>
                   <a href="/add/student" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-user-plus fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['addstud']?></a>
-                  <a href="/add/school" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-clock-o fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['timetable']?></a>
-                  <a href="#" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-calendar fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['calendar']?></a>
+                  <!-- <a href="/add/school" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-clock-o fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['timetable']?></a>
+                  <a href="#" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-calendar fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['calendar']?></a> -->
                   <a href="/manage/articles" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-comment fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['articles']?></a>
                   <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-cloud fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Archives'?></a>
                   <a href="/webrtc" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-laptop fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Online Classes'?></a>

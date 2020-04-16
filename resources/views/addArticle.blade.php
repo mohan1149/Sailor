@@ -57,7 +57,7 @@
       let article  = $('.note-editable').html();
       axios({
         method: 'post',
-        url: "/api/publish/article",
+        url: "/publish/article",
         data: {
           art_title: art_title,
           article: article,
@@ -73,7 +73,3 @@
     });
   </script>
 </html>
-
-
-
-
