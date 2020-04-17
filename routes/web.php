@@ -44,6 +44,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('add/staff','api\Content\StaffController@getSchools');
     Route::POST('manage/staff','api\Content\StaffController@addStaff');
     Route::get('manage/staff','api\Content\StaffController@manageStaff');
+    Route::get('get/departs-classes/{id}','api\Content\StaffController@getDepartsAndClassesBySchoolId');
     //class releated routes
     Route::get('add/class','api\Content\ClassController@getSchools');
     Route::post('add/time-table','api\Content\ClassController@storeClass');

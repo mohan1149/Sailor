@@ -58,6 +58,19 @@
             .active{
                 color:#2196F3 !important;
             }
+            .circle{
+                border: 12px solid rgb(61, 94, 161);
+                border-radius: 50%;
+                width: 250px;
+                height: 250px;
+                padding: 90px;
+            }
+            .data{
+                display:none;
+            }
+            .active{
+                display:block;
+            }
         </style>
     </head>
     <header class='w3-top'>
@@ -75,16 +88,16 @@
                 <div class="w3-row">
                     <div class="w3-third s_info">
                         <div class="w3-display-container school-logo">
-                            <img class="w3-margin logo "src="<?php echo $school->logo_path?>" width="100%">
+                            <img class="w3-margin logo "src="<?php echo $responseData['school']->logo_path?>" width="100%">
                         </div>
                         <div class="w3-container w3-text-black">
-                            <h2><?php echo $school->school_name?></h2>
+                            <h2><?php echo $responseData['school']->school_name?></h2>
                         </div>
                         <div class="w3-container">
-                            <p><i class="fa fa-map-marker fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $school->school_address?></p>
-                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $school->email?></p>
-                            <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $school->phone?></p>
-                            <p><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $school->website?></p>
+                            <p><i class="fa fa-map-marker fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['school']->school_address?></p>
+                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['school']->email?></p>
+                            <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['school']->phone?></p>
+                            <p><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['school']->website?></p>
                         </div>
                     </div>
                     <div class="w3-twothird s_data">
@@ -92,21 +105,30 @@
 
                             <div class="w3-third">
                                 <ul class="w3-ul school-data">
-                                    <li class="data-item active"><h3>Departments &#8618;</h3></li>
-                                    <li class="data-item"><h3>Classes &#8618;</h3></li>
-                                    <li class="data-item"><h3>Staff &#8618;</h3></li>
-                                    <li class="data-item"><h3>Students &#8618;</h3></li>
+                                    <li class="data-item active deps"><h3>Departments &#8618;</h3></li>
+                                    <li class="data-item classes"><h3>Classes &#8618;</h3></li>
+                                    <li class="data-item staff"><h3>Staff &#8618;</h3></li>
+                                    <li class="data-item students"><h3>Students &#8618;</h3></li>
                                 </ul>
                             </div>
                             <div class="w3-twothird">
-                                <table class="w3-table w3-striped w3-padding">
-                                    <th>Department Name</th>
-                                    <th>Department Strength</th>
-                                    <tr>
-                                        <td>Computer Science</td>
-                                        <td>650</td>
-                                    </tr>
-                                </table>
+                                <div class="circle w3-center" style="margin:0 auto">
+                                    <div class="data active deps">
+                                        <h2> <?php echo count($responseData['deps'])?></h2>
+                                    </div>
+                                    <div class="data classes">
+                                        <h2> <?php echo count($responseData['classes'])?></h2>
+                                    </div>
+                                    <div class="data staff">
+                                        <h2> <?php echo count($responseData['staff'])?></h2>
+                                    </div>
+                                    <div class="data students">
+                                        <h2> <?php echo count($responseData['deps'])?></h2>
+                                    </div>
+                                </div>
+                                <div class="w3-center w3-margin">
+                                    <a class="w3-button w3-purple w3-xlarge">View &#8618;</a>
+                                </div>
                             </div>
                         </div>
                     </div>

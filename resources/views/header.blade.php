@@ -7,6 +7,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <script type="text/javascript" src="<?php echo asset('jquery.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo asset('master.js')?>"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" href="<?php echo asset('w3.css')?>">
         <style>
             .center-list {

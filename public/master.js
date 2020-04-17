@@ -65,7 +65,40 @@ $(document).ready(function(){
     });
     $('.data-item').click(function(){
         $('.data-item').removeClass('active');
+        $('.data').removeClass('active');
         $(this).addClass('active');
+        let classes = $(this).attr('class');
+        let classArray = classes.split(" ");
+        $('.' + classArray[1]).addClass('active');
+    });
+    $('.select-school').change(function(){
+        let id = $(this).val();
+        axios.get('/get/departs-classes/' + id)
+        .then(function(response){
+            //dynamic deps
+            let deps = "<select class='form-input department' name='department'>";
+            response.data.deps.map((data)=>{
+                deps+= "<option value='"+ data.id+"'>"+ data.d_name+"</option>";
+            });
+            deps+= "</select>";
+            $('.department').replaceWith(deps);
+            //dynamic classes
+            let classes = "<select class='form-input classes' name='class_teacher_for'>";
+            response.data.classes.map((data)=>{
+                classes+= "<option value='"+ data.id+"'>"+ data.value+"</option>";
+            });
+            classes+= "</select>";
+            $('.classes').replaceWith(classes);
+        });
+    });
+    $('.staff-show').click(function(){
+        var className = '.'+$(this).attr('id');
+        $('content-table').removeClass('active');
+        $('.content-table').addClass('inactive');
+        $(className).removeClass('inactive');
+        $(className).addClass('active');
+        
+        
     });
 }); 
 

@@ -35,13 +35,14 @@
                 background-position: center;
                 background-repeat: no-repeat;
             }
+            
         </style>
-        <script>
-            window.user={
-                id:1, 
-                name:"Mohan"
-            }
-            window.csrfToken = "{{ csrf_token() }}"
+            <script>
+                window.user = {
+                id: {{ $_SESSION['user_id'] }},
+                name: "mohan"
+            };
+            window.csrfToken = "{{ csrf_token() }}";
         </script>
     </head>
     <header class='w3-top'>

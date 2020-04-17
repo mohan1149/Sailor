@@ -22,7 +22,7 @@ class StaffController extends Controller
         $staff_email             = strip_tags($request['email']);
         $staff_designation       = strip_tags($request['designation']);
         $staff_school            = strip_tags($request['school_id']);
-        $staff_main_field        = strip_tags($request['main_field']);
+        $department              = strip_tags($request['department']);
         $staff_class_teacher_for = strip_tags($request['class_teacher_for']);
         try{
             $query = DB::table('teacher')
@@ -31,14 +31,14 @@ class StaffController extends Controller
                     'phone'             => $staff_phone,
                     'email'             => $staff_email,
                     'school_id'         => $staff_school,
-                    'main_field'        => $staff_main_field,
+                    'department'        => $department,
                     'class_teacher_for' => $staff_class_teacher_for,
                     'designation'       => $staff_designation,
                 ]
             );
         return redirect('/manage/staff');
         }catch(\Exception $e){
-            return $e;
+            return response()->json($e->getMessage(),500);
         }
     }
     public function manageStaff(){
@@ -56,5 +56,22 @@ class StaffController extends Controller
                 ->get();
         }
         return view('manageStaff',['staff'=>$staff]);
+    }
+    public function getDepartsAndClassesBySchoolId(Request $request){
+        try{
+            $deps = DB::table('departments')
+                ->where('school_id',$request['id'])
+                ->get();
+            $classes = DB::table('class')
+                ->where('school_id',$request['id'])
+                ->get();
+            $responseData = [];
+            $responseData['deps'] = $deps;
+            $responseData['classes'] = $classes;
+            return response()->json($responseData,200);
+
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
     }
 }

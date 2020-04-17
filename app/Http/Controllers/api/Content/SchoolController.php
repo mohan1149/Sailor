@@ -61,11 +61,26 @@ class SchoolController extends Controller
     }
     public function viewSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];
+        $responseData = [];
         $school = DB::table('school')
             ->where('school_owner_id',$school_owner_id)
             ->where('id',$request['id'])
             ->first();
-        return view('viewSchool',['school'=>$school]);
+        $deps = DB::table('departments')
+            ->where('school_id',$request['id'])
+            ->get();
+        $classes = DB::table('class')
+            ->where('school_id',$request['id'])
+            ->get();
+        $staff = DB::table('teacher')
+            ->where('school_id',$request['id'])
+            ->get();
+        $responseData['school'] = $school;
+        $responseData['deps'] = $deps;
+        $responseData['classes'] = $classes;
+        $responseData['staff'] = $staff;
+        $responseData['deps'] = $deps;
+        return view('viewSchool',['responseData'=>$responseData]);
     }
     public function deleteSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];

@@ -1,89 +1,113 @@
+<?php
+    include(app_path().'/translations/strings.php');
+    $strings = $_SESSION['lang'];
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>SAilor | dd Staff</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <title>Sailor | Add Institute</title>
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
                 /* color: #636b6f; */
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
             }
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
+            .left{
+                background-color: rgb(61, 94, 161);
+                height:100vh;
             }
-
-            .title {
-                font-size: 84px;
-                color:#2196F3;
+            .right{
+                height:100vh;
             }
-            .m-b-md {
-                margin-bottom: 30px;
+            .left-container{
+                margin-top:10vh;
+            }
+            .logo-text{
+                margin-top:10px;
+            }
+            .right-container{
+                margin-top:10vh;
+            }
+            .title{
+                font-family: 'Nunito', sans-serif;
+                font-weight:200;   
+                text-align:center;
+            }
+            .intro{
+                font-family: 'Nunito', sans-serif;
+                font-weight:200;
+                margin-left:50px;
+                margin-right:50px;
+            }
+            .form-input{
+                width:60%!important;
+                margin-bottom:10px;
+                border-radius:30px;
+                padding:4px;
+                padding-left:10px;
+                margin-left:2px;
+                height:50px;
+                font-size:20px;
+                border: 2px solid #2196F3;
+            }
+            .form-submit{
+                color:#fff!important;
+                width:50%;
+                border-radius:30px;
+                background-color: rgb(61, 94, 161)!important;
+            }
+            .add-institute{
+                margin:10px;
             }
             .form-group{
-                border:3px solid #2196F3;
-                margin:10px;
-                border-radius:15px;
-                padding-left:30px;
-
-            }
-            .form-group input{
-                border:none;
-                height:50px;
-                width:500px;
-                border-radius:25px;
-                background:transparent;
-                color:gray;
-                font-size:20px;
-            }
-            .form-group span{
-                color:#2196F3; 
+                margin-bottom:5px;
+                text-align: center;
             }
         </style>
     </head>
-    <header>
+    <header class='w3-top'>
         @include('header')
     </header>
-    <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title m-b-md">
-                    Add staff to STM system
+    <body class="w3-light-grey">
+    <!-- Sidebar/menu -->
+    @include('dashboardSidebar')
+    <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
+        <header class="w3-container" style="padding-top:22px">
+            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Staff</b></h5>
+        </header>
+        <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
+            <div class="add-institute">
+                <div class="instructions">
+                    <h4>Instructions</h4>
                 </div>
-                <div class='signup-form'>
-                    <form action='/api/manage/staff' method="POST">
+                <form action='/manage/staff' method="POST">
+                    @csrf
                         <div class='form-group'>
-                            <span><i class='fa fa-user'></i></span>
-                            <input type='text' name='staffname' placeholder='staff name' >
+                            <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
+                            <input class="form-input" type='text' name='staffname' placeholder='staff name' >
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-phone'></i></span>
-                            <input type='tel' placeholder='phone' name='phone'>
+                            <span><i class='fa fa-phone w3-xlarge w3-text-blue'></i></span>
+                            <input  class="form-input" type='tel' placeholder='phone' name='phone'>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-envelope'></i></span>
-                            <input type='email' placeholder='email' name='email'>
+                            <span><i class='fa fa-envelope w3-xlarge w3-text-blue'></i></span>
+                            <input class="form-input"  type='email' placeholder='email' name='email'>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-book'></i></span>
-                            <input type='text' placeholder='designation' name='designation'>
+                            <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
+                            <input  class="form-input" type='text' placeholder='designation' name='designation'>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-bank'></i></span>
-                            <select name='school_id'style='width:95%;border-radius:50px;background:transparent;border:none;height:50px;color:gray;font-size:20px'>
-                            <option>School</option>
+                            <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
+                            <select  class="form-input select-school" name='school_id'>
+                            <option value="-0">School</option>
                                 <?php 
                                     foreach($schools as $school){
                                         ?>
@@ -94,44 +118,26 @@
                             </select>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-book'></i></span>
-                            <select name='main_field'style='width:95%;border-radius:50px;background:transparent;border:none;height:50px;color:gray;font-size:20px'>
-                                <option>Main Field</option>
-                                <option>Telugu</option>
-                                <option>Hindi</option>
-                                <option>English</option>
-                                <option>Mathematics</option>
-                                <option>Science</option>
-                                <option>Social</option>
-                                <option>Computers</option>
+                            <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
+                            <select class="form-input department"  name='department'>
+                                <option>Department</option>
                             </select>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-book'></i></span>
-                            <select name='class_teacher_for' style='width:95%;border-radius:50px;background:transparent;border:none;height:50px;color:gray;font-size:20px'>
+                            <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
+                            <select  class="form-input classes" name='class_teacher_for'>
                                 <option>Class Teacher for</option>
-                                <option>I</option>
-                                <option>II</option>
-                                <option>III</option>
-                                <option>IV</option>
-                                <option>V</option>
-                                <option>VI</option>
-                                <option>VII</option>
-                                <option>VIII</option>
-                                <option>IX</option>
-                                <option>X</option>
                             </select>
                         </div>
                         <div class='form-group' style='text-align:center'>
-                            <input type='submit' value="Add">
+                            <input  class="w3-button form-input form-submit" type='submit' value="Add">
                         </div>
                     </form>
-                </div>
-                <input class='w3-button w3-red' type='button' value='XLSX Export'>
             </div>
         </div>
+    </div>
     </body>
-    <footer class='w3-bottom'>
+    <footer class='footer w3-bottom'>
         @include('footer')
     </footer>
 </html>
