@@ -88,7 +88,7 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Classes<i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/manage/class">Classes <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -98,7 +98,7 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Exams<i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/manage/class">Exams <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -108,7 +108,17 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Reports<i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/manage/class">Reports <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-comments w3-xxxlarge"></i></div>
+                    <div class="w3-right">
+                        <h3>50</h3>
+                    </div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/manage/class">Blog <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
         </div>
