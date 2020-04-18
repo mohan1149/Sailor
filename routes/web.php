@@ -34,12 +34,16 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('manage/schools','api\Content\SchoolController@manageSchools');
     Route::get('edit/school/{id}','api\Content\SchoolController@editSchool');
     Route::post('update/school/{id}','api\Content\SchoolController@updateSchool');
+    Route::get('delete/school/{id}','api\Content\SchoolController@deleteSchool');
     Route::get('view/school/{id}','api\Content\SchoolController@viewSchool');
+    Route::get('/view/school/{id}/{class}',function(){ return view('schoolFullView');});
 
     //department related routes
-    Route::get('/add/department','api\Content\DepartmentController@addDepartment');
+    Route::get('/add/department','api\Content\DepartmentController@getSchools');
     Route::post('/add/department','api\Content\DepartmentController@storeDepartment');
     Route::get('/manage/departments','api\Content\DepartmentController@manageDepartments');
+    Route::get('/edit/department/{id}','api\Content\DepartmentController@editDepartment');
+    Route::post('/update/department/{id}','api\Content\DepartmentController@updateDepartment');
     //staff releated routes
     Route::get('add/staff','api\Content\StaffController@getSchools');
     Route::POST('manage/staff','api\Content\StaffController@addStaff');

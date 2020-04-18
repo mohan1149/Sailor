@@ -20,6 +20,9 @@
                 font-weight:200 !important;
                 font-family: 'Nunito', sans-serif !important;
             }
+            th{
+                text-transform:uppercase;
+            }
             .menu-item{
                 margin-bottom: 16px;
             }
@@ -46,27 +49,28 @@
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
             <b class="w3-xlarge"><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Institutes</b>
+            <a class="w3-xlarge w3-button" href="/add/institute"><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Manage Institutes</a>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
                 <table class="w3-striped w3-padding w3-responsive w3-bordered w3-table">
                     <tr class="w3-white">
-                        <th class="w3-xlarge"><i class='fa fa-list w3-text-blue w3-xlarge'></i> Registration Number</th>
-                        <th class="w3-xlarge"><i class='fa fa-bank w3-text-blue w3-xlarge'></i> Name</th>
-                        <th class="w3-xlarge"><i class='fa fa-phone w3-text-blue w3-xlarge'></i> Phone</th>
-                        <th class="w3-xlarge"><i class='fa fa-envelope w3-text-blue w3-xlarge'></i> Email</th>
-                        <th class="w3-xlarge"><i class='fa fa-globe w3-text-blue w3-xlarge'></i> Website</th>
+                        <th class="w3-text-grey"><i class='fa fa-list w3-text-purple w3-xlarge'></i> Registration Number</th>
+                        <th class="w3-text-grey"><i class='fa fa-bank w3-text-purple w3-xlarge'></i> Name</th>
+                        <th class="w3-text-grey"><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
+                        <th class="w3-text-grey"><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th>
+                        <th class="w3-text-grey"><i class='fa fa-globe w3-text-purple w3-xlarge'></i> Website</th>
                     </tr>
                     <?php 
                         foreach($schools as $school)
                             {
                             ?>
                                 <tr>
-                                    <td class="w3-xlarge"><?php echo $school->reg_num ?></td>
-                                    <td class="w3-xlarge"><?php echo $school->school_name ?></td>
-                                    <td class="w3-xlarge"><?php echo $school->phone ?></td>
-                                    <td class="w3-xlarge"><a href="mailto:<?php echo $school->email ?>"><?php echo $school->email ?></a></td>
-                                    <td class="w3-xlarge"><a target="_blank"href="<?php echo $school->website ?>"><?php echo $school->website ?></a></td>
+                                    <td class="w3-large"><?php echo $school->reg_num ?></td>
+                                    <td class="w3-large"><?php echo $school->school_name ?></td>
+                                    <td class="w3-large"><?php echo $school->phone ?></td>
+                                    <td class="w3-large"><a href="mailto:<?php echo $school->email ?>"><?php echo $school->email ?></a></td>
+                                    <td class="w3-large"><a target="_blank"href="<?php echo $school->website ?>"><?php echo $school->website ?></a></td>
                                     <!-- <td><?php echo $school->school_address ?></td> -->
                                     <!-- <td><img width="38px" class='school_logo'src="<?php echo $school->logo_path ?>"></td> -->
                                     <td>
@@ -76,7 +80,7 @@
                                         <a class="w3-blue w3-button" href="/edit/school/<?php echo $school->id ?>">Edit <i class="fa fa-pencil"></i></a>
                                     </td>
                                     <td>
-                                        <a class="w3-red w3-button" href="/delete/school/<?php echo $school->id ?>">Delete <i class="fa fa-trash"></i></a>
+                                        <a class="w3-red w3-button delete-school" href="javascript:void(0)" url="/delete/school/<?php echo $school->id ?>">Delete <i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php
@@ -84,9 +88,25 @@
                     ?>
                 </table>
             </div>
-            <div class="w3-center">                        
-                <button class="w3-button w3-green w3-margin pager-prev">Prev</button>
-                <button class="w3-button w3-green w3-margin pager-next">Next</button>
+        </div>
+    </div>
+
+    <!-- delete modal -->
+    <div class="w3-modal delete-modal" id="delete-modal">
+        <div class="w3-modal-content w3-animate-top w3-card-4">
+            <header class="w3-container w3-indigo"> 
+                <span onclick="document.getElementById('delete-modal').style.display='none'" 
+                    class="w3-button w3-xlarge w3-display-topright">&times;</span>
+                <h2>Are you sure to Delete?</h2>
+            </header>
+            <div class="w3-container">
+                <p class="w3-dark-text-grey w3-xlarge">Once you delete,all school related information such as Departments, Classes, Staff and Students will be removed from the Sailor Syatem.</p>
+                <button class="w3-red w3-margin w3-button w3-xlarge delete-confirm">Sure! Delete</button>
+                <button class="w3-green w3-margin w3-button w3-xlarge" onclick="document.getElementById('delete-modal').style.display='none'" >Cancel</button>
+            </div>
+                <footer class="w3-container w3-dark-grey">
+                    <p>@Sailor Sytem </p>
+                </footer>
             </div>
         </div>
     </div>

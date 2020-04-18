@@ -12,6 +12,7 @@ class ClassController extends Controller
         $school_owner_id = $_SESSION['user_id'];
         $schools = DB::table('school')
             ->where('school_owner_id',$school_owner_id)
+            ->where('status',1)
             ->get();
         return view('addClass',['schools'=>$schools]);
     }
@@ -19,6 +20,7 @@ class ClassController extends Controller
         $className   = strip_tags($request['className']);
         $schoolId    = strip_tags($request['school_id']);
         $numSubjects = strip_tags($request['subjects']);
+        $dept_id     = strip_tags($request['department']);
         $query = '';
         try{
             $query = DB::table('class')
@@ -26,7 +28,8 @@ class ClassController extends Controller
                     'value'         => $className,
                     'class_teacher' => -1,
                     'school_id'     => $schoolId,
-                    'num_subjects'  => $numSubjects
+                    'num_subjects'  => $numSubjects,
+                    'dept_id'       => $dept_id,
                 ]);
             $subjects = [];
             for($i=1; $i <= $numSubjects; $i++) { 

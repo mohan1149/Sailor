@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    let delete_url = '';
     $(".language").change(function(e){
         //localStorage.setItem('sailorLang',e.target.value);
         location.assign(location.pathname + "?lan=" + e.target.value);
@@ -99,6 +100,13 @@ $(document).ready(function(){
         $(className).addClass('active');
         
         
+    });
+    $('.delete-school').click(function(){
+        delete_url = $(this).attr('url');
+        $('.delete-modal').show();
+    });
+    $('.delete-confirm').click(function(){
+        location.assign(delete_url);
     });
 }); 
 

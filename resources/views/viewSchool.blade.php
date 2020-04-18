@@ -51,25 +51,33 @@
             }
             .school-data .data-item{
                 cursor: pointer;
+                list-style: none;
             }
             .s_info{
                 border-right: 1px solid gray;
             }
-            .active{
+            .school-data .active{
                 color:#2196F3 !important;
-            }
-            .circle{
-                border: 12px solid rgb(61, 94, 161);
-                border-radius: 50%;
-                width: 250px;
-                height: 250px;
-                padding: 90px;
+                background:black;
             }
             .data{
                 display:none;
             }
+            .data a {
+                text-decoration:none;
+            }
             .active{
                 display:block;
+            }
+            li h3{
+                color: #fff;
+                padding: 0 25px;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+                font-family: 'Nunito', sans-serif;
             }
         </style>
     </head>
@@ -101,34 +109,75 @@
                         </div>
                     </div>
                     <div class="w3-twothird s_data">
-                        <div class="w3-margin w3-card">
-
-                            <div class="w3-third">
-                                <ul class="w3-ul school-data">
-                                    <li class="data-item active deps"><h3>Departments &#8618;</h3></li>
-                                    <li class="data-item classes"><h3>Classes &#8618;</h3></li>
-                                    <li class="data-item staff"><h3>Staff &#8618;</h3></li>
-                                    <li class="data-item students"><h3>Students &#8618;</h3></li>
+                        <div class="w3-margin">
+                            <div class="w3-row">
+                                <ul class="center-list w3-indigo school-data">
+                                    <li class="data-item active deps tablink"><h3>Departments </h3></li>
+                                    <li class="data-item classes"><h3>Classes</h3></li>
+                                    <li class="data-item staff"><h3>Staff</h3></li>
+                                    <!-- <li class="data-item students"><h3>Students</h3></li> -->
                                 </ul>
                             </div>
                             <div class="w3-twothird">
-                                <div class="circle w3-center" style="margin:0 auto">
+                                <div class="">
                                     <div class="data active deps">
-                                        <h2> <?php echo count($responseData['deps'])?></h2>
+                                        <table class="w3-bordered w3-table w3-striped">
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Website</th>
+                                            <?php 
+                                            foreach($responseData['deps'] as $dep){
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $dep->d_name?></td>
+                                                        <td><?php echo $dep->email?></td>
+                                                        <td><?php echo $dep->website?></td>
+                                                    </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                        </table>
                                     </div>
-                                    <div class="data classes">
-                                        <h2> <?php echo count($responseData['classes'])?></h2>
+                                    <div class="data classes" style="height:72vh;overflow:scroll;">
+                                        <table class="w3-bordered w3-table w3-striped">
+                                            <th>Name</th>
+                                            <th>Subjects</th>
+                                            <?php 
+                                            foreach($responseData['classes'] as $class){
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $class->value?></td>
+                                                        <td><?php echo $class->num_subjects?></td>                                                
+                                                    </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                        </table>
                                     </div>
-                                    <div class="data staff">
-                                        <h2> <?php echo count($responseData['staff'])?></h2>
+                                    <div class="data staff" style="height:72vh;overflow:scroll;">
+                                        <table class="w3-bordered w3-table w3-striped">
+                                            <th>Name</th>
+                                            <th>Designation</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <?php 
+                                            foreach($responseData['staff'] as $staff){
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $staff->username?></td>
+                                                        <td><?php echo $staff->designation?></td>                                              
+                                                        <td><?php echo $staff->phone?></td>
+                                                        <td><?php echo $staff->email?></td>
+                                                    </tr>
+                                                <?php
+                                            }
+                                        ?>
+                                        </table>
                                     </div>
                                     <div class="data students">
-                                        <h2> <?php echo count($responseData['deps'])?></h2>
+                                        <a href="#"><h2> <?php echo count($responseData['deps']).' Students'?></h2></a>
                                     </div>
-                                </div>
-                                <div class="w3-center w3-margin">
-                                    <a class="w3-button w3-purple w3-xlarge">View &#8618;</a>
-                                </div>
+                                </div>        
                             </div>
                         </div>
                     </div>

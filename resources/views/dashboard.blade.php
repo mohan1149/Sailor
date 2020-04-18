@@ -1,3 +1,7 @@
+<?php 
+    include(app_path().'/translations/strings.php');
+    $strings = $_SESSION['lang'];
+?>
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -48,7 +52,7 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/schools">Institutes <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/add/institute"><?php echo $$strings['addinsti']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item ">
@@ -58,17 +62,17 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="">Departments <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/add/department"><?php echo $$strings['adddept']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
-                    <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                    <div class="w3-left"><i class="fa fa-user-plus w3-xxxlarge"></i></div>
                     <div class="w3-right">
                         <h3>152</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/staff">Staff <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/add/staff"><?php echo $$strings['addstaff']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -78,7 +82,7 @@
                         <h3>99</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="">Students <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/add/student"><?php echo $$strings['addstud']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
@@ -88,7 +92,7 @@
                         <h3>50</h3>
                     </div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Classes <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/add/class"><?php echo $$strings['addclass']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">

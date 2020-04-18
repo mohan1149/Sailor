@@ -12,6 +12,7 @@ class StaffController extends Controller
         $school_owner_id = $_SESSION['user_id'];
         $schools = DB::table('school')
             ->where('school_owner_id',$school_owner_id)
+            ->where('status',1)
             ->get();
         return view('addStaff',['schools'=>$schools]);
     }
@@ -47,6 +48,7 @@ class StaffController extends Controller
             ->join('teacher','school.id','=','teacher.school_id')
             ->distinct()
             ->where('school.school_owner_id',$school_owner_id)
+            ->where('school.status',1)
             ->select(['teacher.school_id'])
             ->get();
         foreach($ids as $id){
