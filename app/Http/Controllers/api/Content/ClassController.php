@@ -32,7 +32,7 @@ class ClassController extends Controller
                     'dept_id'       => $dept_id,
                 ]);
             $subjects = [];
-            for($i=1; $i <= $numSubjects; $i++) { 
+            for($i=1; $i <= $numSubjects; $i++) {
                 $subjects[] = $request['subject'.$i];
             }
             $subs = implode(",",$subjects);
@@ -57,18 +57,25 @@ class ClassController extends Controller
         }
     }
     public function manageClass(){
-        $school_owner_id = $_SESSION['user_id'];
-        $ids =  DB::table('school')
-            ->where('school.school_owner_id',$school_owner_id)
-            ->select(['school.id'])
-            ->get();
-        foreach($ids as $id){
-            $classes[] = DB::table('school')
-                ->join('class','school.id','=','class.school_id')
-                ->where('school_id',$id->id)
-                ->get();
-        }
-        return view('manageClasses',['classes'=>$classes]);
+      try{
+          $school_owner_id = $_SESSION['user_id'];
+          $ids =  DB::table('school')
+              ->join('class','school.id','=','class.school_id')
+              ->distinct()
+              ->where('school.school_owner_id',$school_owner_id)
+              ->where('school.status',1)
+              ->select(['class.school_id'])
+              ->get();
+          foreach($ids as $id){
+              $classes[] = DB::table('school')
+                  ->join('class','school.id','=','class.school_id')
+                  ->where('school_id',$id->school_id)
+                  ->get();
+          }
+          return view('manageClasses',['classes'=>$classes]);
+      }catch(\Exception $e){
+          return response()->json($e->getMessage(),500);
+      }
     }
     public function storeTimetable(Request $request){
         $periods = $request['periods'];
@@ -105,6 +112,6 @@ class ClassController extends Controller
         }
     }
     function getClasess(Request $request){
-        
+
     }
 }

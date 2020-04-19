@@ -16,11 +16,9 @@ Route::get('/', function () {return view('welcome');});
 Route::post('login','api\User\UserController@login');
 Route::get('/user/signup/',function() {return view('userSignup');});
 Route::post('signup','api\User\UserController@signUp');
-
 Route::get('/forgot/password',function() {return view('forgotPassword');});
 Route::get('/reset/password',function() {return view('passwordReset');});
 Route::post('sent/password/reset/link','MailController@sendPasswordResetLink');
-
 Route::get('/staff/login',function(){ return view('staffLogin');});
 
 Route::group(['middleware' => ['app.access']], function() {
@@ -36,7 +34,6 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::post('update/school/{id}','api\Content\SchoolController@updateSchool');
     Route::get('delete/school/{id}','api\Content\SchoolController@deleteSchool');
     Route::get('view/school/{id}','api\Content\SchoolController@viewSchool');
-    Route::get('/view/school/{id}/{class}',function(){ return view('schoolFullView');});
 
     //department related routes
     Route::get('/add/department','api\Content\DepartmentController@getSchools');
@@ -44,6 +41,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/manage/departments','api\Content\DepartmentController@manageDepartments');
     Route::get('/edit/department/{id}','api\Content\DepartmentController@editDepartment');
     Route::post('/update/department/{id}','api\Content\DepartmentController@updateDepartment');
+    Route::get('/delete/department/{id}','api\Content\DepartmentController@deleteDepartment');
     //staff releated routes
     Route::get('add/staff','api\Content\StaffController@getSchools');
     Route::POST('manage/staff','api\Content\StaffController@addStaff');

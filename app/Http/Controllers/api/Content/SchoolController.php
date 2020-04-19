@@ -33,7 +33,7 @@ class SchoolController extends Controller
                     'phone'           => $school_phone,
                     'email'           => $school_email,
                     'website'         => $school_website,
-                    'logo_path'      => $request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
+                    'logo_path'       => $request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
                     'periods'         => $periods,
                     'period_length'   => $period_length,
                     'reg_num'         => $reg_num,
@@ -60,9 +60,10 @@ class SchoolController extends Controller
     //function to return edit school view
     public function editSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];
+        $school_id       = base64_decode($request['id']);
         $schools = DB::table('school')
             ->where('school_owner_id',$school_owner_id)
-            ->where('id',$request['id'])
+            ->where('id',$school_id)
             ->get();
         return view('editSchool',['schools'=>$schools]);
     }
@@ -70,19 +71,20 @@ class SchoolController extends Controller
     //function to return view for viewing school
     public function viewSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];
-        $responseData = [];
-        $school = DB::table('school')
+        $responseData    = [];
+        $school_id       = base64_decode($request['id']);
+        $school          = DB::table('school')
             ->where('school_owner_id',$school_owner_id)
-            ->where('id',$request['id'])
+            ->where('id',$school_id)
             ->first();
         $deps = DB::table('departments')
-            ->where('school_id',$request['id'])
+            ->where('school_id',$school_id)
             ->get();
         $classes = DB::table('class')
-            ->where('school_id',$request['id'])
+            ->where('school_id',$school_id)
             ->get();
         $staff = DB::table('teacher')
-            ->where('school_id',$request['id'])
+            ->where('school_id',$school_id)
             ->get();
         $responseData['school']  = $school;
         $responseData['deps']    = $deps;
@@ -106,7 +108,7 @@ class SchoolController extends Controller
         }catch(\Exception $e){
             return response()->json($e->getMessage(),500);
         }
-        
+
     }
 
     ////function to update school to the Sailor System

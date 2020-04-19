@@ -31,7 +31,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200; 
+                font-weight:200;
                 font-size:30px;
                 margin-top:5px;
             }
@@ -57,7 +57,7 @@
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
             <div>
-                    <?php 
+                    <?php
                         foreach($deps as $dep){
                             ?>
                                 <div class="w3-container w3-margin w3-accordion">
@@ -67,21 +67,21 @@
                                     </button>
                                     <table width='100%' style='text-align:center' class="inactive w3-table w3-margin w3-accordion-content content-table school-<?php echo $dep[0]->id?>">
                                         <tr class="w3-white">
-                                            
+
                                             <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Department Name</th>
                                             <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Department Email</th>
                                             <th><i class='fa fa-globe w3-text-purple w3-xlarge'></i> Department Website</th>
-                            
+
                                         </tr>
-                                        <?php 
+                                        <?php
                                             foreach($dep as $dep_data){
-                                                ?>   
+                                                ?>
                                                     <tr>
                                                         <td><?php echo $dep_data->d_name?></td>
                                                         <td><?php echo $dep_data->email?></td>
                                                         <td><?php echo $dep_data->website?></td>
                                                         <td><a href="/edit/department/<?php echo base64_encode($dep_data->id)?>"class='w3-button w3-blue'>Edit</a></td>
-                                                        <td><a href="/delete/department/<?php echo base64_encode($dep_data->id)?>"class='w3-button w3-red'>Delete</a></td>
+                                                        <td><a href="javascript:void(0)"url="/delete/department/<?php echo $dep_data->id?>"class='w3-button w3-red del-dept'>Delete</a></td>
                                                     </tr>
                                                 <?php
                                             }
@@ -93,11 +93,26 @@
                     ?>
                 </div>
             </div>
-            <div class="w3-center">                        
-                <button class="w3-button w3-green w3-margin pager-prev">Prev</button>
-                <button class="w3-button w3-green w3-margin pager-next">Next</button>
+        </div>
+        <!-- delete modal start -->
+        <div class="w3-modal delete-modal" id="delete-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-indigo">
+                    <span onclick="document.getElementById('delete-modal').style.display='none'"
+                        class="w3-button w3-xlarge w3-display-topright">&times;</span>
+                    <h2>Are you sure to Delete?</h2>
+                </header>
+                <div class="w3-container">
+                    <p class="w3-dark-text-grey w3-xlarge">Once you delete,all departmet related information such as Classes linked, Staff and Students will be removed from the Sailor System.</p>
+                    <button class="w3-red w3-margin w3-button w3-xlarge delete-confirm">Sure! Delete</button>
+                    <button class="w3-green w3-margin w3-button w3-xlarge" onclick="document.getElementById('delete-modal').style.display='none'" >Cancel</button>
+                </div>
+                <footer class="w3-container w3-dark-grey">
+                        <p>@Sailor Sytem </p>
+                </footer>
             </div>
         </div>
+        <!-- end -->
     </div>
     </body>
     <footer class='footer w3-bottom'>

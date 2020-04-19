@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Sailor | Edit Institute</title>
+        <title>Sailor | View Institute</title>
         <!-- Styles -->
         <style>
             html, body {
@@ -36,7 +36,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:200;
                 text-align:center;
             }
             .school-logo{
@@ -118,14 +118,15 @@
                                     <!-- <li class="data-item students"><h3>Students</h3></li> -->
                                 </ul>
                             </div>
-                            <div class="w3-twothird">
-                                <div class="">
+                            <div class="w3-container">
+                                <div class="data-container">
                                     <div class="data active deps">
-                                        <table class="w3-bordered w3-table w3-striped">
+                                        <table class="w3-bordered w3-table w3-striped w3-responsive">
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Website</th>
-                                            <?php 
+                                            <th>Department Strength</th>
+                                            <?php
                                             foreach($responseData['deps'] as $dep){
                                                 ?>
                                                     <tr>
@@ -139,15 +140,15 @@
                                         </table>
                                     </div>
                                     <div class="data classes" style="height:72vh;overflow:scroll;">
-                                        <table class="w3-bordered w3-table w3-striped">
+                                        <table class="w3-bordered w3-table w3-striped ">
                                             <th>Name</th>
                                             <th>Subjects</th>
-                                            <?php 
+                                            <?php
                                             foreach($responseData['classes'] as $class){
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $class->value?></td>
-                                                        <td><?php echo $class->num_subjects?></td>                                                
+                                                        <td><?php echo $class->num_subjects?></td>
                                                     </tr>
                                                 <?php
                                             }
@@ -155,17 +156,17 @@
                                         </table>
                                     </div>
                                     <div class="data staff" style="height:72vh;overflow:scroll;">
-                                        <table class="w3-bordered w3-table w3-striped">
+                                        <table class="w3-bordered w3-table w3-striped w3-responsive">
                                             <th>Name</th>
                                             <th>Designation</th>
                                             <th>Phone</th>
                                             <th>Email</th>
-                                            <?php 
+                                            <?php
                                             foreach($responseData['staff'] as $staff){
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $staff->username?></td>
-                                                        <td><?php echo $staff->designation?></td>                                              
+                                                        <td><?php echo $staff->designation?></td>
                                                         <td><?php echo $staff->phone?></td>
                                                         <td><?php echo $staff->email?></td>
                                                     </tr>
@@ -177,7 +178,7 @@
                                     <div class="data students">
                                         <a href="#"><h2> <?php echo count($responseData['deps']).' Students'?></h2></a>
                                     </div>
-                                </div>        
+                                </div>
                             </div>
                         </div>
                     </div>

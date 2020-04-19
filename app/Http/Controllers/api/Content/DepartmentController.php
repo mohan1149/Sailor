@@ -19,12 +19,12 @@ class DepartmentController extends Controller
             ->get();
         return view('addDepartment',['schools'=>$schools]);
     }
-    
+
     //function to store departments
     public function storeDepartment(Request $request){
         $dept_name     = strip_tags($request['dept-name']);
         $school_id     = strip_tags($request['school_id']);
-        $email         = strip_tags($request['email']); 
+        $email         = strip_tags($request['email']);
         $website       = strip_tags($request['website']);
         $hex           = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
@@ -70,6 +70,8 @@ class DepartmentController extends Controller
             return response()->json($e->getMessage(),500);
         }
     }
+
+    //function to return edit department view
     public function editDepartment(Request $request){
         $dep_id   = base64_decode($request['id']);
         $dep_data = DB::table('departments')
@@ -78,12 +80,12 @@ class DepartmentController extends Controller
         return view('editDepartment',['dep_data'=>$dep_data]);
     }
 
-
+    //function to update departmet
     public function updateDepartment(Request $request){
         $dep_id        = base64_decode($request['id']);
         $dept_name     = strip_tags($request['dept-name']);
         $school_id     = strip_tags($request['school_id']);
-        $email         = strip_tags($request['email']); 
+        $email         = strip_tags($request['email']);
         $website       = strip_tags($request['website']);
         $hex           = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
@@ -124,5 +126,17 @@ class DepartmentController extends Controller
                 return response()->json($e->getMessage(),500);
             }
         }
+    }
+
+    //function to delete department
+    public function deleteDepartment(Request $request){
+      try{
+        $query = DB::table('departments')
+          ->where('id',$request['id'])
+          ->delete();
+        return redirect('/manage/departments');
+      }catch(\Exception $e){
+        return response()->json($e->getMessage(),500);
+      }
     }
 }

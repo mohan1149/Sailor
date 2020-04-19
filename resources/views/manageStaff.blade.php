@@ -31,7 +31,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200; 
+                font-weight:200;
                 font-size:30px;
                 margin-top:5px;
             }
@@ -56,7 +56,7 @@
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
             <div>
-                    <?php 
+                    <?php
                         foreach($staff as $employee){
                             ?>
                                 <div class="w3-container w3-margin w3-accordion">
@@ -72,9 +72,9 @@
                                             <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Staff Email</th>
                                             <th><i class='fa fa-graduation-cap w3-text-purple w3-xlarge'></i> Designation</th>
                                         </tr>
-                                        <?php 
+                                        <?php
                                             foreach($employee as $employee_data){
-                                                ?>   
+                                                ?>
                                                     <tr>
                                                         <td><?php echo $employee_data->id?></td>
                                                         <td><?php echo $employee_data->username?></td>
@@ -92,10 +92,6 @@
                         }
                     ?>
                 </div>
-            </div>
-            <div class="w3-center">                        
-                <button class="w3-button w3-green w3-margin pager-prev">Prev</button>
-                <button class="w3-button w3-green w3-margin pager-next">Next</button>
             </div>
         </div>
     </div>

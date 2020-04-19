@@ -34,7 +34,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200; 
+                font-weight:200;
                 font-size:30px;
                 margin-top:5px;
             }
@@ -49,7 +49,7 @@
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
             <b class="w3-xlarge"><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Institutes</b>
-            <a class="w3-xlarge w3-button" href="/add/institute"><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Manage Institutes</a>
+            <a class="w3-xlarge w3-button" href="/add/institute"><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Institute</a>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
@@ -61,7 +61,7 @@
                         <th class="w3-text-grey"><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th>
                         <th class="w3-text-grey"><i class='fa fa-globe w3-text-purple w3-xlarge'></i> Website</th>
                     </tr>
-                    <?php 
+                    <?php
                         foreach($schools as $school)
                             {
                             ?>
@@ -74,10 +74,10 @@
                                     <!-- <td><?php echo $school->school_address ?></td> -->
                                     <!-- <td><img width="38px" class='school_logo'src="<?php echo $school->logo_path ?>"></td> -->
                                     <td>
-                                        <a class="w3-indigo w3-button" href="/view/school/<?php echo $school->id ?>">View <i class="fa fa-eye"></i></a>
+                                        <a class="w3-indigo w3-button" href="/view/school/<?php echo base64_encode($school->id) ?>">View <i class="fa fa-eye"></i></a>
                                     </td>
                                     <td>
-                                        <a class="w3-blue w3-button" href="/edit/school/<?php echo $school->id ?>">Edit <i class="fa fa-pencil"></i></a>
+                                        <a class="w3-blue w3-button" href="/edit/school/<?php echo base64_encode($school->id) ?>">Edit <i class="fa fa-pencil"></i></a>
                                     </td>
                                     <td>
                                         <a class="w3-red w3-button delete-school" href="javascript:void(0)" url="/delete/school/<?php echo $school->id ?>">Delete <i class="fa fa-trash"></i></a>
@@ -94,8 +94,8 @@
     <!-- delete modal -->
     <div class="w3-modal delete-modal" id="delete-modal">
         <div class="w3-modal-content w3-animate-top w3-card-4">
-            <header class="w3-container w3-indigo"> 
-                <span onclick="document.getElementById('delete-modal').style.display='none'" 
+            <header class="w3-container w3-indigo">
+                <span onclick="document.getElementById('delete-modal').style.display='none'"
                     class="w3-button w3-xlarge w3-display-topright">&times;</span>
                 <h2>Are you sure to Delete?</h2>
             </header>
@@ -104,11 +104,11 @@
                 <button class="w3-red w3-margin w3-button w3-xlarge delete-confirm">Sure! Delete</button>
                 <button class="w3-green w3-margin w3-button w3-xlarge" onclick="document.getElementById('delete-modal').style.display='none'" >Cancel</button>
             </div>
-                <footer class="w3-container w3-dark-grey">
+            <footer class="w3-container w3-dark-grey">
                     <p>@Sailor Sytem </p>
-                </footer>
-            </div>
+            </footer>
         </div>
+    </div>
     </div>
     </body>
     <footer class='footer w3-bottom'>
