@@ -51,7 +51,8 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
-            <b class="w3-xlarge"><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Staff</b>
+            <a class=""><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Staff</a>
+            <a class="w3-button" href="/add/staff"><i class="fa fa-plus w3-text-blue "></i> Add Staff</a>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
@@ -60,9 +61,9 @@
                         foreach($staff as $employee){
                             ?>
                                 <div class="w3-container w3-margin w3-accordion">
-                                    <button class="w3-blue w3-xlarge w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee[0]->id?>">
+                                    <button class="w3-indigo w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee[0]->id?>">
                                         <?php echo $employee[0]->school_name; ?>
-                                        <i class="fa fa-chevron-down w3-right-align"></i>
+                                        <i class="fa fa-plus w3-right"></i>
                                     </button>
                                     <table width='100%' style='text-align:center' class="inactive w3-table w3-margin w3-accordion-content content-table school-<?php echo $employee[0]->id?>">
                                         <tr class="w3-white">

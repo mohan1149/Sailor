@@ -1,6 +1,7 @@
 $(document).ready(function(){
    // global variable to hold the delete route
     let delete_url = '';
+    let toggle_class_name = '';
     /* code to toggle between the languages
     start*/
     $(".language").change(function(e){
@@ -116,15 +117,36 @@ $(document).ready(function(){
         });
     });
     /*end*/
-    
-    /* code to toggle between departments,classes,staff and students content in school viewing
+
+    /* code to toggle between schools
     start*/
     $('.staff-show').click(function(){
-        var className = '.'+$(this).attr('id');
-        $('content-table').removeClass('active');
-        $('.content-table').addClass('inactive');
-        $(className).removeClass('inactive');
-        $(className).addClass('active');
+      if(toggle_class_name !== '.'+$(this).attr('id')){
+          toggle_class_name = '.'+$(this).attr('id');
+          $('content-table').removeClass('active');
+          $('.content-table').addClass('inactive');
+          $(toggle_class_name).removeClass('inactive');
+          $(toggle_class_name).addClass('active');
+          //icon handling
+          $('.staff-show').children().removeClass('fa-minus');
+          $('.staff-show').children().addClass('fa-plus');
+          $(this).children().removeClass('fa-plus');
+          $(this).children().addClass('fa-minus');
+        }else{
+          $(toggle_class_name).addClass('inactive');
+          if($(this).children().hasClass('fa-plus')){
+
+            $(toggle_class_name).addClass('active');
+            $(toggle_class_name).removeClass('inactive');
+            $(this).children().addClass('fa-minus');
+            $(this).children().removeClass('fa-plus');
+          }else{
+            $(this).children().addClass('fa-plus');
+            $(this).children().removeClass('fa-minus');
+          }
+          //$(this).children().addClass('fa-plus');
+          //$(this).children().removeClass('fa-minus');
+        }
     });
     /*end*/
 

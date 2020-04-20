@@ -27,7 +27,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200; 
+                font-weight:200;
                 font-size:30px;
                 margin-top:5px;
             }
@@ -40,10 +40,10 @@
     <!-- Sidebar/menu -->
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
-        <header class="w3-container" style="padding-top:22px">
-            <a class="w3-large"><i class="fa fa-cogs w3-text-blue"></i> Manage Articles</a>
-            <a class="w3-button w3-large" href="/add/article"><i class="fa fa-plus w3-text-blue"></i> Add Article</a>
-        </header>
+      <header class="w3-container w3-margin" style="padding-top:22px">
+          <a class=""><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Articles</a>
+          <a href = "/add/article"class="w3-button"><i class="fa fa-plus w3-text-blue"></i> Add Article</a>
+      </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
                 <table class="w3-striped w3-padding w3-responsive w3-bordered w3-table">
@@ -52,7 +52,7 @@
                         <th><i class='fa fa-calendar'></i> Published at</th>
                         <th><i class='fa fa-heart'></i> Likes</th>
                     </tr>
-                    <?php 
+                    <?php
                         foreach($articles as $article)
                             {
                             ?>
@@ -75,7 +75,7 @@
                     ?>
                 </table>
             </div>
-            <div class="w3-center">                        
+            <div class="w3-center">
                 <button class="w3-button w3-green w3-margin pager-prev">Prev</button>
                 <button class="w3-button w3-green w3-margin pager-next">Next</button>
             </div>
