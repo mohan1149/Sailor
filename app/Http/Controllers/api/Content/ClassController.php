@@ -59,6 +59,7 @@ class ClassController extends Controller
     public function manageClass(){
       try{
           $school_owner_id = $_SESSION['user_id'];
+          $classes         = [];
           $ids =  DB::table('school')
               ->join('class','school.id','=','class.school_id')
               ->distinct()

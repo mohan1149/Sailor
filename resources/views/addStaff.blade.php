@@ -36,7 +36,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:200;
                 text-align:center;
             }
             .intro{
@@ -108,7 +108,7 @@
                             <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
                             <select  class="form-input select-school" name='school_id'>
                             <option value="-0">School</option>
-                                <?php 
+                                <?php
                                     foreach($schools as $school){
                                         ?>
                                             <option value=<?php echo $school->id;?>><?php echo $school->school_name ?></option>
@@ -123,12 +123,12 @@
                                 <option>Department</option>
                             </select>
                         </div>
-                        <div class='form-group'>
+                        <!-- <div class='form-group'>
                             <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
                             <select  class="form-input classes" name='class_teacher_for'>
                                 <option>Class Teacher for</option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class='form-group' style='text-align:center'>
                             <input  class="w3-button form-input form-submit" type='submit' value="Add">
                         </div>

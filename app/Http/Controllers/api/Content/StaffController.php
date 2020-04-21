@@ -24,7 +24,7 @@ class StaffController extends Controller
         $staff_designation       = strip_tags($request['designation']);
         $staff_school            = strip_tags($request['school_id']);
         $department              = strip_tags($request['department']);
-        $staff_class_teacher_for = strip_tags($request['class_teacher_for']);
+        //$staff_class_teacher_for = strip_tags($request['class_teacher_for']);
         try{
             $query = DB::table('teacher')
                 ->insertGetId([
@@ -33,7 +33,7 @@ class StaffController extends Controller
                     'email'             => $staff_email,
                     'school_id'         => $staff_school,
                     'department'        => $department,
-                    'class_teacher_for' => $staff_class_teacher_for,
+                    'class_teacher_for' => -1,
                     'designation'       => $staff_designation,
                 ]
             );

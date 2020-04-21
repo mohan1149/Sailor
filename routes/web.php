@@ -25,6 +25,11 @@ Route::group(['middleware' => ['app.access']], function() {
     //dashboard related RouteServiceProvider
     Route::get('data','api\Content\DashboardController@getDashboardData');
     Route::get('/dashboard',function(){ return view('dashboard');});
+
+    //user related routes
+    Route::get('/profile','api\User\UserController@getProfile');
+    Route::get('/mailbox','api\User\UserController@getMailbox');
+    Route::get('/notifications','api\User\UserController@getNotifications');
     //school releated routes
     Route::get('/add/school',function(){ return view('addSchool');});
     Route::get('/add/institute',function(){ return view('addInstitute');});

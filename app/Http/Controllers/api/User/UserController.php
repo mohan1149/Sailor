@@ -10,16 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 use \Pusher\Pusher;
 
-session_start();
 class UserController extends Controller
 {
-    private $userController;
-    public function __constructor(){
-        $userController = new UserController();
-    }
+    // signup function for school owners
     public function signUp(Request $request)
     {
-
+        session_start();
         $username  = strip_tags($request['username']);
         $phone     = strip_tags($request['phone']);
         $email     = strip_tags($request['email']);
@@ -36,10 +32,13 @@ class UserController extends Controller
             $_SESSION['user_id'] = $query;
             return redirect('/add/school');
         }catch(\Exception $e){
-            return 'error in sign up';
+            return response()->json($e->getMessage(),500);
         }
     }
+
+    // login function for school owners
     public function login(Request $request){
+        session_start();
         $email      = strip_tags($request['email']);
         $password   = strip_tags($request['password']);
         try {
@@ -61,12 +60,24 @@ class UserController extends Controller
                 }
             }
         }catch (\Exception $e) {
-            return  response()->json($e, 500);
+            return  response()->json($e->getMessage(), 500);
         }
     }
 
+    // function to get user profile
+    public function getProfile(){
+      return view('profile');
+    }
 
+    // function to get user mail box
+    public function getMailbox(){
+      return view('mailbox');
+    }
 
+    //function to get user notifiactions
+    public function getNotifications(){
+      return view('notifications');
+    }
 
 
     public function studentAccess(Request $request){
