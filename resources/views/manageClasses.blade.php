@@ -58,38 +58,33 @@
             <div class="school-tables">
             <div>
                     <?php
-                        if(count($classes) !=0 ){
-                          foreach($classes as $employee){
+                        if(count($response_data) !=0 ){
+                          foreach($response_data as $employee){
                               ?>
                                   <div class="w3-container w3-margin w3-accordion">
-                                      <button class="w3-indigo  w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee[0]->id?>">
-                                          <?php echo $employee[0]->school_name; ?>
+                                      <button class="w3-indigo  w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee['id']?>">
+                                          <?php echo $employee['school_name']; ?>
                                           <i class="fa fa-plus w3-right"></i>
                                       </button>
-                                      <table width='100%' style='text-align:center' class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table school-<?php echo $employee[0]->id?>">
-                                          <tr class="w3-white">
-                                              <th><i class='fa fa-bank w3-text-purple w3-xlarge'></i> Class</th>
-                                              <th><i class='fa fa-book w3-text-purple w3-xlarge'></i> Subjects</th>
-                                              <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Class Teacher</th>
-                                              <th><i class='fa fa-diamond w3-text-purple w3-xlarge'></i> Class Strength</th>
-                                          </tr>
-                                          <?php
-                                              foreach($employee as $employee_data){
-                                                  ?>
-                                                      <tr>
-                                                          <td><?php echo $employee_data->value?></td>
-                                                          <td><?php echo $employee_data->num_subjects?></td>
-                                                          <td><?php echo 'soon';//echo $employee_data->class_teache?></td>
-                                                          <td><?php echo 'soon'?></td>
-                                                          <td><a href='button' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                          <td><a href='button' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i</a></td>
-                                                          <td><a href='button' class='w3-xlarge w3-text-indigo' title='Timetable'><i class="fa fa-clock-o"></i</a></td>
-                                                          <td><a href='button' class='w3-xlarge w3-text-red' title='Delete'><i class="fa fa-trash"></i</a></td>
-                                                      </tr>
-                                                  <?php
-                                              }
-                                          ?>
-                                      </table>
+                                      <div class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table school-<?php echo $employee['id']?>">
+                                        <?php
+                                          if(count($employee['dept_data']) !=0){
+                                            foreach ($employee['dept_data'] as $dept) {
+                                              print_r($dept);
+                                            }
+                                          }else{
+                                            ?>
+                                              <div class=" w3-container w3-panel w3-red">
+                                                  <p>
+                                                      <i class="fa fa-exclamation-triangle w3-jumbo"></i>
+                                                        NO CLASSES ADDED.
+                                                        <a class="" href="/add/class">CLICK HERE TO TO ADD</a>
+                                                  </p>
+                                              </div>
+                                            <?php
+                                          }
+                                        ?>
+                                      </div>
                                   </div>
                               <?php
                           }
@@ -114,3 +109,31 @@
         @include('footer')
     </footer>
 </html>
+
+
+
+
+<!-- <table width='100%' style='text-align:center' class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table school-<?php echo $employee['id']?>">
+    <tr class="w3-white">
+        <th><i class='fa fa-bank w3-text-purple w3-xlarge'></i> Class</th>
+        <th><i class='fa fa-book w3-text-purple w3-xlarge'></i> Subjects</th>
+        <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Class Teacher</th>
+        <th><i class='fa fa-diamond w3-text-purple w3-xlarge'></i> Class Strength</th>
+    </tr>
+    <?php
+        foreach($employee as $employee_data){
+            ?>
+                <tr>
+                    <td><?php //echo $employee_data->value?></td>
+                    <td><?php //echo $employee_data->num_subjects?></td>
+                    <td><?php //echo 'soon';//echo $employee_data->class_teache?></td>
+                    <td><?php //echo 'soon'?></td>
+                    <td><a href='button' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
+                    <td><a href='button' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i</a></td>
+                    <td><a href='button' class='w3-xlarge w3-text-indigo' title='Timetable'><i class="fa fa-clock-o"></i</a></td>
+                    <td><a href='button' class='w3-xlarge w3-text-red' title='Delete'><i class="fa fa-trash"></i</a></td>
+                </tr>
+            <?php
+        }
+    ?>
+</table> -->

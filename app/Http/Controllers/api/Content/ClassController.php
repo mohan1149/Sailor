@@ -16,6 +16,7 @@ class ClassController extends Controller
             ->get();
         return view('addClass',['schools'=>$schools]);
     }
+
     public function storeClass(Request $request){
         $className   = strip_tags($request['className']);
         $schoolId    = strip_tags($request['school_id']);
@@ -56,28 +57,47 @@ class ClassController extends Controller
             return response()->json($e->getMessage(),500);
         }
     }
+
     public function manageClass(){
       try{
           $school_owner_id = $_SESSION['user_id'];
-          $classes         = [];
-          $ids =  DB::table('school')
-              ->join('class','school.id','=','class.school_id')
-              ->distinct()
-              ->where('school.school_owner_id',$school_owner_id)
-              ->where('school.status',1)
-              ->select(['class.school_id'])
-              ->get();
-          foreach($ids as $id){
-              $classes[] = DB::table('school')
-                  ->join('class','school.id','=','class.school_id')
-                  ->where('school_id',$id->school_id)
-                  ->get();
+          $response_data   = [];
+          $schools = DB::table('school')
+            ->where('school_owner_id',$school_owner_id)
+            ->where('status',1)
+            ->get();
+          foreach ($schools as $school) {
+            $response_data[] = [
+              'id'        => $school->id,
+              'school_name' => $school->school_name,
+              'dept_data' => $this->getDeptsBySchoolId($school->id),
+            ];
           }
-          return view('manageClasses',['classes'=>$classes]);
+          return view('manageClasses',['response_data'=>$response_data]);
       }catch(\Exception $e){
           return response()->json($e->getMessage(),500);
       }
     }
+
+    public function getDeptsBySchoolId($school_id){
+      $return_data = [];
+      $deps = DB::table('departments')->where('school_id',$school_id)->get();
+        foreach ($deps as $dep) {
+          $return_data[] = [
+            'id'         => $dep->id,
+            'dept_name'  => $dep->d_name,
+            'class_data' => $this->getClassesByDeptId($dep->id),
+          ];
+        }
+      return $return_data;
+    }
+
+    public function getClassesByDeptId($dept_id){
+      $return_data = [];
+      $return_data = DB::table('class')->where('dept_id',$dept_id)->get();
+      return $return_data;
+    }
+
     public function storeTimetable(Request $request){
         $periods = $request['periods'];
         $class_id = $request['cid'];
@@ -111,8 +131,5 @@ class ClassController extends Controller
         }catch(\Exception $e){
             return response()->json($e->getMessage(),500);
         }
-    }
-    function getClasess(Request $request){
-
     }
 }

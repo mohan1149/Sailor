@@ -53,13 +53,13 @@
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
-                <table class="w3-striped w3-padding w3-responsive w3-bordered w3-table">
+                <table class="w3-padding w3-responsive w3-bordered w3-table">
                     <tr class="w3-white">
-                        <th class="w3-text-grey"><i class='fa fa-list w3-text-purple w3-xlarge'></i> Registration Number</th>
-                        <th class="w3-text-grey"><i class='fa fa-bank w3-text-purple w3-xlarge'></i> Name</th>
-                        <th class="w3-text-grey"><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
-                        <th class="w3-text-grey"><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th>
-                        <th class="w3-text-grey"><i class='fa fa-globe w3-text-purple w3-xlarge'></i> Website</th>
+                        <th class="w3-text-grey"><i class='fa fa-list w3-text-purple w3-xlarge'></i><span class="w3-small"> Reg ID</span></th>
+                        <th class="w3-text-grey"><i class='fa fa-bank w3-text-purple w3-xlarge'></i><span class="w3-small"> Name</span></th>
+                        <th class="w3-text-grey"><i class='fa fa-phone w3-text-purple w3-xlarge'></i><span class="w3-small"> Phone</span></th>
+                        <th class="w3-text-grey"><i class='fa fa-envelope w3-text-purple w3-xlarge'></i><span class="w3-small"> Email</span></th>
+                        <!-- <th class="w3-text-grey"><i class='fa fa-globe w3-text-purple w3-xlarge'></i><span class="w3-small"> Website</span></th> -->
                     </tr>
                     <?php
                         foreach($schools as $school)
@@ -70,17 +70,17 @@
                                     <td class="w3-large"><?php echo $school->school_name ?></td>
                                     <td class="w3-large"><?php echo $school->phone ?></td>
                                     <td class="w3-large"><a href="mailto:<?php echo $school->email ?>"><?php echo $school->email ?></a></td>
-                                    <td class="w3-large"><a target="_blank"href="<?php echo $school->website ?>"><?php echo $school->website ?></a></td>
+                                    <!-- <td class="w3-large"><a target="_blank"href="<?php echo $school->website ?>"><?php echo $school->website ?></a></td> -->
                                     <!-- <td><?php echo $school->school_address ?></td> -->
                                     <!-- <td><img width="38px" class='school_logo'src="<?php echo $school->logo_path ?>"></td> -->
                                     <td>
-                                        <a class="w3-indigo w3-button" href="/view/school/<?php echo base64_encode($school->id) ?>">View <i class="fa fa-eye"></i></a>
+                                        <a title="View"class="w3-text-indigo" href="/view/school/<?php echo base64_encode($school->id) ?>"> <i class="fa fa-eye w3-xlarge"></i></a>
                                     </td>
                                     <td>
-                                        <a class="w3-blue w3-button" href="/edit/school/<?php echo base64_encode($school->id) ?>">Edit <i class="fa fa-pencil"></i></a>
+                                        <a title="Edit"class="w3-text-blue" href="/edit/school/<?php echo base64_encode($school->id) ?>"> <i class="fa fa-edit w3-xlarge"></i></a>
                                     </td>
                                     <td>
-                                        <a class="w3-red w3-button delete-school" href="javascript:void(0)" url="/delete/school/<?php echo $school->id ?>">Delete <i class="fa fa-trash"></i></a>
+                                        <a title="Delete"class="w3-text-red delete-school" href="javascript:void(0)" url="/delete/school/<?php echo $school->id ?>"> <i class="fa fa-trash w3-xlarge"></i></a>
                                     </td>
                                 </tr>
                             <?php
