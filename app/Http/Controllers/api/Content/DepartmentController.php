@@ -7,16 +7,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\api\Content\SchoolController;
 class DepartmentController extends Controller
 {
-
-    //function to get schools for departments
+    private $schoolController;
+    public function __construct(){
+        $this->schoolController = new SchoolController();
+    }
     public function getSchools(){
-        $school_owner_id = $_SESSION['user_id'];
-        $schools = DB::table('school')
-            ->where('school_owner_id',$school_owner_id)
-            ->where('status',1)
-            ->get();
+        $schools = $this->schoolController->getSchoolsByUser();
         return view('addDepartment',['schools'=>$schools]);
     }
 

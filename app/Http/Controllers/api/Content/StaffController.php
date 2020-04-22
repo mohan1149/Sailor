@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\api\Content\SchoolController;
 class StaffController extends Controller
 {
+    private $schoolController;
+    public function __construct(){
+        $this->schoolController = new SchoolController();
+    }
     public function getSchools(){
-        $school_owner_id = $_SESSION['user_id'];
-        $schools = DB::table('school')
-            ->where('school_owner_id',$school_owner_id)
-            ->where('status',1)
-            ->get();
+        $schools = $this->schoolController->getSchoolsByUser();
         return view('addStaff',['schools'=>$schools]);
     }
     public function addStaff(Request $request)

@@ -39,7 +39,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::post('update/school/{id}','api\Content\SchoolController@updateSchool');
     Route::get('delete/school/{id}','api\Content\SchoolController@deleteSchool');
     Route::get('view/school/{id}','api\Content\SchoolController@viewSchool');
-
+    Route::get('add/studying/year','api\Content\SchoolController@addYearOfStudy');
     //department related routes
     Route::get('/add/department','api\Content\DepartmentController@getSchools');
     Route::post('/add/department','api\Content\DepartmentController@storeDepartment');

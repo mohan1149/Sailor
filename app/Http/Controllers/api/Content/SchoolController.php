@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 class SchoolController extends Controller
 {
+    //get schools by user
+    public function getSchoolsByUser(){
+        $school_owner_id = $_SESSION['user_id'];
+        $schools = DB::table('school')
+            ->where('school_owner_id',$school_owner_id)
+            ->where('status',1)
+            ->get();
+        return $schools;
+    }
+
     //function to add school to the Sailor System
     public function addSchool(Request $request)
     {
@@ -111,7 +121,7 @@ class SchoolController extends Controller
 
     }
 
-    ////function to update school to the Sailor System
+    //function to update school to the Sailor System
     public function updateSchool(Request $request){
         $school_owner_id = $_SESSION['user_id'];
         $school_name     = strip_tags($request['name']);
@@ -167,5 +177,11 @@ class SchoolController extends Controller
                 return $e->getMessage();
             }
         }
+    }
+
+    // function to return schools to add year of study
+    public function addYearOfStudy(){
+        $schools = $this->getSchoolsByUser();
+        return view('addYearOfStudy',['schools'=>$schools]);
     }
 }

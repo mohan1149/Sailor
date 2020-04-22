@@ -144,10 +144,36 @@ $(document).ready(function(){
             $(this).children().addClass('fa-plus');
             $(this).children().removeClass('fa-minus');
           }
-          //$(this).children().addClass('fa-plus');
-          //$(this).children().removeClass('fa-minus');
         }
     });
+    /*end*/
+    /*toggle between departments
+    start*/
+    $('.class-show').click(function(){
+        if(toggle_class_name !== '.'+$(this).attr('id')){
+            toggle_class_name = '.'+$(this).attr('id');
+            $('.content-table-inner').removeClass('active-inner');
+            $('.content-table-inner').addClass('inactive-inner');
+            $(toggle_class_name).removeClass('inactive-inner');
+            $(toggle_class_name).addClass('active-inner');
+            //icon handling
+            $('.class-show').children().removeClass('fa-minus');
+            $('.class-show').children().addClass('fa-plus');
+            $(this).children().removeClass('fa-plus');
+            $(this).children().addClass('fa-minus');
+          }else{
+            $(toggle_class_name).addClass('inactive-inner');
+            if($(this).children().hasClass('fa-plus')){
+              $(toggle_class_name).addClass('active-inner');
+              $(toggle_class_name).removeClass('inactive-inner');
+              $(this).children().addClass('fa-minus');
+              $(this).children().removeClass('fa-plus');
+            }else{
+              $(this).children().addClass('fa-plus');
+              $(this).children().removeClass('fa-minus');
+            }
+          }
+      });
     /*end*/
 
     /* code to show school delete modal
