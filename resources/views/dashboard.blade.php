@@ -1,4 +1,4 @@
-<?php 
+<?php
     include(app_path().'/translations/strings.php');
     $strings = $_SESSION['lang'];
 ?>
@@ -48,9 +48,6 @@
             <div class="w3-quarter menu-item ">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-bank w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>50</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/add/institute"><?php echo $$strings['addinsti']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -58,9 +55,6 @@
             <div class="w3-quarter menu-item ">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>50</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/add/department"><?php echo $$strings['adddept']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -68,9 +62,6 @@
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-user-plus w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>152</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/add/staff"><?php echo $$strings['addstaff']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -78,9 +69,6 @@
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-graduation-cap w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>99</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/add/student"><?php echo $$strings['addstud']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -88,9 +76,6 @@
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-book w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>50</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/add/class"><?php echo $$strings['addclass']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -98,9 +83,6 @@
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-edit w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>50</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/manage/class">Exams <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -108,9 +90,6 @@
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-bar-chart w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>50</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/manage/class">Reports <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
@@ -118,9 +97,6 @@
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-comments w3-xxxlarge"></i></div>
-                    <div class="w3-right">
-                        <h3>50</h3>
-                    </div>
                     <div class="w3-clear"></div>
                     <h4><a href="/manage/class">Blog <i class="fa fa-chevron-right"></i></a></h4>
                 </div>

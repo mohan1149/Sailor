@@ -60,21 +60,4 @@ class StaffController extends Controller
         }
         return view('manageStaff',['staff'=>$staff]);
     }
-    public function getDepartsAndClassesBySchoolId(Request $request){
-        try{
-            $deps = DB::table('departments')
-                ->where('school_id',$request['id'])
-                ->get();
-            $classes = DB::table('class')
-                ->where('school_id',$request['id'])
-                ->get();
-            $responseData = [];
-            $responseData['deps'] = $deps;
-            $responseData['classes'] = $classes;
-            return response()->json($responseData,200);
-
-        }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
-        }
-    }
 }

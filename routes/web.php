@@ -40,6 +40,9 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('delete/school/{id}','api\Content\SchoolController@deleteSchool');
     Route::get('view/school/{id}','api\Content\SchoolController@viewSchool');
     Route::get('add/studying/year','api\Content\SchoolController@addYearOfStudy');
+    Route::post('add/year','api\Content\SchoolController@addYear');
+    Route::get('get/classes/{id}','api\Content\SchoolController@getClasses');
+    Route::get('get/departs-grades/{id}','api\Content\SchoolController@getDepartsAndGradesBySchoolId');
     //department related routes
     Route::get('/add/department','api\Content\DepartmentController@getSchools');
     Route::post('/add/department','api\Content\DepartmentController@storeDepartment');
@@ -51,7 +54,6 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('add/staff','api\Content\StaffController@getSchools');
     Route::POST('manage/staff','api\Content\StaffController@addStaff');
     Route::get('manage/staff','api\Content\StaffController@manageStaff');
-    Route::get('get/departs-classes/{id}','api\Content\StaffController@getDepartsAndClassesBySchoolId');
     //class releated routes
     Route::get('add/class','api\Content\ClassController@getSchools');
     Route::post('add/time-table','api\Content\ClassController@storeClass');
@@ -63,6 +65,9 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('manage/articles','api\Content\ArticlesController@manageArticles');
     //onlines classes
     Route::get('/webrtc',function(){ return view('onlineClasses');});
+    //student related routes
+    Route::get('add/student','api\Content\StudentController@addStudent');
+    Route::POST('add/student','api\Content\StudentController@storeStudent');
 });
 
 

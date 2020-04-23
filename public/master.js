@@ -98,26 +98,26 @@ $(document).ready(function(){
     start*/
     $('.select-school').change(function(){
         let id = $(this).val();
-        axios.get('/get/departs-classes/' + id)
+        axios.get('/get/departs-grades/' + id)
         .then(function(response){
             //dynamic deps
-            let deps = "<select class='form-input department' name='department'>";
+            let deps = "<select onchange = 'getGrades()' class='form-input department' name='department'>";
+            deps+= "<option value='-0'>Department</option>;                                                                                                                       </option>";
             response.data.deps.map((data)=>{
-                deps+= "<option value='"+ data.id+"'>"+ data.d_name+"</option>";
+              deps+= "<option value='"+ data.id+"'>"+ data.d_name+"</option>";
             });
             deps+= "</select>";
             $('.department').replaceWith(deps);
             //dynamic classes
-            let classes = "<select class='form-input classes' name='class_teacher_for'>";
+            let classes = "<select class='form-input grade' name='grade'>";
             response.data.classes.map((data)=>{
                 classes+= "<option value='"+ data.id+"'>"+ data.value+"</option>";
             });
             classes+= "</select>";
-            $('.classes').replaceWith(classes);
+            $('.grade').replaceWith(classes);
         });
     });
     /*end*/
-
     /* code to toggle between schools
     start*/
     $('.staff-show').click(function(){

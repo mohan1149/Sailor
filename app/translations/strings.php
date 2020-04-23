@@ -62,7 +62,7 @@
         'reg'=>'Registration Number',
         'dashboard'=>'My Dashboard',
         'addinsti' =>'Add Institute',
-        'adddept'=>'Add Department',
+        'adddept'=>'Add Dept',
         'addclass' =>'Add Class',
         'addstaff'=>'Add Staff',
         'addstud'=>'Add Student',

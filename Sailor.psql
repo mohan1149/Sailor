@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped from database version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -70,44 +70,6 @@ ALTER TABLE public.articles_id_seq OWNER TO sailor;
 --
 
 ALTER SEQUENCE public.articles_id_seq OWNED BY public.articles.id;
-
-
---
--- Name: children; Type: TABLE; Schema: public; Owner: sailor
---
-
-CREATE TABLE public.children (
-    id integer NOT NULL,
-    f_name character varying,
-    l_name character varying,
-    roll_num character varying,
-    parent_id integer,
-    school_id integer
-);
-
-
-ALTER TABLE public.children OWNER TO sailor;
-
---
--- Name: children_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
---
-
-CREATE SEQUENCE public.children_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.children_id_seq OWNER TO sailor;
-
---
--- Name: children_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
---
-
-ALTER SEQUENCE public.children_id_seq OWNED BY public.children.id;
 
 
 --
@@ -187,6 +149,41 @@ ALTER SEQUENCE public.departments_id_seq OWNED BY public.departments.id;
 
 
 --
+-- Name: grades; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.grades (
+    id integer NOT NULL,
+    school_id integer,
+    value character varying
+);
+
+
+ALTER TABLE public.grades OWNER TO sailor;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.grades_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grades_id_seq OWNER TO sailor;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.grades_id_seq OWNED BY public.grades.id;
+
+
+--
 -- Name: school; Type: TABLE; Schema: public; Owner: sailor
 --
 
@@ -231,32 +228,36 @@ ALTER SEQUENCE public.school_id_seq OWNED BY public.school.id;
 
 
 --
--- Name: staff; Type: TABLE; Schema: public; Owner: sailor
+-- Name: student; Type: TABLE; Schema: public; Owner: sailor
 --
 
-CREATE TABLE public.staff (
+CREATE TABLE public.student (
     id integer NOT NULL,
-    staff_id character varying,
-    password character varying,
-    f_name character varying,
-    l_name character varying,
+    fname character varying,
+    lname character varying,
+    father_name character varying,
+    mother_name character varying,
     phone character varying,
     email character varying,
-    institute character varying,
-    branch character varying,
-    designation character varying,
-    profile_pic character varying,
-    profile_status character varying
+    address text,
+    school_id integer,
+    grade_id integer,
+    dept_id integer,
+    class_id integer,
+    photo character varying,
+    colunn character varying,
+    sid character varying,
+    gender character varying
 );
 
 
-ALTER TABLE public.staff OWNER TO sailor;
+ALTER TABLE public.student OWNER TO sailor;
 
 --
--- Name: staff_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+-- Name: student_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
 --
 
-CREATE SEQUENCE public.staff_id_seq
+CREATE SEQUENCE public.student_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -265,13 +266,13 @@ CREATE SEQUENCE public.staff_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.staff_id_seq OWNER TO sailor;
+ALTER TABLE public.student_id_seq OWNER TO sailor;
 
 --
--- Name: staff_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+-- Name: student_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
 --
 
-ALTER SEQUENCE public.staff_id_seq OWNED BY public.staff.id;
+ALTER SEQUENCE public.student_id_seq OWNED BY public.student.id;
 
 
 --
@@ -433,13 +434,6 @@ ALTER TABLE ONLY public.articles ALTER COLUMN id SET DEFAULT nextval('public.art
 
 
 --
--- Name: children id; Type: DEFAULT; Schema: public; Owner: sailor
---
-
-ALTER TABLE ONLY public.children ALTER COLUMN id SET DEFAULT nextval('public.children_id_seq'::regclass);
-
-
---
 -- Name: class id; Type: DEFAULT; Schema: public; Owner: sailor
 --
 
@@ -454,6 +448,13 @@ ALTER TABLE ONLY public.departments ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: grades id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.grades ALTER COLUMN id SET DEFAULT nextval('public.grades_id_seq'::regclass);
+
+
+--
 -- Name: school id; Type: DEFAULT; Schema: public; Owner: sailor
 --
 
@@ -461,10 +462,10 @@ ALTER TABLE ONLY public.school ALTER COLUMN id SET DEFAULT nextval('public.schoo
 
 
 --
--- Name: staff id; Type: DEFAULT; Schema: public; Owner: sailor
+-- Name: student id; Type: DEFAULT; Schema: public; Owner: sailor
 --
 
-ALTER TABLE ONLY public.staff ALTER COLUMN id SET DEFAULT nextval('public.staff_id_seq'::regclass);
+ALTER TABLE ONLY public.student ALTER COLUMN id SET DEFAULT nextval('public.student_id_seq'::regclass);
 
 
 --
@@ -512,45 +513,19 @@ COPY public.articles (id, user_id, likes, created, title, html_link) FROM stdin;
 
 
 --
--- Data for Name: children; Type: TABLE DATA; Schema: public; Owner: sailor
---
-
-COPY public.children (id, f_name, l_name, roll_num, parent_id, school_id) FROM stdin;
-\.
-
-
---
 -- Data for Name: class; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
 COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) FROM stdin;
-43	we	-1	14	1	\N
-44	we	-1	14	1	\N
-45	we	-1	14	1	\N
-46	we	-1	14	1	\N
-47	we	-1	14	1	\N
-48	we	-1	14	1	\N
-49	we	-1	14	1	\N
-50	we	-1	14	1	\N
-51	we	-1	14	1	\N
-52	we	-1	14	1	\N
-53	we	-1	14	1	\N
-54	we	-1	14	1	\N
-55	we	-1	14	1	\N
-56	we	-1	14	1	\N
-57	we	-1	14	1	\N
-58	we	-1	14	1	\N
-59	we	-1	14	1	\N
-60	we	-1	14	1	\N
-61	we	-1	14	1	\N
-62	we	-1	14	1	\N
-63	we	-1	14	1	\N
-64	we	-1	14	1	\N
-65	we	-1	14	1	\N
-66	we	-1	14	1	\N
-67	we	-1	14	1	\N
-68	we	-1	14	1	\N
-69	we	-1	14	1	\N
+71	IV-A	-1	14	4	1
+72	IV-B	-1	16	2	3
+73	IV-B	-1	16	2	3
+74	IV-A	-1	16	2	3
+75	IV-B	-1	14	1	1
+76	IV-c	-1	16	2	3
+77	IV-c	-1	14	2	1
+78	IV-c	-1	14	2	1
+79	IV-c	-1	14	2	1
 \.
 
 
@@ -559,10 +534,18 @@ COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) F
 --
 
 COPY public.departments (id, d_name, school_id, email, website, logo) FROM stdin;
-2	Maths	14	\N	\N	\N
 3	CSE	16	cse@sailor.com	http://sailor.com	
 4	ECE	16	krishnareddy3029@gmail.com	http://testschool.com	http://127.0.0.1:8000/storage/dep_logos/fee346b8fa40fc741315bfbec458100d.jpg
 1	Computers	14	com@sailor.com	http://testschool.com	http://127.0.0.1:8000/storage/dep_logos/222974a0dd290fb364715901e6f5e895.jpg
+\.
+
+
+--
+-- Data for Name: grades; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.grades (id, school_id, value) FROM stdin;
+1	16	qa
 \.
 
 
@@ -592,11 +575,11 @@ COPY public.school (id, school_name, school_address, school_owner_id, phone, ema
 
 
 --
--- Data for Name: staff; Type: TABLE DATA; Schema: public; Owner: sailor
+-- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.staff (id, staff_id, password, f_name, l_name, phone, email, institute, branch, designation, profile_pic, profile_status) FROM stdin;
-1	14701A0549	$2y$10$Kuo0pyihb0k.cZNIWqyJVeQ5hs3l2GCuJGAnynhPXuqo49nEFEZlK	Mohan Krishna Reddy	Velegacherla	+91 8074966828	mohan.velegacherla@gmail.com	AITS	CSE	B.Tech	https://s3.amazonaws.com/uifaces/fac$es/twitter/ladylexy/128.jpg	Private
+COPY public.student (id, fname, lname, father_name, mother_name, phone, email, address, school_id, grade_id, dept_id, class_id, photo, colunn, sid, gender) FROM stdin;
+1	Mohan	Velegacherla	Ramana Reddy	Jayamma	67661149	krishnareddy3029@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	74	http://127.0.0.1:8000/storage/student_images/4dcad70473afa7f4a34a4a6b30d122f6.png	\N	14701A0549	Male
 \.
 
 
@@ -605,33 +588,10 @@ COPY public.staff (id, staff_id, password, f_name, l_name, phone, email, institu
 --
 
 COPY public.subjects (id, class_id, subjects_list) FROM stdin;
-61	43	{1}
-62	44	{1}
-63	45	{1}
-64	46	{1}
-65	47	{1}
-66	48	{1}
-67	49	{1}
-68	50	{1}
-69	51	{1}
-70	52	{1}
-71	53	{1}
-72	54	{1}
-73	55	{1}
-74	56	{1}
-75	57	{1}
-76	58	{1}
-77	59	{1}
-78	60	{1}
-79	61	{1}
-80	62	{1}
-81	63	{1}
-82	64	{1}
-83	65	{1}
-84	66	{1}
-85	67	{1}
-86	68	{1}
-87	69	{1}
+88	70	{"Data Mining","Software Testing","Sytem Architecture","Design Pattrerns"}
+89	71	{"Data Mining","Software Testing","Sytem Architecture","Design Pattrerns"}
+90	75	{}
+91	79	{qwerty,qrtyuzsa}
 \.
 
 
@@ -651,6 +611,8 @@ COPY public.teacher (id, username, phone, email, school_id, designation, departm
 9	mohan	12345	zebed123@gmail.com	13	mteh	\N	\N
 10	Amulay	9876543	amulya@sailor.com	14	btech	1	\N
 11	1st Class A secio	9876543	krishnareddy3029@live.com	14	MCA	1	43
+12	Mohan Reddy	67661149	krishnareddy3029@gmail.com	14	B.Tech	1	43
+13	Moha Amulya	67661149	admin@doclinik.com	14	B.Tech	1	-1
 \.
 
 
@@ -659,12 +621,7 @@ COPY public.teacher (id, username, phone, email, school_id, designation, departm
 --
 
 COPY public.timetable (id, class_id, monday, tuesday, wednesday, thursday, friday, saturday) FROM stdin;
-4	13	{{1,Telugu,Mohan},{2,Hindi,Tenil},{3,English,Loki},{4,Maths,dummy},{5,"Natual Science",Mohan},{6,English,Tenil},{7,Social,Mohan}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}
-5	14	{{1,"Subject Name",mohan},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"}}
-6	\N	{}	{}	{}	{}	{}	{}
-7	\N	{}	{}	{}	{}	{}	{}
-8	\N	{}	{}	{}	{}	{}	{}
-9	\N	{}	{}	{}	{}	{}	{}
+10	71	{{1,"Data Mining",Amulay},{2,"Software Testing","1st Class A secio"},{3,"Sytem Architecture","Mohan Reddy"},{4,"Design Pattrerns","Moha Amulya"},{5,"Data Mining",Amulay},{6,"Software Testing","1st Class A secio"},{7,"Sytem Architecture","Mohan Reddy"},{8,"Design Pattrerns","Moha Amulya"}}	{{1,"Design Pattrerns","Moha Amulya"},{2,"Sytem Architecture","Mohan Reddy"},{3,"Software Testing","1st Class A secio"},{4,"Data Mining",Amulay},{5,"Design Pattrerns","1st Class A secio"},{6,"Sytem Architecture","Mohan Reddy"},{7,"Software Testing","Mohan Reddy"},{8,"Data Mining","Moha Amulya"}}	{{1,"Data Mining","Mohan Reddy"},{2,"Software Testing","1st Class A secio"},{3,"Sytem Architecture","Mohan Reddy"},{4,"Sytem Architecture","Moha Amulya"},{5,"Design Pattrerns",Amulay},{6,"Data Mining","1st Class A secio"},{7,"Design Pattrerns","Mohan Reddy"},{8,"Data Mining","Moha Amulya"}}	{{1,"Data Mining","1st Class A secio"},{2,"Sytem Architecture",Amulay},{3,"Sytem Architecture","1st Class A secio"},{4,"Design Pattrerns","1st Class A secio"},{5,"Design Pattrerns","1st Class A secio"},{6,"Data Mining","1st Class A secio"},{7,"Data Mining","Moha Amulya"},{8,"Design Pattrerns","1st Class A secio"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"},{8,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"},{8,"Subject Name","Staff Name"}}
 \.
 
 
@@ -687,24 +644,24 @@ SELECT pg_catalog.setval('public.articles_id_seq', 13, true);
 
 
 --
--- Name: children_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
---
-
-SELECT pg_catalog.setval('public.children_id_seq', 1, false);
-
-
---
 -- Name: class_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.class_id_seq', 69, true);
+SELECT pg_catalog.setval('public.class_id_seq', 79, true);
 
 
 --
 -- Name: departments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.departments_id_seq', 4, true);
+SELECT pg_catalog.setval('public.departments_id_seq', 5, true);
+
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.grades_id_seq', 1, true);
 
 
 --
@@ -715,31 +672,31 @@ SELECT pg_catalog.setval('public.school_id_seq', 18, true);
 
 
 --
--- Name: staff_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+-- Name: student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.staff_id_seq', 1, false);
+SELECT pg_catalog.setval('public.student_id_seq', 1, true);
 
 
 --
 -- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.subjects_id_seq', 87, true);
+SELECT pg_catalog.setval('public.subjects_id_seq', 91, true);
 
 
 --
 -- Name: teacher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.teacher_id_seq', 11, true);
+SELECT pg_catalog.setval('public.teacher_id_seq', 13, true);
 
 
 --
 -- Name: timetable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.timetable_id_seq', 9, true);
+SELECT pg_catalog.setval('public.timetable_id_seq', 10, true);
 
 
 --
@@ -747,22 +704,6 @@ SELECT pg_catalog.setval('public.timetable_id_seq', 9, true);
 --
 
 SELECT pg_catalog.setval('public.users_id_seq', 3, true);
-
-
---
--- Name: children children_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
---
-
-ALTER TABLE ONLY public.children
-    ADD CONSTRAINT children_pkey PRIMARY KEY (id);
-
-
---
--- Name: children children_roll_num_key; Type: CONSTRAINT; Schema: public; Owner: sailor
---
-
-ALTER TABLE ONLY public.children
-    ADD CONSTRAINT children_roll_num_key UNIQUE (roll_num);
 
 
 --
@@ -782,27 +723,19 @@ ALTER TABLE ONLY public.school
 
 
 --
--- Name: staff staff_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
---
-
-ALTER TABLE ONLY public.staff
-    ADD CONSTRAINT staff_pkey PRIMARY KEY (id);
-
-
---
--- Name: staff staff_staff_id_key; Type: CONSTRAINT; Schema: public; Owner: sailor
---
-
-ALTER TABLE ONLY public.staff
-    ADD CONSTRAINT staff_staff_id_key UNIQUE (staff_id);
-
-
---
 -- Name: teacher teacher_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
 --
 
 ALTER TABLE ONLY public.teacher
     ADD CONSTRAINT teacher_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: student unique_sid; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT unique_sid UNIQUE (sid);
 
 
 --

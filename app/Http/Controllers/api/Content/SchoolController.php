@@ -31,8 +31,8 @@ class SchoolController extends Controller
         $periods         = strip_tags($request['periods']);
         $period_length   = strip_tags($request['period-length']);
         $reg_num         = strip_tags($request['reg-num']);
-        $hex = bin2hex(openssl_random_pseudo_bytes(16));
-        $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
+        $hex             = bin2hex(openssl_random_pseudo_bytes(16));
+        $imageFileType   = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
         move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/school_logos/".$hex.'.'.$imageFileType);
         try{
             $query = DB::table('school')
@@ -183,5 +183,49 @@ class SchoolController extends Controller
     public function addYearOfStudy(){
         $schools = $this->getSchoolsByUser();
         return view('addYearOfStudy',['schools'=>$schools]);
+    }
+
+    public function addYear(Request $request){
+      $year_value = $request['year-value'];
+      $school_id  = $request['school_id'];
+      try{
+        $query = DB::table('grades')
+          ->insert([
+            'school_id' => $school_id,
+            'value'     => strip_tags($year_value),
+          ]);
+        return redirect('/manage/schools');
+      }catch(\Exception $e){
+        return reponse()->json($e->getMessage(),500);
+      }
+    }
+
+    public function getDepartsAndGradesBySchoolId(Request $request){
+        try{
+            $deps = DB::table('departments')
+                ->where('school_id',$request['id'])
+                ->get();
+            $classes = DB::table('grades')
+                ->where('school_id',$request['id'])
+                ->get();
+            $responseData = [];
+            $responseData['deps'] = $deps;
+            $responseData['classes'] = $classes;
+            return response()->json($responseData,200);
+
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+    }
+
+    public function getClasses(Request $request){
+      try{
+        $classes = DB::table('class')
+          ->where('dept_id', $request['id'])
+          ->get();
+        return $classes;
+      }catch(\Exception $e){
+        return response()->json($e->getMessage(),500);
+      }
     }
 }
