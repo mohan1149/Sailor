@@ -80,7 +80,7 @@
                                         <a title="Edit"class="w3-text-blue" href="/edit/school/<?php echo base64_encode($school->id) ?>"> <i class="fa fa-edit w3-xlarge"></i></a>
                                     </td>
                                     <td>
-                                        <a title="Delete"class="w3-text-red delete-school" href="javascript:void(0)" url="/delete/school/<?php echo $school->id ?>"> <i class="fa fa-trash w3-xlarge"></i></a>
+                                        <a title="Delete"class="w3-text-red delete-button" href="javascript:void(0)" url="/delete/school/<?php echo $school->id ?>"> <i class="fa fa-trash w3-xlarge"></i></a>
                                     </td>
                                 </tr>
                             <?php
@@ -109,6 +109,7 @@
             </footer>
         </div>
     </div>
+    <!-- end -->
     </div>
     </body>
     <footer class='footer w3-bottom'>

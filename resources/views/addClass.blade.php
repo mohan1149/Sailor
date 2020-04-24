@@ -94,6 +94,7 @@
                         <div class='form-group'>
                             <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
                             <select required class="form-input select-school"name='school_id'>
+                                <option value="-1">Institute</option>
                                 <?php
                                     foreach($schools as $school){
                                         ?>

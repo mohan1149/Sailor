@@ -42,7 +42,7 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:300px;margin-top:43px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-th"></i> My Dashboard</b></h5>
+            <h5><b><i class="fa fa-th"></i> Institute Management</b></h5>
         </header>
         <div class="w3-row-padding w3-margin-bottom">
             <div class="w3-quarter menu-item ">
@@ -82,6 +82,44 @@
             </div>
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-laptop w3-xxxlarge"></i></div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/add/lab">Add Lab <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+        </div>
+        <header class="w3-container" style="">
+            <h5><b><i class="fa fa-th"></i> Administration</b></h5>
+        </header>
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-black-tie w3-xxxlarge"></i></div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/manage/class">Employees <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-home w3-xxxlarge"></i></div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/manage/class">Leaves <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-money w3-xxxlarge"></i></div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/manage/class">Salaries <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
+        </div>
+        <header class="w3-container" style="">
+            <h5><b><i class="fa fa-th"></i> Exams</b></h5>
+        </header>
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-edit w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
                     <h4><a href="/manage/class">Exams <i class="fa fa-chevron-right"></i></a></h4>
@@ -92,13 +130,6 @@
                     <div class="w3-left"><i class="fa fa-bar-chart w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
                     <h4><a href="/manage/class">Reports <i class="fa fa-chevron-right"></i></a></h4>
-                </div>
-            </div>
-            <div class="w3-quarter menu-item">
-                <div class="w3-container w3-padding-16 w3-card">
-                    <div class="w3-left"><i class="fa fa-comments w3-xxxlarge"></i></div>
-                    <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Blog <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
         </div>

@@ -96,11 +96,14 @@ class SchoolController extends Controller
         $staff = DB::table('teacher')
             ->where('school_id',$school_id)
             ->get();
-        $responseData['school']  = $school;
-        $responseData['deps']    = $deps;
-        $responseData['classes'] = $classes;
-        $responseData['staff']   = $staff;
-        $responseData['deps']    = $deps;
+        $students = DB::table('student')
+            ->where('school_id',$school_id)
+            ->get();
+        $responseData['school']   = $school;
+        $responseData['deps']     = $deps;
+        $responseData['classes']  = $classes;
+        $responseData['staff']    = $staff;
+        $responseData['students'] = $students;
         return view('viewSchool',['responseData'=>$responseData]);
     }
 
@@ -135,7 +138,7 @@ class SchoolController extends Controller
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
         if($imageFileType !==''){
-            move_uploaded_file($_FILES['logo']['tmp_name'],'school_logos/'.$hex.'.'.$imageFileType);
+            move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/school_logos/".$hex.'.'.$imageFileType);
             try{
                 $query = DB::table('school')
                     ->where('id', $request['id'])
@@ -146,7 +149,7 @@ class SchoolController extends Controller
                         'phone'           => $school_phone,
                         'email'           => $school_email,
                         'website'         => $school_website,
-                        'logo_path'       => $request->getSchemeAndHttpHost().'/school_logos/'.$hex.'.'.$imageFileType,
+                        'logo_path'       => $request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
                         'periods'         => $periods,
                         'period_length'   => $period_length,
                         'reg_num'         => $reg_num,

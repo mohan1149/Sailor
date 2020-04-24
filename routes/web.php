@@ -14,55 +14,60 @@ Route::get('/', function () {return view('welcome');});
 
 //user releated routes
 Route::post('login','api\User\UserController@login');
-Route::get('/user/signup/',function() {return view('userSignup');});
 Route::post('signup','api\User\UserController@signUp');
-Route::get('/forgot/password',function() {return view('forgotPassword');});
-Route::get('/reset/password',function() {return view('passwordReset');});
-Route::post('sent/password/reset/link','MailController@sendPasswordResetLink');
 Route::get('/staff/login',function(){ return view('staffLogin');});
+Route::get('/user/signup/',function() {return view('userSignup');});
+Route::get('/reset/password',function() {return view('passwordReset');});
+Route::get('/forgot/password',function() {return view('forgotPassword');});
+Route::post('sent/password/reset/link','MailController@sendPasswordResetLink');
 
 Route::group(['middleware' => ['app.access']], function() {
     //dashboard related RouteServiceProvider
-    Route::get('data','api\Content\DashboardController@getDashboardData');
     Route::get('/dashboard',function(){ return view('dashboard');});
-
+    Route::get('data','api\Content\DashboardController@getDashboardData');
     //user related routes
     Route::get('/profile','api\User\UserController@getProfile');
     Route::get('/mailbox','api\User\UserController@getMailbox');
     Route::get('/notifications','api\User\UserController@getNotifications');
     //school releated routes
-    Route::get('/add/school',function(){ return view('addSchool');});
-    Route::get('/add/institute',function(){ return view('addInstitute');});
-    Route::post('add/school','api\Content\SchoolController@addSchool');
-    Route::get('manage/schools','api\Content\SchoolController@manageSchools');
-    Route::get('edit/school/{id}','api\Content\SchoolController@editSchool');
-    Route::post('update/school/{id}','api\Content\SchoolController@updateSchool');
-    Route::get('delete/school/{id}','api\Content\SchoolController@deleteSchool');
-    Route::get('view/school/{id}','api\Content\SchoolController@viewSchool');
-    Route::get('add/studying/year','api\Content\SchoolController@addYearOfStudy');
     Route::post('add/year','api\Content\SchoolController@addYear');
+    Route::get('/add/school',function(){ return view('addSchool');});
+    Route::post('add/school','api\Content\SchoolController@addSchool');
+    Route::get('/add/institute',function(){ return view('addInstitute');});
+    Route::get('edit/school/{id}','api\Content\SchoolController@editSchool');
+    Route::get('view/school/{id}','api\Content\SchoolController@viewSchool');
     Route::get('get/classes/{id}','api\Content\SchoolController@getClasses');
+    Route::get('manage/schools','api\Content\SchoolController@manageSchools');
+    Route::get('delete/school/{id}','api\Content\SchoolController@deleteSchool');
+    Route::get('add/studying/year','api\Content\SchoolController@addYearOfStudy');
+    Route::post('update/school/{id}','api\Content\SchoolController@updateSchool');
     Route::get('get/departs-grades/{id}','api\Content\SchoolController@getDepartsAndGradesBySchoolId');
     //department related routes
     Route::get('/add/department','api\Content\DepartmentController@getSchools');
     Route::post('/add/department','api\Content\DepartmentController@storeDepartment');
-    Route::get('/manage/departments','api\Content\DepartmentController@manageDepartments');
     Route::get('/edit/department/{id}','api\Content\DepartmentController@editDepartment');
-    Route::post('/update/department/{id}','api\Content\DepartmentController@updateDepartment');
+    Route::get('/view/department/{id}','api\Content\DepartmentController@viewDepartment');
+    Route::get('/manage/departments','api\Content\DepartmentController@manageDepartments');
     Route::get('/delete/department/{id}','api\Content\DepartmentController@deleteDepartment');
+    Route::post('/update/department/{id}','api\Content\DepartmentController@updateDepartment');
     //staff releated routes
     Route::get('add/staff','api\Content\StaffController@getSchools');
     Route::POST('manage/staff','api\Content\StaffController@addStaff');
     Route::get('manage/staff','api\Content\StaffController@manageStaff');
     //class releated routes
     Route::get('add/class','api\Content\ClassController@getSchools');
-    Route::post('add/time-table','api\Content\ClassController@storeClass');
     Route::get('manage/class','api\Content\ClassController@manageClass');
+    Route::post('add/time-table','api\Content\ClassController@storeClass');
+    Route::get('/edit/class/{id}','api\Content\ClassController@editClass');
+    Route::get('/view/class/{id}','api\Content\ClassController@viewClass');
     Route::post('add/timetable','api\Content\ClassController@storeTimetable');
+    Route::post('update/class/{id}','api\Content\ClassController@updateClass');
+    Route::get('/delete/class/{id}','api\Content\ClassController@deleteClass');
+    Route::get('/view/timetable/{id}','api\Content\ClassController@viewTimetable');
     //Articles related routes
     Route::get('/add/article',function() {return view('addArticle');});
-    Route::post('publish/article','api\Content\ArticlesController@publishArticle');
     Route::get('manage/articles','api\Content\ArticlesController@manageArticles');
+    Route::post('publish/article','api\Content\ArticlesController@publishArticle');
     //onlines classes
     Route::get('/webrtc',function(){ return view('onlineClasses');});
     //student related routes

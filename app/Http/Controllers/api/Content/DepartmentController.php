@@ -138,4 +138,26 @@ class DepartmentController extends Controller
         return response()->json($e->getMessage(),500);
       }
     }
+
+    //function to view department
+    public function viewDepartment(Request $request){
+        $dept_id = base64_decode($request['id']);
+        $dep = DB::table('departments')
+            ->where('id',$dept_id)
+            ->first();
+        $classes = DB::table('class')
+            ->where('dept_id',$dept_id)
+            ->get();
+        $staff = DB::table('teacher')
+            ->where('department',$dept_id)
+            ->get();
+        $students = DB::table('student')
+            ->where('dept_id',$dept_id)
+            ->get();
+        $responseData['dep']      = $dep;
+        $responseData['classes']  = $classes;
+        $responseData['staff']    = $staff;
+        $responseData['students'] = $students;
+        return view('viewDepartment',['responseData'=>$responseData]);
+    }
 }

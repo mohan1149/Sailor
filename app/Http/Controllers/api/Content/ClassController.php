@@ -132,4 +132,48 @@ class ClassController extends Controller
             return response()->json($e->getMessage(),500);
         }
     }
+    public function deleteClass(Request $request){
+        try{
+            $query = DB::table('class')
+                ->where('id',$request['id'])
+                ->delete();
+            return redirect('/manage/class');
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+    }
+
+    public function editClass(Request $request){
+        try{
+            $response_data = [];
+            $subjects      = [];
+            $class_id      = base64_decode($request['id']);
+            $class_data    = DB::table('class')
+                ->join('subjects','subjects.class_id','=','class.id')
+                ->where('class.id',$class_id)
+                ->first();
+            if(isset($class_data->subjects_list)){
+                $subjects = str_ireplace('{','',$class_data->subjects_list);
+                $subjects = str_ireplace('}','',$subjects);
+                $subjects = explode(',',$subjects);
+            }
+            $response_data['class'] = $class_data;
+            $response_data['subjects'] = $subjects;
+            return view('editClass',['class'=>$response_data]);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(),500);
+        }
+    }
+
+    public function updateClass(Request $request){
+
+    }
+
+    public function viewTimetable(Request $request){
+
+    }
+
+    public function viewClass(Request $request){
+
+    }
 }

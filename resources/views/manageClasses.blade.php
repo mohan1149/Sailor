@@ -111,10 +111,10 @@
                                                                             <td><?php echo $class->num_subjects?></td>
                                                                             <td><?php echo 'soon';//echo $employee_data->class_teache?></td>
                                                                             <td><?php echo 'soon'?></td>
-                                                                            <td><a href='button' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                                            <td><a href='button' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i</a></td>
-                                                                            <td><a href='button' class='w3-xlarge w3-text-indigo' title='Timetable'><i class="fa fa-clock-o"></i</a></td>
-                                                                            <td><a href='button' class='w3-xlarge w3-text-red' title='Delete'><i class="fa fa-trash"></i</a></td>
+                                                                            <td><a href='/edit/class/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
+                                                                            <td><a href='/view/class/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>
+                                                                            <td><a href='/view/timetable/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-indigo' title='Timetable'><i class="fa fa-clock-o"></i></a></td>
+                                                                            <td><a href='javascript:void(0)' url = "/delete/class/<?php echo $class->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
                                                                         </tr>
                                                                     <?php
                                                                 }
@@ -127,8 +127,8 @@
                                             ?>
                                               <div class=" w3-container w3-panel w3-red">
                                                   <p>
-                                                      <i class="fa fa-exclamation-triangle w3-jumbo"></i>
-                                                        NO DEPARTMENTS ADDED.
+                                                        <i class="fa fa-exclamation-triangle w3-jumbo"></i>
+                                                            NO DEPARTMENTS ADDED.
                                                         <a class="" href="/add/department">CLICK HERE TO TO ADD</a>
                                                   </p>
                                               </div>
@@ -154,6 +154,25 @@
                 </div>
             </div>
         </div>
+        <!-- delete modal start -->
+        <div class="w3-modal delete-modal" id="delete-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-indigo">
+                    <span onclick="document.getElementById('delete-modal').style.display='none'"
+                        class="w3-button w3-xlarge w3-display-topright">&times;</span>
+                    <h2>Are you sure to Delete?</h2>
+                </header>
+                <div class="w3-container">
+                    <p class="w3-dark-text-grey w3-xlarge">Once you delete,all class related information such as staff linked,students will be removed from the Sailor System.</p>
+                    <button class="w3-red w3-margin w3-button w3-xlarge delete-confirm">Sure! Delete</button>
+                    <button class="w3-green w3-margin w3-button w3-xlarge" onclick="document.getElementById('delete-modal').style.display='none'" >Cancel</button>
+                </div>
+                <footer class="w3-container w3-dark-grey">
+                    <p>@Sailor Sytem </p>
+                </footer>
+            </div>
+        </div>
+        <!-- end -->
     </div>
     </body>
     <footer class='footer w3-bottom'>

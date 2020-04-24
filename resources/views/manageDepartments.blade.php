@@ -56,7 +56,22 @@
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
-            <div>
+                <div>
+                    <?php 
+                        if(count($deps) > 1){
+                            ?>
+                                <div class="w3-panel w3-blue">
+                                    <p>You have added multiple institutes. Click on istitute to view departments.</p>
+                                </div>
+                            <?php
+                        }else{
+                            ?>
+                                <div class="w3-panel w3-blue">
+                                    <p>Click on istitute to view departments.</p>
+                                </div>
+                            <?php
+                        }
+                    ?>
                     <?php
                         foreach($deps as $dep){
                             ?>
@@ -79,8 +94,9 @@
                                                         <td><?php echo $dep_data->d_name?></td>
                                                         <td><?php echo $dep_data->email?></td>
                                                         <td><?php echo $dep_data->website?></td>
+                                                        <td><a href="/view/department/<?php echo base64_encode($dep_data->id)?>" title='View'><i class="w3-text-blue fa fa-eye w3-xlarge"></i></a></td>
                                                         <td><a href="/edit/department/<?php echo base64_encode($dep_data->id)?>" title='Edit'><i class="w3-text-blue fa fa-edit w3-xlarge"></i></a></td>
-                                                        <td><a href="javascript:void(0)"url="/delete/department/<?php echo $dep_data->id?>" title="Delete"class='del-dept'><i class="w3-text-red fa fa-trash w3-xlarge"></i></a></td>
+                                                        <td><a href="javascript:void(0)"url="/delete/department/<?php echo $dep_data->id?>" title="Delete"class='delete-button'><i class="w3-text-red fa fa-trash w3-xlarge"></i></a></td>
                                                     </tr>
                                                 <?php
                                             }

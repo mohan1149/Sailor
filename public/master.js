@@ -178,7 +178,7 @@ $(document).ready(function(){
 
     /* code to show school delete modal
     start*/
-    $('.delete-school').click(function(){
+    $('.delete-button').click(function(){
         delete_url = $(this).attr('url');
         $('.delete-modal').show();
     });
@@ -191,19 +191,31 @@ $(document).ready(function(){
     });
     /*end*/
 
-    /*code to show department delete modal
-    start*/
-    $('.del-dept').click(function(){
-        delete_url = $(this).attr('url');
-        $('.delete-modal').show();
+    $('.count').each(function () {
+        $(this).prop('Counter',0).animate({
+            Counter: $(this).html()
+        }, {
+            duration: 1000,
+            easing: 'linear',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
     });
-    /*end*/
-
-    /* delete departmet confirm
-    satrt*/
-    $('.delete-confirm').click(function(){
-        location.assign(delete_url);
+    $('.subject').click(function(){
+        $(this).hide();
     });
-    /*end*/
 
+    $('.add-subject').click(function(){
+        $('.subject-modal').show();
+    });
+
+    $('.add-confirm').click(function(){
+        $('.subject-modal').hide();
+        let subject = $('.subject-name').val();
+        let sub_class  = subject.replace(/ /gi,'_');
+        let button = "<span style='margin-left:4px;'onclick='hide("+sub_class+")' id ="+sub_class+" class='w3-button w3-blue w3-margin-bottom'>"+ subject +"<i class='fa fa-times'></i></span>";
+        $('.subjects-list').append(button);
+        $('.subject-name').val('');
+    });
 });
