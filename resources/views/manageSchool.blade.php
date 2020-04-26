@@ -59,7 +59,7 @@
                         <th class="w3-text-grey"><i class='fa fa-bank w3-text-purple w3-xlarge'></i><span class="w3-small"> Name</span></th>
                         <th class="w3-text-grey"><i class='fa fa-phone w3-text-purple w3-xlarge'></i><span class="w3-small"> Phone</span></th>
                         <th class="w3-text-grey"><i class='fa fa-envelope w3-text-purple w3-xlarge'></i><span class="w3-small"> Email</span></th>
-                        <!-- <th class="w3-text-grey"><i class='fa fa-globe w3-text-purple w3-xlarge'></i><span class="w3-small"> Website</span></th> -->
+                        <th class="w3-text-grey"><i class='fa fa-globe w3-text-purple w3-xlarge'></i><span class="w3-small"> Website</span></th>
                     </tr>
                     <?php
                         foreach($schools as $school)
@@ -70,7 +70,7 @@
                                     <td class="w3-large"><?php echo $school->school_name ?></td>
                                     <td class="w3-large"><?php echo $school->phone ?></td>
                                     <td class="w3-large"><a href="mailto:<?php echo $school->email ?>"><?php echo $school->email ?></a></td>
-                                    <!-- <td class="w3-large"><a target="_blank"href="<?php echo $school->website ?>"><?php echo $school->website ?></a></td> -->
+                                    <td class="w3-large"><a target="_blank"href="<?php echo $school->website ?>"><?php echo $school->website ?></a></td>
                                     <!-- <td><?php echo $school->school_address ?></td> -->
                                     <!-- <td><img width="38px" class='school_logo'src="<?php echo $school->logo_path ?>"></td> -->
                                     <td>

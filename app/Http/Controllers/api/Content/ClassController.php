@@ -54,7 +54,7 @@ class ClassController extends Controller
             $viewData['class_id']  = $query;
             return view('addTimeTable',['viewData'=>$viewData]);
         }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
+            return view('excep');
         }
     }
 
@@ -75,7 +75,7 @@ class ClassController extends Controller
           }
           return view('manageClasses',['response_data'=>$response_data]);
       }catch(\Exception $e){
-          return response()->json($e->getMessage(),500);
+          return view('excep');
       }
     }
 
@@ -94,8 +94,17 @@ class ClassController extends Controller
 
     public function getClassesByDeptId($dept_id){
       $return_data = [];
-      $return_data = DB::table('class')->where('dept_id',$dept_id)->get();
-      return $return_data;
+      $return_data['classes'] = DB::table('class')
+        ->where('dept_id',$dept_id)
+        ->get();
+    $counts=[];
+    foreach($return_data['classes'] as $class){
+        $counts[] = DB::table('student')
+            ->where('class_id',$class->id)
+            ->count();
+    }
+    $return_data['counts'] = $counts;
+    return $return_data;
     }
 
     public function storeTimetable(Request $request){
@@ -129,7 +138,7 @@ class ClassController extends Controller
             ]);
             return redirect('/manage/class');
         }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
+            return view('excep');
         }
     }
     public function deleteClass(Request $request){
@@ -139,7 +148,7 @@ class ClassController extends Controller
                 ->delete();
             return redirect('/manage/class');
         }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
+            return view('excep');
         }
     }
 
@@ -155,18 +164,39 @@ class ClassController extends Controller
             if(isset($class_data->subjects_list)){
                 $subjects = str_ireplace('{','',$class_data->subjects_list);
                 $subjects = str_ireplace('}','',$subjects);
+                $subjects = str_ireplace('"','',$subjects);
                 $subjects = explode(',',$subjects);
             }
             $response_data['class'] = $class_data;
             $response_data['subjects'] = $subjects;
             return view('editClass',['class'=>$response_data]);
         }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
+            return view('excep');    
         }
     }
 
     public function updateClass(Request $request){
-
+        $class_id  = $request['id'];
+        $className = strip_tags($request['className']);
+        $subjects  = strip_tags($request['subjects']);
+        $count     = count(explode(',',$subjects));
+        try{
+            $updateClass = DB::table('class')
+                ->where('id',$class_id)
+                ->update([
+                    'value'        => $className,
+                    'num_subjects' => $count,
+                ]);
+            $upSubjects = DB::table('subjects')
+                ->where('class_id',$class_id)
+                ->update([
+                    'subjects_list' => '{'.$subjects.'}',
+                ]);
+            return redirect('/manage/class');
+        }catch(\Exception $e){
+            return view('excep');
+        }
+        return $request['subjects'];
     }
 
     public function viewTimetable(Request $request){
@@ -174,6 +204,20 @@ class ClassController extends Controller
     }
 
     public function viewClass(Request $request){
-
+        try{
+            $class_id      = base64_decode($request['id']);
+            $response_data = []; 
+            $class_data = DB::table('class')
+                ->where('id',$class_id)
+                ->first();
+            $stud_count = DB::table('student')
+                ->where('class_id',$class_id)
+                ->count();
+            $response_data['class_data'] = $class_data;
+            $response_data['students']   = $stud_count;
+            return view('viewClass',['responseData'=>$response_data]);
+        }catch(\Exception $e){
+            return view('excep');
+        }
     }
 }

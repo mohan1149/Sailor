@@ -78,7 +78,7 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Year of Study</b></h5>
+            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Year</b></h5>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
@@ -88,7 +88,7 @@
                 <form action='/add/year' method="POST" class="w3-center" enctype="multipart/form-data">
                     @csrf
                     <div class='form-group'>
-                        <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
+                        <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
                         <input required type='text' class="form-input"autofocus name='year-value' placeholder='Eg: Grade 9' >
                     </div>
                     <div class='form-group'>

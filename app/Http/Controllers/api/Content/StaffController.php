@@ -45,6 +45,7 @@ class StaffController extends Controller
     }
     public function manageStaff(){
         $school_owner_id = $_SESSION['user_id'];
+        $staff = [];
         $ids =  DB::table('school')
             ->join('teacher','school.id','=','teacher.school_id')
             ->distinct()

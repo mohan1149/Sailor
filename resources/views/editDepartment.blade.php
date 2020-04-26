@@ -104,7 +104,7 @@
                         <input type='file' name='logo'  accept="image/*" class="form-input">
                     </div>
                     <div class='form-group w3-center' >
-                        <input class="w3-button form-input form-submit"type='submit' value="Next">
+                        <input class="w3-button form-input form-submit"type='submit' value="Save">
                     </div>
                 </form>
             </div>

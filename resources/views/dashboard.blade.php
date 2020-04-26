@@ -87,6 +87,13 @@
                     <h4><a href="/add/lab">Add Lab <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-calendar w3-xxxlarge"></i></div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/add/studying/year">Add Year <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
         </div>
         <header class="w3-container" style="">
             <h5><b><i class="fa fa-th"></i> Administration</b></h5>

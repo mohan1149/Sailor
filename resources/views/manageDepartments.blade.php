@@ -57,51 +57,58 @@
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
                 <div>
-                    <?php 
-                        if(count($deps) > 1){
-                            ?>
-                                <div class="w3-panel w3-blue">
-                                    <p>You have added multiple institutes. Click on istitute to view departments.</p>
-                                </div>
-                            <?php
-                        }else{
-                            ?>
-                                <div class="w3-panel w3-blue">
-                                    <p>Click on istitute to view departments.</p>
-                                </div>
-                            <?php
-                        }
-                    ?>
                     <?php
-                        foreach($deps as $dep){
+                        if(count($deps) !=0){
+                            if(count($deps) > 1){
+                                ?>
+                                    <div class="w3-panel w3-blue">
+                                        <p>You have added multiple institutes. Click on istitute to view departments.</p>
+                                    </div>
+                                <?php
+                            }else{
+                                ?>
+                                    <div class="w3-panel w3-blue">
+                                        <p>Click on istitute to view departments.</p>
+                                    </div>
+                                <?php
+                            }
+                            foreach($deps as $dep){
+                                ?>
+                                    <div class="w3-container w3-margin w3-accordion">
+                                        <button class="w3-indigo w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $dep[0]->id?>">
+                                            <?php echo $dep[0]->school_name; ?>
+                                            <i class="fa fa-plus w3-right"></i>
+                                        </button>
+                                        <table width='100%' style='text-align:center' class="inactive w3-table w3-margin w3-accordion-content content-table school-<?php echo $dep[0]->id?>">
+                                            <tr class="w3-white">
+                                                <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Name</span></th>
+                                                <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Email</span></th>
+                                                <th><i class='fa fa-globe w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Website</span></th>
+    
+                                            </tr>
+                                            <?php
+                                                foreach($dep as $dep_data){
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $dep_data->d_name?></td>
+                                                            <td><?php echo $dep_data->email?></td>
+                                                            <td><?php echo $dep_data->website?></td>
+                                                            <td><a href="/view/department/<?php echo base64_encode($dep_data->id)?>" title='View'><i class="w3-text-blue fa fa-eye w3-xlarge"></i></a></td>
+                                                            <td><a href="/edit/department/<?php echo base64_encode($dep_data->id)?>" title='Edit'><i class="w3-text-blue fa fa-edit w3-xlarge"></i></a></td>
+                                                            <td><a href="javascript:void(0)"url="/delete/department/<?php echo $dep_data->id?>" title="Delete"class='delete-button'><i class="w3-text-red fa fa-trash w3-xlarge"></i></a></td>
+                                                        </tr>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </table>
+                                    </div>
+                                <?php
+                            }
+                        }
+                        else{
                             ?>
-                                <div class="w3-container w3-margin w3-accordion">
-                                    <button class="w3-indigo w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $dep[0]->id?>">
-                                        <?php echo $dep[0]->school_name; ?>
-                                        <i class="fa fa-plus w3-right"></i>
-                                    </button>
-                                    <table width='100%' style='text-align:center' class="inactive w3-table w3-margin w3-accordion-content content-table school-<?php echo $dep[0]->id?>">
-                                        <tr class="w3-white">
-                                            <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Name</span></th>
-                                            <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Email</span></th>
-                                            <th><i class='fa fa-globe w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Website</span></th>
-
-                                        </tr>
-                                        <?php
-                                            foreach($dep as $dep_data){
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $dep_data->d_name?></td>
-                                                        <td><?php echo $dep_data->email?></td>
-                                                        <td><?php echo $dep_data->website?></td>
-                                                        <td><a href="/view/department/<?php echo base64_encode($dep_data->id)?>" title='View'><i class="w3-text-blue fa fa-eye w3-xlarge"></i></a></td>
-                                                        <td><a href="/edit/department/<?php echo base64_encode($dep_data->id)?>" title='Edit'><i class="w3-text-blue fa fa-edit w3-xlarge"></i></a></td>
-                                                        <td><a href="javascript:void(0)"url="/delete/department/<?php echo $dep_data->id?>" title="Delete"class='delete-button'><i class="w3-text-red fa fa-trash w3-xlarge"></i></a></td>
-                                                    </tr>
-                                                <?php
-                                            }
-                                        ?>
-                                    </table>
+                                <div class=" w3-red w3-container w3-margin">
+                                    <p class="w3-xlarge"><i class="fa fa-exclamation-triangle w3-xxxlarge"></i>  No Department has added. <a href="/add/department">Click here to add.</a></p>
                                 </div>
                             <?php
                         }

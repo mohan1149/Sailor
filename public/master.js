@@ -203,7 +203,12 @@ $(document).ready(function(){
         });
     });
     $('.subject').click(function(){
-        $(this).hide();
+        let id = $(this).attr('id');
+        let svalue = $(this).attr('value');
+        $(this).remove();
+        $('.'+id).remove();
+        window.subjects = window.subjects.filter(function(value){ return value !== svalue;});
+        $('#final_subs').attr('value',window.subjects.toString());   
     });
 
     $('.add-subject').click(function(){
@@ -216,6 +221,7 @@ $(document).ready(function(){
         let sub_class  = subject.replace(/ /gi,'_');
         let button = "<span style='margin-left:4px;'onclick='hide("+sub_class+")' id ="+sub_class+" class='w3-button w3-blue w3-margin-bottom'>"+ subject +"<i class='fa fa-times'></i></span>";
         $('.subjects-list').append(button);
-        $('.subject-name').val('');
+        window.subjects.push(subject);
+        $('#final_subs').attr('value',window.subjects.toString());
     });
 });

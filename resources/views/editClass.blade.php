@@ -79,8 +79,18 @@
         <script>
             function hide(id){
                 id.style.display = 'none';
-                //document.getElementById(id).style.display = 'none';
+                let val = id.id.replace(/_/gi,' ');
+                window.subjects = window.subjects.filter(function(value){ return value !== val;});
+                document.getElementById('final_subs').value = window.subjects.toString();
             }
+            window.subjects = [];
+            <?php 
+                foreach($class['subjects'] as $subject){
+                    ?>
+                        window.subjects.push("<?php echo $subject;?>");
+                    <?php
+                }
+            ?>
         </script>
     </head>
     <header class='w3-top'>
@@ -98,7 +108,7 @@
                 <div class="instructions">
                     <h4>Instructions</h4>
                 </div>
-                <form action='/update/class/<?php echo $class['class']->id?>' method="POST" class="w3-center">
+                <form action='/update/class/<?php echo $class['class']->class_id?>' method="POST" class="w3-center edit-class">
                     @csrf
                     <div class='form-group'>
                         <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
@@ -110,13 +120,14 @@
                     <div class="w3-margin subjects-list">
                         <span class="subjects">Subjects</span>
                         <?php 
-                            foreach($class['subjects'] as $subject){
+                            foreach($class['subjects'] as $key => $subject){
                                 ?>
-                                    <span class="w3-button subject w3-blue w3-margin-bottom"><?php echo $subject?> <i class="fa fa-times"></i></span>
+                                    <span value="<?php echo $subject?>" id="sub-<?php echo $key?>"class="w3-button subject w3-blue w3-margin-bottom"><?php echo $subject?> <i class="fa fa-times"></i></span>
                                 <?php
                             }
                         ?>
                     </div>
+                    <input type="hidden" value="" id="final_subs"name="subjects">
                     <div class='form-group w3-center' >
                         <input class="w3-button form-input form-submit"type='submit' value="Save">
                     </div>
@@ -147,6 +158,9 @@
     </div>
     <!-- end -->
     </body>
+    <script>
+        document.getElementById('final_subs').value = window.subjects.toString();
+    </script>
     <footer class='footer w3-bottom'>
         @include('footer')
     </footer>

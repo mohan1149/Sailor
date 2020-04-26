@@ -58,39 +58,48 @@
             <div class="school-tables">
             <div>
                     <?php
-                        foreach($staff as $employee){
+                        if(count($staff) !=0){
+                            foreach($staff as $employee){
+                                ?>
+                                    <div class="w3-container w3-margin w3-accordion">
+                                        <button class="w3-indigo w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee[0]->id?>">
+                                            <?php echo $employee[0]->school_name; ?>
+                                            <i class="fa fa-plus w3-right"></i>
+                                        </button>
+                                        <table width='100%' style='text-align:center' class="inactive w3-table w3-margin w3-accordion-content content-table school-<?php echo $employee[0]->id?>">
+                                            <tr class="w3-white">
+                                                <th><i class='fa fa-list-ol w3-text-purple w3-xlarge'></i> Staff ID</th>
+                                                <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Staff Name</th>
+                                                <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Staff Phone</th>
+                                                <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Staff Email</th>
+                                                <th><i class='fa fa-graduation-cap w3-text-purple w3-xlarge'></i> Designation</th>
+                                            </tr>
+                                            <?php
+                                                foreach($employee as $employee_data){
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $employee_data->id?></td>
+                                                            <td><?php echo $employee_data->username?></td>
+                                                            <td><?php echo $employee_data->phone?></td>
+                                                            <td><?php echo $employee_data->email?></td>
+                                                            <td><?php echo $employee_data->designation?></td>                                                       <td><input type='button' class='w3-button w3-blue' value='Edit'></td>
+                                                            <td><input type='button' class='w3-button w3-red' value='Delete'></td>
+                                                        </tr>
+                                                    <?php
+                                                }
+                                            ?>
+                                        </table>
+                                    </div>
+                                <?php
+                            }
+                        }else{
                             ?>
-                                <div class="w3-container w3-margin w3-accordion">
-                                    <button class="w3-indigo w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee[0]->id?>">
-                                        <?php echo $employee[0]->school_name; ?>
-                                        <i class="fa fa-plus w3-right"></i>
-                                    </button>
-                                    <table width='100%' style='text-align:center' class="inactive w3-table w3-margin w3-accordion-content content-table school-<?php echo $employee[0]->id?>">
-                                        <tr class="w3-white">
-                                            <th><i class='fa fa-list-ol w3-text-purple w3-xlarge'></i> Staff ID</th>
-                                            <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Staff Name</th>
-                                            <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Staff Phone</th>
-                                            <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Staff Email</th>
-                                            <th><i class='fa fa-graduation-cap w3-text-purple w3-xlarge'></i> Designation</th>
-                                        </tr>
-                                        <?php
-                                            foreach($employee as $employee_data){
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $employee_data->id?></td>
-                                                        <td><?php echo $employee_data->username?></td>
-                                                        <td><?php echo $employee_data->phone?></td>
-                                                        <td><?php echo $employee_data->email?></td>
-                                                        <td><?php echo $employee_data->designation?></td>                                                       <td><input type='button' class='w3-button w3-blue' value='Edit'></td>
-                                                        <td><input type='button' class='w3-button w3-red' value='Delete'></td>
-                                                    </tr>
-                                                <?php
-                                            }
-                                        ?>
-                                    </table>
+                                <div class=" w3-red w3-container w3-margin">
+                                    <p class="w3-xlarge"><i class="fa fa-exclamation-triangle w3-xxxlarge"></i>  No Staff Added <a href="/add/staff">Click here to add.</a></p>
                                 </div>
                             <?php
                         }
+                        
                     ?>
                 </div>
             </div>

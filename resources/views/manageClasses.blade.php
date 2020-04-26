@@ -103,18 +103,28 @@
                                                                         </td>
                                                                     </tr>
                                                                 <?php
-                                                            }else{
-                                                                foreach($dept['class_data'] as $class){
+                                                            }else{                                                                
+                                                                if(count($dept['class_data']['classes']) != 0){
+                                                                    foreach($dept['class_data']['classes'] as $key => $class){                                                                
+                                                                        ?>
+                                                                            <tr>
+                                                                                <td><?php echo $class->value?></td>
+                                                                                <td><?php echo $class->num_subjects?></td>
+                                                                                <td><?php echo 'soon';//echo $employee_data->class_teache?></td>
+                                                                                <td><?php echo $dept['class_data']['counts'][$key]?></td>
+                                                                                <td><a href='/edit/class/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
+                                                                                <!-- <td><a href='/view/class/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td> -->
+                                                                                <td><a href='/view/timetable/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-indigo' title='Timetable'><i class="fa fa-clock-o"></i></a></td>
+                                                                                <td><a href='javascript:void(0)' url = "/delete/class/<?php echo $class->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
+                                                                            </tr>
+                                                                        <?php
+                                                                    }
+                                                                }else{
                                                                     ?>
                                                                         <tr>
-                                                                            <td><?php echo $class->value?></td>
-                                                                            <td><?php echo $class->num_subjects?></td>
-                                                                            <td><?php echo 'soon';//echo $employee_data->class_teache?></td>
-                                                                            <td><?php echo 'soon'?></td>
-                                                                            <td><a href='/edit/class/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                                            <td><a href='/view/class/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>
-                                                                            <td><a href='/view/timetable/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-indigo' title='Timetable'><i class="fa fa-clock-o"></i></a></td>
-                                                                            <td><a href='javascript:void(0)' url = "/delete/class/<?php echo $class->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
+                                                                            <td>
+                                                                                <p><i class="fa fa-exclamation-triangle w3-xlarge"></i>  No Class has added. <a href="/add/class">Click here to add</a></p>
+                                                                            </td>
                                                                         </tr>
                                                                     <?php
                                                                 }

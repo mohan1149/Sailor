@@ -25,7 +25,6 @@
               <div class="w3-bar-block sidenav">
                   <a href="/manage/schools" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-bank fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Institutes'?></a>
                   <a href="/manage/departments" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-share-alt fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Departments'?></a>
-                  <a href="/manage/studying/years" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-calendar fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Year Of Study'?></a>
                   <a href="/manage/class" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-book fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Classes'?></a>
                   <a href="/manage/staff" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-users fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Staff'?></a>
                   <a href="/manage/students" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-graduation-cap fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Students'?></a>

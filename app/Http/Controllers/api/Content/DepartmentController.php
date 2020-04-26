@@ -50,6 +50,7 @@ class DepartmentController extends Controller
     //function to manage departments
     public function manageDepartments(){
         try{
+            $deps = [];
             $school_owner_id = $_SESSION['user_id'];
             $ids =  DB::table('school')
                 ->join('departments','school.id','=','departments.school_id')
