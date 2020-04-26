@@ -10,6 +10,7 @@ use App\Http\Controllers\api\Content\SchoolController;
 class StaffController extends Controller
 {
     private $schoolController;
+    private $classController;
     public function __construct(){
         $this->schoolController = new SchoolController();
     }
@@ -44,21 +45,87 @@ class StaffController extends Controller
         }
     }
     public function manageStaff(){
-        $school_owner_id = $_SESSION['user_id'];
-        $staff = [];
-        $ids =  DB::table('school')
-            ->join('teacher','school.id','=','teacher.school_id')
-            ->distinct()
-            ->where('school.school_owner_id',$school_owner_id)
-            ->where('school.status',1)
-            ->select(['teacher.school_id'])
+      try{
+          $school_owner_id = $_SESSION['user_id'];
+          $response_data   = [];
+          $schools = DB::table('school')
+            ->where('school_owner_id',$school_owner_id)
+            ->where('status',1)
             ->get();
-        foreach($ids as $id){
-            $staff[] = DB::table('school')
-                ->join('teacher','school.id','=','teacher.school_id')
-                ->where('school_id',$id->school_id)
-                ->get();
+          foreach ($schools as $school) {
+            $response_data[] = [
+              'id'        => $school->id,
+              'school_name' => $school->school_name,
+              'dept_data' => $this->getDeptsBySchoolId($school->id),
+            ];
+          }
+          return view('manageStaff',['response_data'=>$response_data]);
+      }catch(\Exception $e){
+          return view('excep');
+      }
+    }
+
+    public function getDeptsBySchoolId($school_id){
+      $return_data = [];
+      $deps = DB::table('departments')->where('school_id',$school_id)->get();
+        foreach ($deps as $dep) {
+          $return_data[] = [
+            'id'         => $dep->id,
+            'dept_name'  => $dep->d_name,
+            'staff_data' => $this->geStaffByDeptId($dep->id),
+          ];
         }
-        return view('manageStaff',['staff'=>$staff]);
+      return $return_data;
+    }
+
+    public function geStaffByDeptId($dept_id){
+      $return_data = [];
+      $return_data['staff'] = DB::table('teacher')
+        ->where('department',$dept_id)
+        ->get();
+      return $return_data;
+    }
+
+    public function deleteStaff(Request $request){
+      try{
+        $staff_id = $request['id'];
+        $delete   = DB::table('teacher')
+          ->where('id', $staff_id)
+          ->delete();
+        return redirect ('/manage/staff');
+      }catch(\Exception $e){
+        return view('excep');
+      }
+    }
+    public function editStaff(Request $request){
+      try{
+        $staff_id   = base64_decode($request['id']);
+        $staff_data = DB::table('teacher')
+          ->where('id',$staff_id)
+          ->first();
+        return view('editStaff',['staff_data'=>$staff_data]);
+      }catch(\Exception $e){
+        return view('excep');
+      }
+    }
+    public function updateStaff(Request $request){
+      try{
+        $staff_id          = $request['id'];
+        $staff_name        = strip_tags($request['staffname']);
+        $staff_phone       = strip_tags($request['phone']);
+        $staff_email       = strip_tags($request['email']);
+        $staff_designation = strip_tags($request['designation']);
+        $update = DB::table('teacher')
+          ->where('id',$staff_id)
+          ->update([
+            'username'    => $staff_name,
+            'phone'       => $staff_phone,
+            'email'       => $staff_email,
+            'designation' => $staff_designation
+          ]);
+        return redirect('/manage/staff');
+      }catch(\Exception $e){
+        return $e->getMessage();
+      }
     }
 }

@@ -60,4 +60,46 @@ class StudentController extends Controller
     }
   }
 
+  public function manageStudents(){
+    try{
+        $school_owner_id = $_SESSION['user_id'];
+        $response_data   = [];
+        $schools = DB::table('school')
+          ->where('school_owner_id',$school_owner_id)
+          ->where('status',1)
+          ->get();
+        foreach ($schools as $school) {
+          $response_data[] = [
+            'id'        => $school->id,
+            'school_name' => $school->school_name,
+            'dept_data' => $this->getDeptsBySchoolId($school->id),
+          ];
+        }
+        return view('manageStudents',['response_data'=>$response_data]);
+    }catch(\Exception $e){
+        return view('excep');
+    }
+  }
+
+  public function getDeptsBySchoolId($school_id){
+    $return_data = [];
+    $deps = DB::table('departments')->where('school_id',$school_id)->get();
+      foreach ($deps as $dep) {
+        $return_data[] = [
+          'id'            => $dep->id,
+          'dept_name'     => $dep->d_name,
+          'students_data' => $this->getStudentsByDeptId($dep->id),
+        ];
+      }
+    return $return_data;
+  }
+
+  public function getStudentsByDeptId($dept_id){
+    $return_data = [];
+    $return_data['students'] = DB::table('student')
+      ->where('dept_id',$dept_id)
+      ->get();
+    return $return_data;
+  }
+
 }

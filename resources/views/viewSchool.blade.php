@@ -119,35 +119,35 @@
                         <div class="w3-margin">
                             <div class="w3-container">
                                 <div class="w3-container data-container w3-row">
-                                    <div class="w3-quarter w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-share-alt w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['deps']) ?></span>
-                                        <div class="w3-xlarge count-text">Departments</div>                             
+                                        <div class="w3-xlarge count-text">Departments</div>
                                     </div>
-                                    <div class="w3-quarter w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-book w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['classes']) ?></span>
-                                        <div class="w3-xlarge count-text">Classes</div>                             
+                                        <div class="w3-xlarge count-text">Classes</div>
                                     </div>
-                                    <div class="w3-quarter w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-black-tie w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['staff']) ?></span>
-                                        <div class="w3-xlarge count-text">Staff</div>                             
+                                        <div class="w3-xlarge count-text">Staff</div>
                                     </div>
-                                    <div class="w3-quarter w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-graduation-cap w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['students']) ?></span>
-                                        <div class="w3-xlarge count-text">Students</div>                             
+                                        <div class="w3-xlarge count-text">Students</div>
                                     </div>
-                                    <div class="w3-quarter w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-users w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count-soon"><?php echo 'soon';//echo count($responseData['students']) ?></span>
-                                        <div class="w3-xlarge count-text">employees</div>                             
+                                        <div class="w3-xlarge count-text">employees</div>
                                     </div>
-                                    <div class="w3-quarter w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-laptop w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count-soon"><?php echo 'soon';//echo count($responseData['students']) ?></span>
-                                        <div class="w3-xlarge count-text">labs</div>                             
+                                        <div class="w3-xlarge count-text">labs</div>
                                     </div>
                                 </div>
                             </div>

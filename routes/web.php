@@ -54,6 +54,11 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('add/staff','api\Content\StaffController@getSchools');
     Route::POST('manage/staff','api\Content\StaffController@addStaff');
     Route::get('manage/staff','api\Content\StaffController@manageStaff');
+    Route::get('edit/staff/{id}','api\Content\StaffController@editStaff');
+    Route::get('view/staff/{id}','api\Content\StaffController@viewStaff');
+    Route::get('delete/staff/{id}','api\Content\StaffController@deleteStaff');
+    Route::post('update/staff/{id}','api\Content\StaffController@updateStaff');
+
     //class releated routes
     Route::get('add/class','api\Content\ClassController@getSchools');
     Route::get('manage/class','api\Content\ClassController@manageClass');
@@ -73,6 +78,7 @@ Route::group(['middleware' => ['app.access']], function() {
     //student related routes
     Route::get('add/student','api\Content\StudentController@addStudent');
     Route::POST('add/student','api\Content\StudentController@storeStudent');
+    Route::get('/manage/students','api\Content\StudentController@manageStudents');
 });
 
 

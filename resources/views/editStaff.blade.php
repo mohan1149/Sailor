@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Sailor | Add Staff</title>
+        <title>Sailor | Edit Staff</title>
         <!-- Styles -->
         <style>
             html, body {
@@ -79,58 +79,34 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Staff</b></h5>
+            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Edit Staff</b></h5>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
                 <div class="instructions">
                     <h4>Instructions</h4>
                 </div>
-                <form action='/manage/staff' method="POST">
+                <form action='/update/staff/<?php echo $staff_data->id?>' method="POST">
                     @csrf
                         <div class='form-group'>
                             <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
-                            <input class="form-input" type='text' name='staffname' placeholder='staff name' >
+                            <input value="<?php echo $staff_data->username?>"class="form-input" type='text' name='staffname' placeholder='staff name' >
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-phone w3-xlarge w3-text-blue'></i></span>
-                            <input  class="form-input" type='tel' placeholder='phone' name='phone'>
+                            <input value="<?php echo $staff_data->phone?>" class="form-input" type='tel' placeholder='phone' name='phone'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-envelope w3-xlarge w3-text-blue'></i></span>
-                            <input class="form-input"  type='email' placeholder='email' name='email'>
+                            <input value="<?php echo $staff_data->email?>" class="form-input"  type='email' placeholder='email' name='email'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input  class="form-input" type='text' placeholder='designation' name='designation'>
+                            <input value="<?php echo $staff_data->designation?>" class="form-input" type='text' placeholder='designation' name='designation'>
                         </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
-                            <select  class="form-input select-school" name='school_id'>
-                            <option value="-0">School</option>
-                                <?php
-                                    foreach($schools as $school){
-                                        ?>
-                                            <option value=<?php echo $school->id;?>><?php echo $school->school_name ?></option>
-                                        <?php
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
-                            <select class="form-input department"  name='department'>
-                                <option>Department</option>
-                            </select>
-                        </div>
-                        <!-- <div class='form-group'>
-                            <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <select  class="form-input classes" name='class_teacher_for'>
-                                <option>Class Teacher for</option>
-                            </select>
-                        </div> -->
+
                         <div class='form-group' style='text-align:center'>
-                            <input  class="w3-button form-input form-submit" type='submit' value="Add">
+                            <input  class="w3-button form-input form-submit" type='submit' value="Save">
                         </div>
                     </form>
             </div>
