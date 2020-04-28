@@ -76,9 +76,13 @@ Route::group(['middleware' => ['app.access']], function() {
     //onlines classes
     Route::get('/webrtc',function(){ return view('onlineClasses');});
     //student related routes
-    Route::get('add/student','api\Content\StudentController@addStudent');
-    Route::POST('add/student','api\Content\StudentController@storeStudent');
+    Route::get('/add/student','api\Content\StudentController@addStudent');
+    Route::POST('/add/student','api\Content\StudentController@storeStudent');
+    Route::get('/edit/student/{id}','api\Content\StudentController@editStudent');
+    Route::get('/view/student/{id}','api\Content\StudentController@viewStudent');
     Route::get('/manage/students','api\Content\StudentController@manageStudents');
+    Route::get('/delete/student/{id}','api\Content\StudentController@deleteStudent');
+    Route::post('/update/student/{id}','api\Content\StudentController@updateStudent');
 });
 
 

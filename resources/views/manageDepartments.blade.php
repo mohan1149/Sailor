@@ -84,7 +84,7 @@
                                                 <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Name</span></th>
                                                 <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Email</span></th>
                                                 <th><i class='fa fa-globe w3-text-purple w3-xlarge'></i> <span class="w3-small"> Department Website</span></th>
-    
+
                                             </tr>
                                             <?php
                                                 foreach($dep as $dep_data){
@@ -93,7 +93,7 @@
                                                             <td><?php echo $dep_data->d_name?></td>
                                                             <td><?php echo $dep_data->email?></td>
                                                             <td><?php echo $dep_data->website?></td>
-                                                            <td><a href="/view/department/<?php echo base64_encode($dep_data->id)?>" title='View'><i class="w3-text-blue fa fa-eye w3-xlarge"></i></a></td>
+                                                            <td><a href="/view/department/<?php echo base64_encode($dep_data->id)?>" title='View'><i class="w3-text-indigo fa fa-eye w3-xlarge"></i></a></td>
                                                             <td><a href="/edit/department/<?php echo base64_encode($dep_data->id)?>" title='Edit'><i class="w3-text-blue fa fa-edit w3-xlarge"></i></a></td>
                                                             <td><a href="javascript:void(0)"url="/delete/department/<?php echo $dep_data->id?>" title="Delete"class='delete-button'><i class="w3-text-red fa fa-trash w3-xlarge"></i></a></td>
                                                         </tr>

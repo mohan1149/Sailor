@@ -101,5 +101,94 @@ class StudentController extends Controller
       ->get();
     return $return_data;
   }
+  public function editStudent(Request $request){
+    try{
+      $schools = $this->schoolController->getSchoolsByUser();
+      $stud_id = base64_decode($request['id']);
+      $student = DB::table('student')
+        ->where('id',$stud_id)
+        ->first();
+      $stud_data['schools'] = $schools;
+      $stud_data['student'] = $student;
+      return view('editStudent',['stud_data' => $stud_data]);
+    }catch(\Exception $e){
+      return view('excep');
+    }
+  }
 
+  public function updateStudent(Request $request){
+    $stud_id = $request['id'];
+    $sid     = strip_tags($request['reg-id']);
+    $fname   = strip_tags($request['fname']);
+    $lname   = strip_tags($request['lname']);
+    $gender  = strip_tags($request['gender']);
+    $father  = strip_tags($request['father']);
+    $mother  = strip_tags($request['mother']);
+    $phone   = strip_tags($request['phone']);
+    $email   = strip_tags($request['email']);
+    $address = strip_tags($request['address']);
+    $school  = $request['school_id'];
+    $grade   = $request['grade'];
+    $dept    = $request['department'];
+    $class   = $request['class'];
+    $hex     = bin2hex(openssl_random_pseudo_bytes(16));
+    try{
+      $type    = strtolower(pathinfo($_FILES['photo']['name'],PATHINFO_EXTENSION));
+      if($type != ''){
+        move_uploaded_file($_FILES['photo']['tmp_name'],storage_path()."/app/public/student_images/".$hex.'.'.$type);
+        $query = DB::table('student')
+          ->where('id',$stud_id)
+          ->update([
+            'fname'       => $fname,
+            'lname'       => $lname,
+            'gender'      => $gender,
+            'father_name' => $father,
+            'mother_name' => $mother,
+            'phone'       => $phone,
+            'email'       => $email,
+            'address'     => $address,
+            'school_id'   => $school,
+            'grade_id'    => $grade,
+            'dept_id'     => $dept,
+            'class_id'    => $class,
+            'photo'       => $request->getSchemeAndHttpHost().Storage::url('student_images/'.$hex.'.'.$type),
+          ]);
+      }else{
+        $query = DB::table('student')
+          ->where('id',$stud_id)
+          ->update([
+            'fname'       => $fname,
+            'lname'       => $lname,
+            'gender'      => $gender,
+            'father_name' => $father,
+            'mother_name' => $mother,
+            'phone'       => $phone,
+            'email'       => $email,
+            'address'     => $address,
+            'school_id'   => $school,
+            'grade_id'    => $grade,
+            'dept_id'     => $dept,
+            'class_id'    => $class,
+          ]);
+      }
+      return redirect('/manage/students');
+    }catch(\Exception $e){
+      return response()->json($e->getMessage(),500);
+    }
+  }
+
+  public function deleteStudent(Request $request){
+    try{
+      $stud_id = $request['id'];
+      $delete  = DB::table('student')
+        ->where('id',$stud_id)
+        ->delete();
+    }catch(\Exception $e){
+      return view('excep');
+    }
+  }
+
+  public function viewStudent(Request $request){
+
+  }
 }

@@ -115,6 +115,7 @@ class StaffController extends Controller
         $staff_phone       = strip_tags($request['phone']);
         $staff_email       = strip_tags($request['email']);
         $staff_designation = strip_tags($request['designation']);
+
         $update = DB::table('teacher')
           ->where('id',$staff_id)
           ->update([
@@ -127,5 +128,9 @@ class StaffController extends Controller
       }catch(\Exception $e){
         return $e->getMessage();
       }
+    }
+
+    public function viewStaff(Request $request){
+      return base64_decode($request['id']);
     }
 }
