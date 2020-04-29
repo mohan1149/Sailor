@@ -66,7 +66,15 @@ class UserController extends Controller
 
     // function to get user profile
     public function getProfile(){
-      return view('profile');
+      try{
+        $user_id   = $_SESSION['user_id'];
+        $user_data = DB::table('users')
+          ->where('id',$user_id)
+          ->first();
+        return view('profile',['user' => $user_data]);
+      }catch(\Exception $e){
+        return view('execp');
+      }
     }
 
     // function to get user mail box

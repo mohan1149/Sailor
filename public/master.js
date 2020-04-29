@@ -208,7 +208,7 @@ $(document).ready(function(){
         $(this).remove();
         $('.'+id).remove();
         window.subjects = window.subjects.filter(function(value){ return value !== svalue;});
-        $('#final_subs').attr('value',window.subjects.toString());   
+        $('#final_subs').attr('value',window.subjects.toString());
     });
 
     $('.add-subject').click(function(){
@@ -223,5 +223,11 @@ $(document).ready(function(){
         $('.subjects-list').append(button);
         window.subjects.push(subject);
         $('#final_subs').attr('value',window.subjects.toString());
+    });
+
+    $('.notif-side-panel').click(function(){
+      $('.notif-side-panel').removeClass('active');
+      $(this).addClass('read active');
+      $(this).removeClass('unread');
     });
 });
