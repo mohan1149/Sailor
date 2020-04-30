@@ -111,7 +111,7 @@ $(document).ready(function(){
             //dynamic classes
             let classes = "<select class='form-input grade' name='grade'>";
             response.data.classes.map((data)=>{
-                classes+= "<option value='"+ data.id+"'>"+ data.value+"</option>";
+                classes+= "<option value='"+ data.id+"'>"+ data.year+"</option>";
             });
             classes+= "</select>";
             $('.grade').replaceWith(classes);
@@ -229,5 +229,13 @@ $(document).ready(function(){
       $('.notif-side-panel').removeClass('active');
       $(this).addClass('read active');
       $(this).removeClass('unread');
+    });
+
+    //student Search inside table
+    $(".student-search").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $(".student-data-table tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
     });
 });

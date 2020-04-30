@@ -82,6 +82,7 @@ class StaffController extends Controller
       $return_data = [];
       $return_data['staff'] = DB::table('teacher')
         ->where('department',$dept_id)
+        ->orderBy('username')
         ->get();
       return $return_data;
     }
@@ -131,6 +132,6 @@ class StaffController extends Controller
     }
 
     public function viewStaff(Request $request){
-      return base64_decode($request['id']);
+      return view('csoon');
     }
 }

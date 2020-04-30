@@ -51,7 +51,7 @@
                     <a href="/api/manage/staff" class=''><?php echo $$strings['faq']?></a>
                     <a href="/api/add/staff" class=''><?php echo $$strings['help']?></a>
                     <a href="/api/manage/staff" class=''><?php echo $$strings['howtouse']?></a>
-                    <a href="https://forge.laravel.com" class=''><?php echo $$strings['logout']?></a>
+                    <a href="/logout" class='logout'><?php echo $$strings['logout']?></a>
                 </div>
             </div>
         </div>

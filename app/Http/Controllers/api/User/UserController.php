@@ -87,6 +87,14 @@ class UserController extends Controller
       return view('notifications');
     }
 
+    public function logout(){
+      try{
+        $_SESSION['user_id'] = '';
+        return redirect('/');
+      }catch(\Exception $e){
+        return view('excep');
+      }
+    }
 
     public function studentAccess(Request $request){
         $socketId = $request->socket_id;

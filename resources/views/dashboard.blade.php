@@ -99,25 +99,32 @@
             <h5><b><i class="fa fa-th"></i> Administration</b></h5>
         </header>
         <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-quarter menu-item">
+              <div class="w3-container w3-padding-16 w3-card">
+                  <div class="w3-left"><i class="fa fa-black-tie w3-xxxlarge"></i></div>
+                  <div class="w3-clear"></div>
+                  <h4><a href="/admissions/">Admissions <i class="fa fa-chevron-right"></i></a></h4>
+              </div>
+          </div>
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-black-tie w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Employees <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/manage/employees">Employees <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-home w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Leaves <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/manage/leaves">Leaves <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
             <div class="w3-quarter menu-item">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-money w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/manage/class">Salaries <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/manage/leaves">Salaries <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
         </div>

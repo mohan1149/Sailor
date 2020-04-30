@@ -99,11 +99,15 @@ class SchoolController extends Controller
         $students = DB::table('student')
             ->where('school_id',$school_id)
             ->get();
+        $labs = DB::table('labs')
+            ->where('school_id',$school_id)
+            ->get();
         $responseData['school']   = $school;
         $responseData['deps']     = $deps;
         $responseData['classes']  = $classes;
         $responseData['staff']    = $staff;
         $responseData['students'] = $students;
+        $responseData['labs']     = $labs;
         return view('viewSchool',['responseData'=>$responseData]);
     }
 
@@ -195,7 +199,7 @@ class SchoolController extends Controller
         $query = DB::table('grades')
           ->insert([
             'school_id' => $school_id,
-            'value'     => strip_tags($year_value),
+            'year'     => strip_tags($year_value),
           ]);
         return redirect('/manage/schools');
       }catch(\Exception $e){

@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Sailor | Manage Students</title>
+        <title>Sailor | Manage Classes</title>
         <!-- Styles -->
         <style>
             .menu{
@@ -54,16 +53,6 @@
                 margin-top:5px;
                 margin-bottom:5px;
             }
-            .search-container{
-              width: 40vw;
-              margin: 10px;
-              border: 2px solid grey;
-            }
-            .student-search{
-              border: none;
-              width: 90%;
-              padding: 10px;
-            }
         </style>
     </head>
     <header class='w3-top'>
@@ -74,8 +63,8 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
-            <a class=""><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Students</a>
-            <a href = "/add/student" class="w3-button"><i class="fa fa-plus w3-text-blue"></i> Add Student</a>
+            <a class=""><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Labs</a>
+            <a href = "/add/lab"class="w3-button"><i class="fa fa-plus w3-text-blue"></i> Add Lab</a>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
@@ -98,58 +87,45 @@
                                                         <?php echo $dept['dept_name']; ?>
                                                         <i class="fa fa-plus w3-right"></i>
                                                     </button>
-                                                    <div class="inactive-inner w3-margin w3-accordion-content content-table-inner dept-<?php echo $dept['id']?>">
-                                                      <div class="search-container">
-                                                        <input type="text" class="student-search" placeholder="Search student..."> <i class="fa fa-search"></i>
-                                                      </div>
-                                                      <table style='text-align:center;width:90%' class="w3-table w3-bordered student-data-table">
-                                                          <tr class="w3-white">
-                                                              <th><i class='fa fa-id-badge w3-text-purple w3-xlarge'></i> ID</th>
-                                                              <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Name</th>
-                                                              <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
-                                                              <!-- <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th> -->
-                                                              <th><i class='fa fa-calendar w3-text-purple w3-xlarge'></i> Year</th>
-                                                              <th><i class='fa fa-book w3-text-purple w3-xlarge'></i> Class</th>
-
-                                                          </tr>
-                                                          <?php
-                                                              if(count($dept['students_data']) == 0){
-                                                                  ?>
-                                                                      <tr>
-                                                                          <td>
-                                                                              <i class="fa fa-exclamation-triangle"></i><span> No classes are added to this department</span>
-                                                                          </td>
-                                                                      </tr>
-                                                                  <?php
-                                                              }else{
-                                                                  if(count($dept['students_data']['students']) != 0){
-                                                                      foreach($dept['students_data']['students'] as $key => $class){
-                                                                          ?>
-                                                                              <tr>
-                                                                                  <td><?php echo $class->sid?></td>
-                                                                                  <td><?php echo $class->fname.' '.$class->lname?></td>
-                                                                                  <td><?php echo $class->phone?></td>
-                                                                                  <td><?php echo $class->year?></td>
-                                                                                  <td><?php echo $class->value?></td>
-                                                                                  <td><a href='/edit/student/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                                                  <td><a href='/view/student/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>
-                                                                                  <td><a href='javascript:void(0)' url = "/delete/student/<?php echo $class->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
-                                                                              </tr>
-                                                                          <?php
-                                                                      }
-                                                                  }else{
-                                                                      ?>
-                                                                          <tr>
-                                                                              <td>
-                                                                                  <p><i class="fa fa-exclamation-triangle w3-xlarge"></i>  No student has added. <a href="/add/student">Click here to add</a></p>
-                                                                              </td>
-                                                                          </tr>
-                                                                      <?php
-                                                                  }
-                                                              }
-                                                          ?>
-                                                      </table>
-                                                    </div>
+                                                    <table style='text-align:center;width:90%' class="inactive-inner w3-table w3-bordered w3-margin w3-accordion-content content-table-inner dept-<?php echo $dept['id']?>">
+                                                        <tr class="w3-white">
+                                                            <th><i class='fa fa-laptop w3-text-purple w3-xlarge'></i> Lab Name</th>
+                                                            <th><i class='fa fa-diamond w3-text-purple w3-xlarge'></i> Working Machines</th>
+                                                        </tr>
+                                                        <?php
+                                                            if(count($dept['lab_data']) == 0){
+                                                                ?>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <i class="fa fa-exclamation-triangle"></i><span> No classes are added to this department</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php
+                                                            }else{
+                                                                if(count($dept['lab_data']['labs']) != 0){
+                                                                    foreach($dept['lab_data']['labs'] as $key => $lab){
+                                                                        ?>
+                                                                            <tr>
+                                                                                <td><?php echo $lab->name?></td>
+                                                                                <td><?php echo $lab->machines?></td>
+                                                                                <td><a href='/edit/lab/<?php echo base64_encode($lab->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
+                                                                                <!-- <td><a href='/view/lab/<?php echo base64_encode($lab->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td> -->
+                                                                                <td><a href='javascript:void(0)' url = "/delete/lab/<?php echo $lab->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
+                                                                            </tr>
+                                                                        <?php
+                                                                    }
+                                                                }else{
+                                                                    ?>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p><i class="fa fa-exclamation-triangle w3-xlarge"></i>  No Lab has added. <a href="/add/lab">Click here to add</a></p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                        ?>
+                                                    </table>
                                                 <?php
                                                 }
                                             }else{
@@ -173,8 +149,8 @@
                               <div class="w3-panel w3-red">
                                   <p>
                                       <i class="fa fa-exclamation-triangle w3-jumbo"></i>
-                                        NO STUDENT HAS ADDED TO SAILOR SYSTEM.
-                                        <a class="" href="/add/student">CLICK HERE TO TO ADD</a>
+                                        NO CLASSES ADDED TO SAILOR SYSTEM.
+                                        <a class="" href="/add/class">CLICK HERE TO TO ADD</a>
                                   </p>
                               </div>
                           <?php

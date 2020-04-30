@@ -28,6 +28,7 @@
                   <a href="/manage/class" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-book fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Classes'?></a>
                   <a href="/manage/staff" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-users fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Staff'?></a>
                   <a href="/manage/students" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-graduation-cap fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Students'?></a>
+                  <a href="/manage/labs" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-laptop fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Labs'?></a>
                   <a href="/manage/articles" class="w3-bar-item w3-button w3-padding w3-large"><i class="fa fa-comment fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['articles']?></a>
                   <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-diamond fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo $$strings['payments']?></a>
                   <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-user-secret fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Permissions'?></a>

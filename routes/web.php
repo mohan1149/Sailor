@@ -26,6 +26,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/dashboard',function(){ return view('dashboard');});
     Route::get('data','api\Content\DashboardController@getDashboardData');
     //user related routes
+    Route::get('/logout','api\User\UserController@logout');
     Route::get('/profile','api\User\UserController@getProfile');
     Route::get('/mailbox','api\User\UserController@getMailbox');
     Route::get('/notifications','api\User\UserController@getNotifications');
@@ -83,6 +84,15 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/manage/students','api\Content\StudentController@manageStudents');
     Route::get('/delete/student/{id}','api\Content\StudentController@deleteStudent');
     Route::post('/update/student/{id}','api\Content\StudentController@updateStudent');
+    //routes related to lab
+    Route::get('/add/lab','api\Content\LabsController@addLab');
+    Route::post('/store/lab','api\Content\LabsController@storeLab');
+    Route::get('/edit/lab/{id}','api\Content\LabsController@editLab');
+    Route::get('/manage/labs','api\Content\LabsController@manageLabs');
+    Route::get('/delete/lab/{id}','api\Content\LabsController@deleteLab');
+    Route::post('/update/lab/{id}','api\Content\LabsController@updateLab');
+    Route::get('/manage/employees',function(){ return view('csoon');});
+    Route::get('/manage/leaves',function(){ return view('csoon');});
 });
 
 

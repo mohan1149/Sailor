@@ -108,34 +108,34 @@
                         <div class="w3-container w3-text-black">
                             <h2><?php echo $responseData['dep']->d_name?></h2>
                         </div>
-                        <div class="w3-container">                            
-                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['dep']->email?></p>        
+                        <div class="w3-container">
+                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['dep']->email?></p>
                             <p><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['dep']->website?></p>
                         </div>
                     </div>
                     <div class="w3-twothird s_data">
                         <div class="w3-margin">
                             <div class="w3-container">
-                                <div class="w3-container data-container w3-row">                    
+                                <div class="w3-container data-container w3-row">
                                     <div class="w3-quarter w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-book w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['classes']) ?></span>
-                                        <div class="w3-xlarge count-text">Classes</div>                             
+                                        <div class="w3-xlarge count-text">Classes</div>
                                     </div>
                                     <div class="w3-quarter w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-black-tie w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['staff']) ?></span>
-                                        <div class="w3-xlarge count-text">Staff</div>                             
+                                        <div class="w3-xlarge count-text">Staff</div>
                                     </div>
                                     <div class="w3-quarter w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-graduation-cap w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['students']) ?></span>
-                                        <div class="w3-xlarge count-text">Students</div>                             
-                                    </div>                                    
+                                        <div class="w3-xlarge count-text">Students</div>
+                                    </div>
                                     <div class="w3-quarter w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-laptop w3-jumbo w3-text-blue"></i></div>
-                                        <span class="w3-xxxlarge count-soon"><?php echo 'soon';//echo count($responseData['students']) ?></span>
-                                        <div class="w3-xlarge count-text">labs</div>                             
+                                        <span class="w3-xxxlarge count"><?php echo count($responseData['labs']) ?></span>
+                                        <div class="w3-xlarge count-text">labs</div>
                                     </div>
                                 </div>
                             </div>

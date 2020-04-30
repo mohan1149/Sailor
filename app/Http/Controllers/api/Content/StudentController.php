@@ -97,7 +97,10 @@ class StudentController extends Controller
   public function getStudentsByDeptId($dept_id){
     $return_data = [];
     $return_data['students'] = DB::table('student')
-      ->where('dept_id',$dept_id)
+      ->join('grades','grades.id','=','student.grade_id')
+      ->join('class','class.id','=','student.class_id')
+      ->where('student.dept_id',$dept_id)
+      ->orderBy('sid')
       ->get();
     return $return_data;
   }
@@ -189,6 +192,6 @@ class StudentController extends Controller
   }
 
   public function viewStudent(Request $request){
-
+    return view('csoon');
   }
 }

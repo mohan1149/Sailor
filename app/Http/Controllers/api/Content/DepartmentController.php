@@ -155,10 +155,14 @@ class DepartmentController extends Controller
         $students = DB::table('student')
             ->where('dept_id',$dept_id)
             ->get();
+        $labs = DB::table('labs')
+            ->where('dept_id',$dept_id)
+            ->get();
         $responseData['dep']      = $dep;
         $responseData['classes']  = $classes;
         $responseData['staff']    = $staff;
         $responseData['students'] = $students;
+        $responseData['labs']     = $labs;
         return view('viewDepartment',['responseData'=>$responseData]);
     }
 }

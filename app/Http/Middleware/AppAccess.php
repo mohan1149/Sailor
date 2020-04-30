@@ -20,7 +20,7 @@ class AppAccess
             return response()->json('Unauthorized', 401);
         }*/
         session_start();
-        if(isset($_SESSION['user_id'])){
+        if($_SESSION['user_id'] != ''){
             return $next($request);
         }else{
             return response()->view('accessDenied');

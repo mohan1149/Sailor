@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-laptop w3-jumbo w3-text-blue"></i></div>
-                                        <span class="w3-xxxlarge count-soon"><?php echo 'soon';//echo count($responseData['students']) ?></span>
+                                        <span class="w3-xxxlarge count"><?php echo count($responseData['labs']) ?></span>
                                         <div class="w3-xlarge count-text">labs</div>
                                     </div>
                                 </div>
