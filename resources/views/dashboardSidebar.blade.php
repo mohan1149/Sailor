@@ -13,7 +13,7 @@
                   <div class="center-list user-nav">
                       <a href="/dashboard"><i title ="Home" class="fa fa-home" style="font-size:24px;"></i></a>
                       <a href="/profile" title ="Profile" ><i class="fa fa-user" style="font-size:24px;"></i></a>
-                      <a href="/mailbox" title ="Mailbox" ><i class="fa fa-envelope" style="font-size:24px;"></i></a>
+                      <!-- <a href="/mailbox" title ="Mailbox" ><i class="fa fa-envelope" style="font-size:24px;"></i></a> -->
                       <a href="/notifications" title ="Notifcations"><i class="fa fa-bell" style="font-size:24px;"></i></a>
                   </div>
 

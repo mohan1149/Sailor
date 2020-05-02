@@ -1,7 +1,7 @@
 $(document).ready(function(){
    // global variable to hold the delete route
     let delete_url = '';
-    let toggle_class_name = '';
+    let toggle_class_name = '';    
     /* code to toggle between the languages
     start*/
     $(".language").change(function(e){
@@ -237,5 +237,28 @@ $(document).ready(function(){
       $(".student-data-table tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
+    });
+
+    $('.school').change(function (){        
+        let id    = $(this).val();
+        window.school_id = id;
+        let data  = JSON.parse(window.school_data);
+        //dynamic year data
+        let year = "<select class='year'>";
+        year    += "<option value='-1'>Year</option>"   
+        data[id].years_data.map(function(data_year){
+            year+="<option value="+ data_year.id+">"+data_year.year+"</option>"
+        });
+        year+="</select>";
+        $('.year').replaceWith(year);
+
+        //dynamic department data
+        let dept = "<select onchange='updateClass()' class='dept'>";
+        dept    += "<option value='-1'>Department</option>";        
+        data[id].dep_data.map(function(deps,index){                
+            dept += "<option value="+ index +">"+deps.dept_name+"</option>"
+        });
+        year+="</select>";
+        $('.dept').replaceWith(dept);
     });
 });

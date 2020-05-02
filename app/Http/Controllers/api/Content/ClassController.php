@@ -35,15 +35,14 @@ class ClassController extends Controller
             $subjects = [];
             for($i=1; $i <= $numSubjects; $i++) {
                 $subjects[] = $request['subject'.$i];
-            }
-            $subs = implode(",",$subjects);
+            }        
+            $subs = json_encode($subjects);
             $res = DB::table('subjects')
                 ->insert([
-                    'class_id'      =>$query,
-                    'subjects_list' =>'{'.$subs.'}'
+                    'class_id'      => $query,
+                    'subjects_list' => $subs
                 ]);
             $staff = DB::table('teacher')
-                ->select(['username'])
                 ->where('school_id',$schoolId)
                 ->get();
             $periods = DB::table('school')->where('id',$schoolId)->first();
@@ -51,7 +50,7 @@ class ClassController extends Controller
             $viewData['staff']     = $staff;
             $viewData['periods']   = $periods;
             $viewData['className'] = $className;
-            $viewData['class_id']  = $query;
+            $viewData['class_id']  = $query;            
             return view('addTimeTable',['viewData'=>$viewData]);
         }catch(\Exception $e){
             return view('excep');
@@ -107,37 +106,36 @@ class ClassController extends Controller
     return $return_data;
     }
 
-    public function storeTimetable(Request $request){
-        $periods = $request['periods'];
+    public function storeTimetable(Request $request){        
+        $periods  = $request['periods'];
         $class_id = $request['cid'];
-        $weeks = ['monday','tuesday','wednesday','thursday','friday','saturday'];
+        $weeks = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
         $str = [];
         foreach($weeks as $week){
             for($i = 1;$i <= $periods;$i++){
-                $str[$i] = $i.",".$request[$week.'_'.$i.'_subject'].",".$request[$week.'_'.$i.'_staff'];
+                $data[$i] = [
+                    'staff_id' => substr($request[$week.'_'.$i.'_staff'],0,stripos($request[$week.'_'.$i.'_staff'],'_')),
+                    'staff'    => substr($request[$week.'_'.$i.'_staff'],strripos($request[$week.'_'.$i.'_staff'],'_') + 1),
+                    'subject'  => $request[$week.'_'.$i.'_subject']
+                ];                
+
             }
-            $res[$week] = $str;
-        }
-        $st = [];
-        foreach($res as $week){
-            $string = "";
-            for($i = 1;$i <= $periods;$i++){
-                $string .= "{".$week[$i]."},";
-            }
-            $st[] = substr_replace($string,"",-1);
+            $res[$week] = json_encode($data);
         }
         try{
             $query = DB::table('timetable')->insert([
                 'class_id'  => $class_id,
-                'monday'    => '{'.$st[0].'}',
-                'tuesday'   => '{'.$st[1].'}',
-                'wednesday' => '{'.$st[2].'}',
-                'thursday'  => '{'.$st[3].'}',
-                'friday'    => '{'.$st[4].'}',
-                'saturday'  => '{'.$st[5].'}',
+                'sunday'    => $res['sunday'],
+                'monday'    => $res['monday'],
+                'tuesday'   => $res['tuesday'],
+                'wednesday' => $res['wednesday'],
+                'thursday'  => $res['thursday'],
+                'friday'    => $res['friday'],
+                'saturday'  => $res['saturday'],
             ]);
             return redirect('/manage/class');
         }catch(\Exception $e){
+            return $e->getMessage();
             return view('excep');
         }
     }
@@ -160,15 +158,12 @@ class ClassController extends Controller
             $class_data    = DB::table('class')
                 ->join('subjects','subjects.class_id','=','class.id')
                 ->where('class.id',$class_id)
-                ->first();
+                ->first();            
             if(isset($class_data->subjects_list)){
-                $subjects = str_ireplace('{','',$class_data->subjects_list);
-                $subjects = str_ireplace('}','',$subjects);
-                $subjects = str_ireplace('"','',$subjects);
-                $subjects = explode(',',$subjects);
-            }
+                $subjects = $class_data->subjects_list;                
+            }            
             $response_data['class'] = $class_data;
-            $response_data['subjects'] = $subjects;
+            $response_data['subjects'] = json_decode($subjects);
             return view('editClass',['class'=>$response_data]);
         }catch(\Exception $e){
             return view('excep');    
@@ -178,8 +173,8 @@ class ClassController extends Controller
     public function updateClass(Request $request){
         $class_id  = $request['id'];
         $className = strip_tags($request['className']);
-        $subjects  = strip_tags($request['subjects']);
-        $count     = count(explode(',',$subjects));
+        $subjects  = json_encode(explode(',',strip_tags($request['subjects'])));
+        $count     = count(explode(',',$subjects));        
         try{
             $updateClass = DB::table('class')
                 ->where('id',$class_id)
@@ -190,7 +185,7 @@ class ClassController extends Controller
             $upSubjects = DB::table('subjects')
                 ->where('class_id',$class_id)
                 ->update([
-                    'subjects_list' => '{'.$subjects.'}',
+                    'subjects_list' => $subjects,
                 ]);
             return redirect('/manage/class');
         }catch(\Exception $e){
@@ -200,7 +195,11 @@ class ClassController extends Controller
     }
 
     public function viewTimetable(Request $request){
-
+        $class_id  = base64_decode($request['id']);
+        $timetable = DB::table('timetable')
+            ->where('class_id',$class_id)
+            ->first();
+        return view('viewTimetable',['timetable'=>$timetable]);
     }
 
     public function viewClass(Request $request){

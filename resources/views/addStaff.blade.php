@@ -86,8 +86,12 @@
                 <div class="instructions">
                     <h4>Instructions</h4>
                 </div>
-                <form action='/manage/staff' method="POST">
+                <form action='/manage/staff' method="POST" enctype="multipart/form-data">
                     @csrf
+                        <div class='form-group'>
+                            <span><i class='fa fa-id-badge w3-xlarge w3-text-blue'></i></span>
+                            <input class="form-input" type='text' name='staff_id' placeholder='ID' >
+                        </div>
                         <div class='form-group'>
                             <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
                             <input class="form-input" type='text' name='staffname' placeholder='staff name' >
@@ -129,6 +133,10 @@
                                 <option>Class Teacher for</option>
                             </select>
                         </div> -->
+                        <div class='form-group'>
+                            <span><i class='fa fa-image w3-xlarge w3-text-blue'></i></span>
+                            <input  class="form-input" type='file' accept="image/*" name='profile'>
+                        </div>
                         <div class='form-group' style='text-align:center'>
                             <input  class="w3-button form-input form-submit" type='submit' value="Add">
                         </div>

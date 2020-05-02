@@ -54,7 +54,7 @@
                 list-style: none;
             }
             .s_info{
-                border-right: 1px solid gray;
+                /* border-right: 1px solid gray; */
             }
             .school-data .active{
                 color:#2196F3 !important;
@@ -114,7 +114,8 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5 class="w3-xlarge"><b><i class="fa fa-bell w3-text-blue w3-xlarge"></i> Notifictions</b></h5>
+            <a class=""><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Notifictions</a>
+            <a class="w3-button" href="/add/notification"><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Notifiaction</a>
         </header>
         <div class="w3-container w3-margin-bottom">
           <span><i class="fa fa-circle w3-text-red"></i> Active</span>
@@ -124,13 +125,13 @@
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
                 <div class="w3-row">
-                    <div class="w3-third s_info w3-margin-top" style="height:100vh">
+                    <div class="w3-third s_info w3-margin-top" style="height:auto">
                       <?php
                         for ($i=0; $i < 10; $i++) {
                           ?>
                               <div class="notif-side-panel unread center-list <?php echo $i ?>">
-                                  <i class="fa fa-bell w3-xlarge w3-text-white w3-margin-right"></i>
-                                  <p class="notif-title">Notifiaction Title</p>
+                                  <!-- <i class="fa fa-bell w3-xlarge w3-text-white w3-margin-right"></i> -->
+                                  <p class="notif-title">2nd Mind Examination Timetable</p>
                                   <i class="fa fa-chevron-right w3-margin-left w3-text-white"></i>
                               </div>
                               <hr style="margin:0;border-top:2px solid #eee;"></hr>
@@ -146,6 +147,7 @@
                                 <p>Hello, i just wanted to let you know that i'll be home at lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                              <hr>
                               <i class="fa fa-clock-o w3-xlarge"></i><span> 2020/04/21 by admin</span>
                             </div>
                         </div>

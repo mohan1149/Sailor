@@ -93,6 +93,8 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::post('/update/lab/{id}','api\Content\LabsController@updateLab');
     Route::get('/manage/employees',function(){ return view('csoon');});
     Route::get('/manage/leaves',function(){ return view('csoon');});
+
+    Route::get('/add/notification','api\Content\NotificationsController@addNotification');
 });
 
 

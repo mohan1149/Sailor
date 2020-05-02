@@ -103,7 +103,7 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5 class="w3-xlarge"><b><i class="fa fa-eye w3-text-blue w3-xlarge"></i> View CLass</b></h5>
+            <h5 class="w3-xlarge"><b><i class="fa fa-eye w3-text-blue w3-xlarge"></i> View Class</b></h5>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card w3-twothird">
             <div class="w3-container data-container w3-row w3-center">

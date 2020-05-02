@@ -13,7 +13,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Sailor | Add Institute</title>
+        <title>Sailor | Add Timetable</title>
         <!-- Styles -->
         <style>
             html, body {
@@ -91,6 +91,12 @@
                 margin-left: 25px; 
                 justify-content: center;
             }
+            .lists a{
+                width:100%;
+            }
+            .lists a div{
+                width:100%;
+            }            
         </style>
     </head>
     <header class='w3-top'>
@@ -117,30 +123,33 @@
                     <h4><strong>Note:</strong>Please do not refresh while addig time table.</h4>
                 </div>
                 <div class='addClass-form'>
-                    <div class="w3-row w3-margin">
+                    <div class="w3-row w3-margin center-list lists">
+                        <a href="javascript:void(0)" onclick="openDay(event, 'sun');">
+                            <div class="w3-col tablink w3-bottombar w3-hover-teal w3-padding sun">Sunday</div>
+                        </a>
                         <a href="javascript:void(0)" onclick="openDay(event, 'mon');">
-                            <div class="w3-col l2 tablink w3-bottombar w3-hover-teal w3-padding mon">Monday</div>
+                            <div class="w3-col tablink w3-bottombar w3-hover-teal w3-padding mon">Monday</div>
                         </a>
                         <a href="javascript:void(0)" onclick="openDay(event, 'tue');">
-                            <div class="w3-col l2 tablink w3-bottombar w3-hover-green w3-padding tue">Tuesday</div>
+                            <div class="w3-col tablink w3-bottombar w3-hover-green w3-padding tue">Tuesday</div>
                         </a>
                         <a href="javascript:void(0)" onclick="openDay(event, 'wed');">
-                            <div class="w3-col l2 tablink w3-bottombar w3-hover-yellow w3-padding wed">Wednesday</div>
+                            <div class="w3-col tablink w3-bottombar w3-hover-yellow w3-padding wed">Wednesday</div>
                         </a>
                         <a href="javascript:void(0)" onclick="openDay(event, 'thu');">
-                            <div class="w3-col l2 tablink w3-bottombar w3-hover-blue w3-padding thu">Thursday</div>
+                            <div class="w3-col tablink w3-bottombar w3-hover-blue w3-padding thu">Thursday</div>
                         </a>
                         <a href="javascript:void(0)" onclick="openDay(event, 'fri');">
-                            <div class="w3-col l2 tablink w3-bottombar w3-hover-indigo w3-padding fri">Friday</div>
+                            <div class="w3-col tablink w3-bottombar w3-hover-indigo w3-padding fri">Friday</div>
                         </a>
                         <a href="javascript:void(0)" onclick="openDay(event, 'sat');">
-                            <div class="w3-col l2 tablink w3-bottombar w3-hover-gray w3-padding sat">Saturday</div>
+                            <div class="w3-col tablink w3-bottombar w3-hover-gray w3-padding sat">Saturday</div>
                         </a>
                     </div>
                     <form action='/add/timetable' method="POST">
                         @csrf
                         <?php
-                            $weeks = ['monday','tuesday','wednesday','thursday','friday','saturday'];
+                            $weeks = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
                             foreach($weeks as $week){
                                 ?>
                                     <div class="<?php echo $week;?>" style="display:none">
@@ -165,9 +174,9 @@
                                                                 <select required class="w3-input form-select-bottom" name="<?php echo $week.'_'.$i.'_staff'?>">
                                                                     <option>Staff Name</option>
                                                                     <?php
-                                                                        foreach($staff as $teacher){
+                                                                        foreach($staff as $teacher){                                                                            
                                                                             ?>
-                                                                                <option><?php echo $teacher->username ?></option>
+                                                                                <option value="<?php echo $teacher->id.'_'.$teacher->username ?>"><?php echo $teacher->username ?></option>
                                                                             <?php
                                                                         }
                                                                     ?>
@@ -200,41 +209,47 @@
         <script>
             function openDay(e,day){
                 switch(day){
+                    case "sun": 
+                        $(".sunday").show();
+                        $(".sun").addClass('w3-border-red');
+                        $(".mon,.tue,.wed,.thu,.fri,.sat").removeClass('w3-border-red');
+                        $(".monday,.tuesday,.wednesday,.thursday,.friday,.saturday").hide();
+                        break;
                     case "mon": 
                         $(".monday").show();
                         $(".mon").addClass('w3-border-red');
-                        $(".tue,.wed,.thu,.fri,.sat").removeClass('w3-border-red');
-                        $(".tuesday,.wednesday,.thursday,.friday,.saturday").hide();
+                        $(".tue,.wed,.thu,.fri,.sat,.sun").removeClass('w3-border-red');
+                        $(".tuesday,.wednesday,.thursday,.friday,.saturday,.sunday").hide();
                         break;
                     case "tue": 
                         $(".tuesday").show();
                         $(".tue").addClass('w3-border-red');
-                        $(".mon,.wed,.thu,.fri,.sat").removeClass('w3-border-red');
-                        $(".monday,.wednesday,.thursday,.friday,.saturday").hide();
+                        $(".mon,.wed,.thu,.fri,.sat,.sun").removeClass('w3-border-red');
+                        $(".monday,.wednesday,.thursday,.friday,.saturday,.sunday").hide();
                         break;
                     case "wed": 
                         $(".wednesday").show();
                         $(".wed").addClass('w3-border-red');
-                        $(".mon,.tue,.thu,.fri,.sat").removeClass('w3-border-red');
-                        $(".monday,.tuesday,.thursday,.friday,.saturday").hide();
+                        $(".mon,.tue,.thu,.fri,.sat,.sun").removeClass('w3-border-red');
+                        $(".monday,.tuesday,.thursday,.friday,.saturday,.sunday").hide();
                         break;
                     case "thu": 
                         $(".thursday").show();
                         $(".thu").addClass('w3-border-red');
-                        $(".mon,.tue,.wed,.fri,.sat").removeClass('w3-border-red');
-                        $(".monday,.tuesday,.wednesday,.friday,.saturday").hide();
+                        $(".mon,.tue,.wed,.fri,.sat,.sun").removeClass('w3-border-red');
+                        $(".monday,.tuesday,.wednesday,.friday,.saturday,.sunday").hide();
                         break;
                     case "fri": 
                         $(".friday").show();
                         $(".fri").addClass('w3-border-red');
-                        $(".mon,.tue,.wed,.thu,.sat").removeClass('w3-border-red');
-                        $(".monday,.tuesday,.wednesday,.thursday,.saturday").hide();
+                        $(".mon,.tue,.wed,.thu,.sat,.sun").removeClass('w3-border-red');
+                        $(".monday,.tuesday,.wednesday,.thursday,.saturday,.sunday").hide();
                         break;
                     case "sat": 
                         $(".saturday").show();
                         $(".sat").addClass('w3-border-red');
-                        $(".mon,.tue,.wed,.thu,.fri").removeClass('w3-border-red');
-                        $(".monday,.tuesday,.wednesday,.thursday,.friday").hide();
+                        $(".mon,.tue,.wed,.thu,.fri,.sun").removeClass('w3-border-red');
+                        $(".monday,.tuesday,.wednesday,.thursday,.friday,.sunday").hide();
                         $(".save-tt").removeAttr('disabled');
                         break;
                 }

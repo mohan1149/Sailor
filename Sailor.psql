@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+-- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -318,7 +318,7 @@ ALTER SEQUENCE public.student_id_seq OWNED BY public.student.id;
 CREATE TABLE public.subjects (
     id integer NOT NULL,
     class_id integer,
-    subjects_list character varying[]
+    subjects_list text
 );
 
 
@@ -358,7 +358,9 @@ CREATE TABLE public.teacher (
     school_id integer,
     designation character varying,
     department integer,
-    class_teacher_for integer
+    class_teacher_for integer,
+    profile character varying,
+    staff_id character varying
 );
 
 
@@ -393,12 +395,13 @@ ALTER SEQUENCE public.teacher_id_seq OWNED BY public.teacher.id;
 CREATE TABLE public.timetable (
     id integer NOT NULL,
     class_id integer,
-    monday character varying[],
-    tuesday character varying[],
-    wednesday character varying[],
-    thursday character varying[],
-    friday character varying[],
-    saturday character varying[]
+    sunday json,
+    monday json,
+    tuesday json,
+    wednesday json,
+    thursday json,
+    friday json,
+    saturday json
 );
 
 
@@ -605,10 +608,7 @@ COPY public.articles (id, user_id, likes, created, title, html_link) FROM stdin;
 --
 
 COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) FROM stdin;
-72	IV-B	-1	16	2	3
-73	IV-B	-1	16	2	3
-76	IV-c	-1	16	2	3
-83	X-Spark	-1	21	4	9
+99	X-Spark	-1	16	4	3
 \.
 
 
@@ -649,24 +649,24 @@ COPY public.labs (id, name, school_id, dept_id, machines) FROM stdin;
 --
 
 COPY public.school (id, school_name, school_address, school_owner_id, phone, email, website, logo_path, periods, period_length, reg_num, status) FROM stdin;
-1	yui	test address	12	dfghjk	hy@g.c	http://testschool.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	7	\N	\N	1
-4	qwertyuio	9/89-JU/RA	11	ertyuiop	krishnareddy3029@gmail.com	https://google.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	7	\N	\N	1
-5	oiuytgfd	hfqshqvngsgqjsgjwygdjhwbjh	11	plokijuhgf	hjujhdkjwdkjhkj@nbkbw.com	https://fvgbhjkl.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	7	\N	\N	1
-6	Prathibha	Nadalur,Kadapa,A{	11	8079466828	prathibhahs@gmail.com	https://prathibhahs.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	7	\N	\N	1
-7	GHSchool	Nadalur,Kadapa,AP	11	7896543210	javvajihari6@gmail.com	https://prathibhahs.com	http://appserver.local:8000/school_logos/831b7f9bb718f4980baa3436708ef8bc.svg	7	\N	\N	1
-8	qwertgyhjuk	wfefewf	11	rftghyjkl;p	tghyjukl@vbnm.com	hhtp://google.com	http://appserver.local:8000/school_logos/e78848d33f3619c4ccff08d7a0f165c3.svg	7	\N	\N	1
-10	Test School	Nadalur,Kadapa,AP	11	897456516546	test@yahoo.com	https://prathibhahs.com	http://appserver.local:8000/school_logos/4cf7850c6569c5726b55260125c1ae8f.svg	7	52	\N	1
-11	Tesr	fdgfgvxkhjhg	11	tffufdut	krishnareddy309@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/f6df398682348654f4631791221d2ee2.	7	40	\N	1
-12	1234234567	kuwait	11	67667749	zebed123@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/b8f358678cad5e6a62550beb51434d88.jpg	6	30	\N	1
-3	Update check	whbkhwkjdhwkd	11	fghjkl	hi@g.com	http://testschool.com	http://127.0.0.1:8000/school_logos/adb6ebf21e15db0ab33e8b5423ad76e9.	7	12	\N	1
-2	BVBHSs	9/89-JU/RA	11	7896541230	bvbhs@gmail.com	http://testschool.com	http://127.0.0.1:8000/school_logos/bf8956a5781b7e465e942a10540a8a64.	7	\N	\N	1
-16	amam school_name school_name school_name	Jahra, Kuwait	1	1234567	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/e1be37ec0992e415231d407c44e7751d.jpg	5	55	14701A0500	1
-14	wertywdgw d	Nadalur,Kadapa,A	1	1234567	krishnareddy3029@live.com	https://prathibhahs.com	http://127.0.0.1:8000/school_logos/776e202cad230125416905cb1529f4d5.png	8	52	7895463213	1
-13	AITS	Rajamapet	1	1234567890	aits@aits.com	https://aits.com	http://127.0.0.1:8000/school_logos/80a5fe04d8a413a3f881413013c7297f.jpg	7	50	14701A0549	0
-15	sri test high school	Jahra, Kuwait	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/67ca33ac4400ea5e123731f842972acd.jpg	6	50	\N	0
-21	Sailor School of Computing	Street 214, Trinity Square, Canada	4	987654321	ssc@mail.com	https://ssc.edu.ac	http://127.0.0.1:8000/storage/school_logos/a32eac57ba0478fccdb963d277d40b5b.png	6	40	14701A0549	1
-18	BVBHS	Kuwat,Kadapa,AP	1	234567890	mohan@sailor.com	http://testschool.com	http://127.0.0.1:8000/storage/school_logos/0e0d275b3e4e17e82fccf8c3a0a8e27f.png	5	40	234567890	0
-17	Test School2	Kuwat,Kadapa,AP	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/school_logos/bfcf5486f53444d1372a05b37cb02332.jpg	7	45	7412369852	0
+1	yui	test address	12	dfghjk	hy@g.c	http://testschool.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
+4	qwertyuio	9/89-JU/RA	11	ertyuiop	krishnareddy3029@gmail.com	https://google.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
+5	oiuytgfd	hfqshqvngsgqjsgjwygdjhwbjh	11	plokijuhgf	hjujhdkjwdkjhkj@nbkbw.com	https://fvgbhjkl.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
+6	Prathibha	Nadalur,Kadapa,A{	11	8079466828	prathibhahs@gmail.com	https://prathibhahs.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
+7	GHSchool	Nadalur,Kadapa,AP	11	7896543210	javvajihari6@gmail.com	https://prathibhahs.com	http://appserver.local:8000/school_logos/831b7f9bb718f4980baa3436708ef8bc.svg	4	\N	\N	1
+8	qwertgyhjuk	wfefewf	11	rftghyjkl;p	tghyjukl@vbnm.com	hhtp://google.com	http://appserver.local:8000/school_logos/e78848d33f3619c4ccff08d7a0f165c3.svg	4	\N	\N	1
+10	Test School	Nadalur,Kadapa,AP	11	897456516546	test@yahoo.com	https://prathibhahs.com	http://appserver.local:8000/school_logos/4cf7850c6569c5726b55260125c1ae8f.svg	4	52	\N	1
+11	Tesr	fdgfgvxkhjhg	11	tffufdut	krishnareddy309@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/f6df398682348654f4631791221d2ee2.	4	40	\N	1
+12	1234234567	kuwait	11	67667749	zebed123@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/b8f358678cad5e6a62550beb51434d88.jpg	4	30	\N	1
+3	Update check	whbkhwkjdhwkd	11	fghjkl	hi@g.com	http://testschool.com	http://127.0.0.1:8000/school_logos/adb6ebf21e15db0ab33e8b5423ad76e9.	4	12	\N	1
+2	BVBHSs	9/89-JU/RA	11	7896541230	bvbhs@gmail.com	http://testschool.com	http://127.0.0.1:8000/school_logos/bf8956a5781b7e465e942a10540a8a64.	4	\N	\N	1
+16	amam school_name school_name school_name	Jahra, Kuwait	1	1234567	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/e1be37ec0992e415231d407c44e7751d.jpg	4	55	14701A0500	1
+14	wertywdgw d	Nadalur,Kadapa,A	1	1234567	krishnareddy3029@live.com	https://prathibhahs.com	http://127.0.0.1:8000/school_logos/776e202cad230125416905cb1529f4d5.png	4	52	7895463213	1
+13	AITS	Rajamapet	1	1234567890	aits@aits.com	https://aits.com	http://127.0.0.1:8000/school_logos/80a5fe04d8a413a3f881413013c7297f.jpg	4	50	14701A0549	0
+15	sri test high school	Jahra, Kuwait	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/67ca33ac4400ea5e123731f842972acd.jpg	4	50	\N	0
+21	Sailor School of Computing	Street 214, Trinity Square, Canada	4	987654321	ssc@mail.com	https://ssc.edu.ac	http://127.0.0.1:8000/storage/school_logos/a32eac57ba0478fccdb963d277d40b5b.png	4	40	14701A0549	1
+18	BVBHS	Kuwat,Kadapa,AP	1	234567890	mohan@sailor.com	http://testschool.com	http://127.0.0.1:8000/storage/school_logos/0e0d275b3e4e17e82fccf8c3a0a8e27f.png	4	40	234567890	0
+17	Test School2	Kuwat,Kadapa,AP	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/school_logos/bfcf5486f53444d1372a05b37cb02332.jpg	4	45	7412369852	0
 \.
 
 
@@ -686,12 +686,7 @@ COPY public.student (id, fname, lname, father_name, mother_name, phone, email, a
 --
 
 COPY public.subjects (id, class_id, subjects_list) FROM stdin;
-88	70	{"Data Mining","Software Testing","Sytem Architecture","Design Pattrerns"}
-89	71	{"Data Mining","Software Testing","Sytem Architecture","Design Pattrerns"}
-90	75	{}
-91	79	{qwerty,qrtyuzsa}
-94	82	{"Operating Systems","System Programming","Web Programming","Data Structures"}
-95	83	{"Operating Systems","System Programming","Web Programming","Data Structures"}
+111	99	["Operating Systems","System Programming","Web Programming","Data Structures"]
 \.
 
 
@@ -699,22 +694,26 @@ COPY public.subjects (id, class_id, subjects_list) FROM stdin;
 -- Data for Name: teacher; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.teacher (id, username, phone, email, school_id, designation, department, class_teacher_for) FROM stdin;
-1	Mohan	80749668282	krishnareddy3029@gmail.com	2	B.Tech	\N	\N
-2	Amulya	9000137502	amulya4@gmail.com	3	B.Tech	\N	\N
-3	Tenil	7894561230	test@yahoo.com	2	MBA	\N	\N
-4	Loki	4563217890	test@testmail.com	2	Phd	\N	\N
-5	Thor	9876543210	hammer@thor.com	4	Phd	\N	\N
-6	dummy	7896543210	dummy@mail.com	2	MCA	\N	\N
-7	test	test	test@gmail.com	4	MBA	\N	\N
-8	Loki	789456123	harijavvaji6@gmail.com	3	B.Tech	\N	\N
-9	mohan	12345	zebed123@gmail.com	13	mteh	\N	\N
-12	Mohan Reddy	67661149	krishnareddy3029@gmail.com	14	B.Tech	1	43
-15	Jhone Doe	9876543210	jd@ssc.com	21	Msc Computers	9	-1
-16	Banner Bruce	9876543210	bb@ssc.com	21	MS Computers	9	-1
-17	Jermy	987654321	jb@ssc.com	21	MS Computers	9	-1
-18	Robin Hart	78945123	rh@ssc.com	21	MS Computers	9	-1
-10	Amulya	9876543	amulya@sailor.com	14	btech	1	\N
+COPY public.teacher (id, username, phone, email, school_id, designation, department, class_teacher_for, profile, staff_id) FROM stdin;
+1	Mohan	80749668282	krishnareddy3029@gmail.com	2	B.Tech	\N	\N	\N	\N
+2	Amulya	9000137502	amulya4@gmail.com	3	B.Tech	\N	\N	\N	\N
+3	Tenil	7894561230	test@yahoo.com	2	MBA	\N	\N	\N	\N
+4	Loki	4563217890	test@testmail.com	2	Phd	\N	\N	\N	\N
+5	Thor	9876543210	hammer@thor.com	4	Phd	\N	\N	\N	\N
+6	dummy	7896543210	dummy@mail.com	2	MCA	\N	\N	\N	\N
+7	test	test	test@gmail.com	4	MBA	\N	\N	\N	\N
+8	Loki	789456123	harijavvaji6@gmail.com	3	B.Tech	\N	\N	\N	\N
+9	mohan	12345	zebed123@gmail.com	13	mteh	\N	\N	\N	\N
+12	Mohan Reddy	67661149	krishnareddy3029@gmail.com	14	B.Tech	1	43	\N	\N
+15	Jhone Doe	9876543210	jd@ssc.com	21	Msc Computers	9	-1	\N	\N
+16	Banner Bruce	9876543210	bb@ssc.com	21	MS Computers	9	-1	\N	\N
+17	Jermy	987654321	jb@ssc.com	21	MS Computers	9	-1	\N	\N
+18	Robin Hart	78945123	rh@ssc.com	21	MS Computers	9	-1	\N	\N
+10	Amulya	9876543	amulya@sailor.com	14	btech	1	\N	\N	\N
+20	Hawk	12345678	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/af985c62bad374d3ff69ab19a38213e1.png	145655655
+19	Banner	9876543	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/4c4acc8802e098b840509a8bc0ff3525.jpg	12345678
+21	Stark	234567	jb@ssc.com	16	Msc Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/1bc2e3be337dd4670b8ac6e1f20f242b.png	98765
+22	Rodgers	9876368	jb@ssc.com	16	MCA	3	-1	http://127.0.0.1:8000/storage/staff_images/65aaf2c1afd17e48ae7e63a0a0be4236.png	857192
 \.
 
 
@@ -722,9 +721,8 @@ COPY public.teacher (id, username, phone, email, school_id, designation, departm
 -- Data for Name: timetable; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.timetable (id, class_id, monday, tuesday, wednesday, thursday, friday, saturday) FROM stdin;
-10	71	{{1,"Data Mining",Amulay},{2,"Software Testing","1st Class A secio"},{3,"Sytem Architecture","Mohan Reddy"},{4,"Design Pattrerns","Moha Amulya"},{5,"Data Mining",Amulay},{6,"Software Testing","1st Class A secio"},{7,"Sytem Architecture","Mohan Reddy"},{8,"Design Pattrerns","Moha Amulya"}}	{{1,"Design Pattrerns","Moha Amulya"},{2,"Sytem Architecture","Mohan Reddy"},{3,"Software Testing","1st Class A secio"},{4,"Data Mining",Amulay},{5,"Design Pattrerns","1st Class A secio"},{6,"Sytem Architecture","Mohan Reddy"},{7,"Software Testing","Mohan Reddy"},{8,"Data Mining","Moha Amulya"}}	{{1,"Data Mining","Mohan Reddy"},{2,"Software Testing","1st Class A secio"},{3,"Sytem Architecture","Mohan Reddy"},{4,"Sytem Architecture","Moha Amulya"},{5,"Design Pattrerns",Amulay},{6,"Data Mining","1st Class A secio"},{7,"Design Pattrerns","Mohan Reddy"},{8,"Data Mining","Moha Amulya"}}	{{1,"Data Mining","1st Class A secio"},{2,"Sytem Architecture",Amulay},{3,"Sytem Architecture","1st Class A secio"},{4,"Design Pattrerns","1st Class A secio"},{5,"Design Pattrerns","1st Class A secio"},{6,"Data Mining","1st Class A secio"},{7,"Data Mining","Moha Amulya"},{8,"Design Pattrerns","1st Class A secio"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"},{8,"Subject Name","Staff Name"}}	{{1,"Subject Name","Staff Name"},{2,"Subject Name","Staff Name"},{3,"Subject Name","Staff Name"},{4,"Subject Name","Staff Name"},{5,"Subject Name","Staff Name"},{6,"Subject Name","Staff Name"},{7,"Subject Name","Staff Name"},{8,"Subject Name","Staff Name"}}
-11	83	{{1,"Operating Systems","Jhone Doe"},{2,"System Programming","Banner Bruce"},{3,"Web Programming",Jermy},{4,"Data Structures","Robin Hart"},{5,"Operating Systems","Jhone Doe"},{6,"System Programming","Banner Bruce"}}	{{1,"Web Programming",Jermy},{2,"Data Structures","Robin Hart"},{3,"Operating Systems","Jhone Doe"},{4,"System Programming","Banner Bruce"},{5,"Web Programming",Jermy},{6,"Data Structures","Robin Hart"}}	{{1,"Operating Systems","Jhone Doe"},{2,"System Programming","Banner Bruce"},{3,"Web Programming",Jermy},{4,"Web Programming","Robin Hart"},{5,"Operating Systems","Jhone Doe"},{6,"System Programming","Banner Bruce"}}	{{1,"Web Programming",Jermy},{2,"Data Structures","Robin Hart"},{3,"Operating Systems","Jhone Doe"},{4,"System Programming","Banner Bruce"},{5,"Web Programming",Jermy},{6,"Data Structures","Robin Hart"}}	{{1,"Operating Systems","Jhone Doe"},{2,"System Programming","Banner Bruce"},{3,"Web Programming","Staff Name"},{4,"Data Structures","Robin Hart"},{5,"Operating Systems","Jhone Doe"},{6,"System Programming","Robin Hart"}}	{{1,"Web Programming",Jermy},{2,"Data Structures","Robin Hart"},{3,"Operating Systems","Jhone Doe"},{4,"System Programming","Banner Bruce"},{5,"Web Programming",Jermy},{6,"Data Structures","Robin Hart"}}
+COPY public.timetable (id, class_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday) FROM stdin;
+2	99	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}
 \.
 
 
@@ -758,7 +756,7 @@ SELECT pg_catalog.setval('public.articles_id_seq', 13, true);
 -- Name: class_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.class_id_seq', 83, true);
+SELECT pg_catalog.setval('public.class_id_seq', 99, true);
 
 
 --
@@ -793,28 +791,28 @@ SELECT pg_catalog.setval('public.school_id_seq', 21, true);
 -- Name: student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.student_id_seq', 10, true);
+SELECT pg_catalog.setval('public.student_id_seq', 11, true);
 
 
 --
 -- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.subjects_id_seq', 95, true);
+SELECT pg_catalog.setval('public.subjects_id_seq', 111, true);
 
 
 --
 -- Name: teacher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.teacher_id_seq', 18, true);
+SELECT pg_catalog.setval('public.teacher_id_seq', 22, true);
 
 
 --
 -- Name: timetable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.timetable_id_seq', 11, true);
+SELECT pg_catalog.setval('public.timetable_id_seq', 2, true);
 
 
 --
@@ -861,6 +859,14 @@ ALTER TABLE ONLY public.teacher
 
 ALTER TABLE ONLY public.student
     ADD CONSTRAINT unique_sid UNIQUE (sid);
+
+
+--
+-- Name: teacher unique_staff_id; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.teacher
+    ADD CONSTRAINT unique_staff_id UNIQUE (staff_id);
 
 
 --

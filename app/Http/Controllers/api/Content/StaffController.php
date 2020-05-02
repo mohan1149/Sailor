@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\api\Content\SchoolController;
 class StaffController extends Controller
 {
@@ -20,28 +21,34 @@ class StaffController extends Controller
     }
     public function addStaff(Request $request)
     {
-        $staff_name              = strip_tags($request['staffname']);
-        $staff_phone             = strip_tags($request['phone']);
-        $staff_email             = strip_tags($request['email']);
-        $staff_designation       = strip_tags($request['designation']);
-        $staff_school            = strip_tags($request['school_id']);
-        $department              = strip_tags($request['department']);
-        //$staff_class_teacher_for = strip_tags($request['class_teacher_for']);
+        $staff_id          = strip_tags($request['staff_id']);
+        $staff_name        = strip_tags($request['staffname']);
+        $staff_phone       = strip_tags($request['phone']);
+        $staff_email       = strip_tags($request['email']);
+        $staff_designation = strip_tags($request['designation']);
+        $staff_school      = strip_tags($request['school_id']);
+        $department        = strip_tags($request['department']);
+        $hex               = bin2hex(openssl_random_pseudo_bytes(16));
         try{
+          $type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
+          move_uploaded_file($_FILES['profile']['tmp_name'],storage_path()."/app/public/staff_images/".$hex.'.'.$type);
             $query = DB::table('teacher')
-                ->insertGetId([
-                    'username'          => $staff_name,
-                    'phone'             => $staff_phone,
-                    'email'             => $staff_email,
-                    'school_id'         => $staff_school,
-                    'department'        => $department,
-                    'class_teacher_for' => -1,
-                    'designation'       => $staff_designation,
+              ->insertGetId(
+                [
+                  'staff_id'          => $staff_id,
+                  'username'          => $staff_name,
+                  'phone'             => $staff_phone,
+                  'email'             => $staff_email,
+                  'school_id'         => $staff_school,
+                  'department'        => $department,
+                  'class_teacher_for' => -1,
+                  'designation'       => $staff_designation,
+                  'profile'           => $request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
                 ]
-            );
-        return redirect('/manage/staff');
+              );
+            return redirect('/manage/staff');
         }catch(\Exception $e){
-            return response()->json($e->getMessage(),500);
+            return view('excep');
         }
     }
     public function manageStaff(){
@@ -112,19 +119,39 @@ class StaffController extends Controller
     public function updateStaff(Request $request){
       try{
         $staff_id          = $request['id'];
+        $staff_sid         = strip_tags($request['staff_id']);
         $staff_name        = strip_tags($request['staffname']);
         $staff_phone       = strip_tags($request['phone']);
         $staff_email       = strip_tags($request['email']);
         $staff_designation = strip_tags($request['designation']);
+        $hex               = bin2hex(openssl_random_pseudo_bytes(16));
+        $type              = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
+        if($type !=''){
+          move_uploaded_file($_FILES['profile']['tmp_name'],storage_path()."/app/public/staff_images/".$hex.'.'.$type);
+          $update = DB::table('teacher')
+            ->where('id',$staff_id)
+            ->update([
+              'staff_id'    => $staff_sid,
+              'username'    => $staff_name,
+              'phone'       => $staff_phone,
+              'email'       => $staff_email,
+              'designation' => $staff_designation,
+              'profile'     => $request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
 
-        $update = DB::table('teacher')
-          ->where('id',$staff_id)
-          ->update([
-            'username'    => $staff_name,
-            'phone'       => $staff_phone,
-            'email'       => $staff_email,
-            'designation' => $staff_designation
-          ]);
+            ]
+          );
+        }else{
+          $update = DB::table('teacher')
+            ->where('id',$staff_id)
+            ->update([
+              'staff_id'    => $staff_sid,
+              'username'    => $staff_name,
+              'phone'       => $staff_phone,
+              'email'       => $staff_email,
+              'designation' => $staff_designation
+            ]
+          );
+        }
         return redirect('/manage/staff');
       }catch(\Exception $e){
         return $e->getMessage();

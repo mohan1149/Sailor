@@ -112,7 +112,7 @@
                         <div id = "bio-info">
                           <div class='form-group'>
                               <span><i class='fa fa-id-badge w3-xlarge w3-text-blue'></i></span>
-                              <input disabled value="<?php echo $stud_data['student']->sid?>" class="form-input" type='text' name='reg-id' placeholder='student id' >
+                              <input value="<?php echo $stud_data['student']->sid?>" class="form-input" type='text' name='reg-id' placeholder='student id' >
                           </div>
                           <div class='form-group'>
                               <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
