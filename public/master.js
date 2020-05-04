@@ -1,7 +1,8 @@
 $(document).ready(function(){
+
    // global variable to hold the delete route
     let delete_url = '';
-    let toggle_class_name = '';    
+    let toggle_class_name = '';
     /* code to toggle between the languages
     start*/
     $(".language").change(function(e){
@@ -239,13 +240,21 @@ $(document).ready(function(){
       });
     });
 
-    $('.school').change(function (){        
+    // staff search inside table
+    $(".staff-search").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $(".staff-data-table tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+    $('.school').change(function (){
         let id    = $(this).val();
         window.school_id = id;
         let data  = JSON.parse(window.school_data);
         //dynamic year data
         let year = "<select class='year'>";
-        year    += "<option value='-1'>Year</option>"   
+        year    += "<option value='-1'>Year</option>"
         data[id].years_data.map(function(data_year){
             year+="<option value="+ data_year.id+">"+data_year.year+"</option>"
         });
@@ -254,11 +263,29 @@ $(document).ready(function(){
 
         //dynamic department data
         let dept = "<select onchange='updateClass()' class='dept'>";
-        dept    += "<option value='-1'>Department</option>";        
-        data[id].dep_data.map(function(deps,index){                
+        dept    += "<option value='-1'>Department</option>";
+        data[id].dep_data.map(function(deps,index){
             dept += "<option value="+ index +">"+deps.dept_name+"</option>"
         });
         year+="</select>";
         $('.dept').replaceWith(dept);
     });
+    //sorting the student table
+    var table = $('.student-data-table');
+    $('.year-sort, .class-sort')
+        .each(function(){
+            var th  = $(this),
+            thIndex = th.index(),
+            inverse = false;
+            th.click(function(){
+                table.find('td').filter(function(){
+                    return $(this).index() === thIndex;
+                }).sortElements(function(a, b){
+                    return $.text([a]) > $.text([b]) ? inverse ? -1 : 1 : inverse ? 1 : -1;
+                }, function(){
+                    return this.parentNode;
+                });
+                inverse = !inverse;
+            });
+        });
 });

@@ -101,6 +101,7 @@ class StudentController extends Controller
       ->join('class','class.id','=','student.class_id')
       ->where('student.dept_id',$dept_id)
       ->orderBy('sid')
+      ->select(['fname','lname','father_name','mother_name','student.id','sid','year','value','phone'])
       ->get();
     return $return_data;
   }

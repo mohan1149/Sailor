@@ -54,6 +54,16 @@
                 margin-top:5px;
                 margin-bottom:5px;
             }
+            .search-container{
+              width: 40vw;
+              margin: 10px;
+              border: 2px solid grey;
+            }
+            .staff-search{
+              border: none;
+              width: 90%;
+              padding: 10px;
+            }
         </style>
     </head>
     <header class='w3-top'>
@@ -88,49 +98,54 @@
                                                         <?php echo $dept['dept_name']; ?>
                                                         <i class="fa fa-plus w3-right"></i>
                                                     </button>
-                                                    <table style='text-align:center;width:90%' class="inactive-inner w3-table w3-bordered w3-margin w3-accordion-content content-table-inner dept-<?php echo $dept['id']?>">
-                                                        <tr class="w3-white">
-                                                            <th><i class='fa fa-black-tie w3-text-purple w3-xlarge'></i> Name</th>
-                                                            <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
-                                                            <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th>
-                                                            <th><i class='fa fa-graduation-cap w3-text-purple w3-xlarge'></i> Designation</th>
-                                                        </tr>
-                                                        <?php
-                                                            if(count($dept['staff_data']) == 0){
-                                                                ?>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <i class="fa fa-exclamation-triangle"></i><span> No classes are added to this department</span>
-                                                                        </td>
-                                                                    </tr>
-                                                                <?php
-                                                            }else{
-                                                                if(count($dept['staff_data']['staff']) != 0){
-                                                                    foreach($dept['staff_data']['staff'] as $key => $class){
-                                                                        ?>
-                                                                            <tr>
-                                                                                <td><?php echo $class->username?></td>
-                                                                                <td><?php echo $class->phone?></td>
-                                                                                <td><?php echo $class->email?></td>
-                                                                                <td><?php echo $class->designation?></td>
-                                                                                <td><a href='/edit/staff/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                                                <td><a href='/view/staff/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>
-                                                                                <td><a href='javascript:void(0)' url = "/delete/staff/<?php echo $class->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
-                                                                            </tr>
-                                                                        <?php
-                                                                    }
-                                                                }else{
-                                                                    ?>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <p><i class="fa fa-exclamation-triangle w3-xlarge"></i>  No Staff has added. <a href="/add/staff">Click here to add</a></p>
-                                                                            </td>
-                                                                        </tr>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                        ?>
-                                                    </table>
+                                                    <div class="inactive-inner w3-table w3-bordered w3-margin w3-accordion-content content-table-inner dept-<?php echo $dept['id']?>">
+                                                      <div class="search-container">
+                                                        <input type="text" class="staff-search" placeholder="Search staff..."> <i class="fa fa-search"></i>
+                                                      </div>
+                                                      <table style='text-align:center;width:90%' class="w3-table w3-bordered staff-data-table">
+                                                          <tr class="w3-white">
+                                                              <th><i class='fa fa-black-tie w3-text-purple w3-xlarge'></i> Name</th>
+                                                              <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
+                                                              <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th>
+                                                              <th><i class='fa fa-graduation-cap w3-text-purple w3-xlarge'></i> Designation</th>
+                                                          </tr>
+                                                          <?php
+                                                              if(count($dept['staff_data']) == 0){
+                                                                  ?>
+                                                                      <tr>
+                                                                          <td>
+                                                                              <i class="fa fa-exclamation-triangle"></i><span> No classes are added to this department</span>
+                                                                          </td>
+                                                                      </tr>
+                                                                  <?php
+                                                              }else{
+                                                                  if(count($dept['staff_data']['staff']) != 0){
+                                                                      foreach($dept['staff_data']['staff'] as $key => $class){
+                                                                          ?>
+                                                                              <tr>
+                                                                                  <td><?php echo $class->username?></td>
+                                                                                  <td><?php echo $class->phone?></td>
+                                                                                  <td><?php echo $class->email?></td>
+                                                                                  <td><?php echo $class->designation?></td>
+                                                                                  <td><a href='/edit/staff/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
+                                                                                  <td><a href='/view/staff/<?php echo base64_encode($class->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>
+                                                                                  <td><a href='javascript:void(0)' url = "/delete/staff/<?php echo $class->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
+                                                                              </tr>
+                                                                          <?php
+                                                                      }
+                                                                  }else{
+                                                                      ?>
+                                                                          <tr>
+                                                                              <td>
+                                                                                  <p><i class="fa fa-exclamation-triangle w3-xlarge"></i>  No Staff has added. <a href="/add/staff">Click here to add</a></p>
+                                                                              </td>
+                                                                          </tr>
+                                                                      <?php
+                                                                  }
+                                                              }
+                                                          ?>
+                                                      </table>
+                                                    </div>
                                                 <?php
                                                 }
                                             }else{

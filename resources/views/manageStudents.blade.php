@@ -64,6 +64,12 @@
               width: 90%;
               padding: 10px;
             }
+            .year-sort{
+              cursor: pointer;
+            }
+            .class-sort{
+              cursor: pointer;
+            }
         </style>
     </head>
     <header class='w3-top'>
@@ -108,8 +114,8 @@
                                                               <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Name</th>
                                                               <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
                                                               <!-- <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th> -->
-                                                              <th><i class='fa fa-calendar w3-text-purple w3-xlarge'></i> Year</th>
-                                                              <th><i class='fa fa-book w3-text-purple w3-xlarge'></i> Class</th>
+                                                              <th class="year-sort"><i class='fa fa-calendar w3-text-purple w3-xlarge'></i> Year <i class="fa fa-sort"><i/></th>
+                                                              <th class="class-sort"><i class='fa fa-book w3-text-purple w3-xlarge'></i> Class <i class="fa fa-sort"><i/></th>
 
                                                           </tr>
                                                           <?php
@@ -207,4 +213,5 @@
     <footer class='footer w3-bottom'>
         @include('footer')
     </footer>
+    <script src="/sortElements.js"></script>
 </html>
