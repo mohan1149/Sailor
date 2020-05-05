@@ -46,11 +46,11 @@
       </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">
-                <table class="w3-striped w3-padding w3-responsive w3-bordered w3-table">
+                <table class="w3-bordered w3-table">
                     <tr class="w3-white">
-                        <th><i class='fa fa-bank'></i> Title</th>
-                        <th><i class='fa fa-calendar'></i> Published at</th>
-                        <th><i class='fa fa-heart'></i> Likes</th>
+                        <th><i class='fa fa-bank w3-text-purple w3-xlarge'></i> Title</th>
+                        <th><i class='fa fa-calendar w3-text-purple w3-xlarge'></i> Published at</th>
+                        <th><i class='fa fa-heart w3-text-purple w3-xlarge'></i> Likes</th>
                     </tr>
                     <?php
                         foreach($articles as $article)
@@ -61,13 +61,13 @@
                                     <td><?php echo $article->created?></td>
                                     <td><?php echo $article->likes?></td>
                                     <td>
-                                        <a class="w3-indigo w3-button" href="<?php echo $article->html_link?>">View <i class="fa fa-eye"></i></a>
+                                        <a class="w3-xlarge w3-text-indigo" target="_blank" title="View" href="/view/article?url=<?php echo base64_encode($article->html_link); ?>&title=<?php echo base64_encode($article->title);?>"><i class="fa fa-eye"></i></a>
                                     </td>
+                                    <!-- <td>
+                                        <a title="Share" href="#"><i class=" w3-xlarge w3-text-blue fa fa-share-alt"></i></a>
+                                    </td> -->
                                     <td>
-                                        <a class="w3-blue w3-button" href="/api/delete/school/">Share <i class="fa fa-share-alt"></i></a>
-                                    </td>
-                                    <td>
-                                        <a class="w3-red w3-button" href="/api/delete/school/">Delete <i class="fa fa-trash"></i></a>
+                                        <a href='javascript:void(0)' url = "/delete/article/<?php echo $article->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php
@@ -75,11 +75,26 @@
                     ?>
                 </table>
             </div>
-            <div class="w3-center">
-                <button class="w3-button w3-green w3-margin pager-prev">Prev</button>
-                <button class="w3-button w3-green w3-margin pager-next">Next</button>
+        </div>
+        <!-- delete modal start -->
+        <div class="w3-modal delete-modal" id="delete-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-indigo">
+                    <span onclick="document.getElementById('delete-modal').style.display='none'"
+                        class="w3-button w3-xlarge w3-display-topright">&times;</span>
+                    <h2>Are you sure to Delete?</h2>
+                </header>
+                <div class="w3-container">
+                    <p class="w3-dark-text-grey w3-xlarge">Once you delete,all class related information such as staff linked,students will be removed from the Sailor System.</p>
+                    <button class="w3-red w3-margin w3-button w3-xlarge delete-confirm">Sure! Delete</button>
+                    <button class="w3-green w3-margin w3-button w3-xlarge" onclick="document.getElementById('delete-modal').style.display='none'" >Cancel</button>
+                </div>
+                <footer class="w3-container w3-dark-grey">
+                    <p>@Sailor Sytem </p>
+                </footer>
             </div>
         </div>
+        <!-- end -->
     </div>
     </body>
     <footer class='footer w3-bottom'>

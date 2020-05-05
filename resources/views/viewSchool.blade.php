@@ -18,27 +18,7 @@
                 height: 100vh;
                 margin: 0;
             }
-            .left{
-                background-color: rgb(61, 94, 161);
-                height:100vh;
-            }
-            .right{
-                height:100vh;
-            }
-            .left-container{
-                margin-top:10vh;
-            }
-            .logo-text{
-                margin-top:10px;
-            }
-            .right-container{
-                margin-top:10vh;
-            }
-            .title{
-                font-family: 'Nunito', sans-serif;
-                font-weight:200;
-                text-align:center;
-            }
+
             .school-logo{
                 display:flex;
                 justify-content: center;
@@ -56,35 +36,16 @@
             .s_info{
                 border-right: 1px solid gray;
             }
-            .school-data .active{
-                color:#2196F3 !important;
-                background:black;
-            }
-            .data{
-                display:none;
-            }
-            .data a {
-                text-decoration:none;
-            }
-            .active{
-                display:block;
-            }
-            li h3{
-                color: #fff;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-                font-family: 'Nunito', sans-serif;
-            }
             .count-text{
                 color: #636b6f;
                 text-transform: uppercase;
                 font-family: 'Nunito', sans-serif;
                 letter-spacing: .1rem;
                 font-weight: 600;
+                cursor: pointer;
+            }
+            .inner-content table{
+              display: none;
             }
         </style>
     </head>
@@ -122,7 +83,7 @@
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-share-alt w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['deps']) ?></span>
-                                        <div class="w3-xlarge count-text">Departments</div>
+                                        <div class="w3-xlarge count-text depts">Departments</div>
                                     </div>
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-book w3-jumbo w3-text-blue"></i></div>
@@ -149,6 +110,14 @@
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['labs']) ?></span>
                                         <div class="w3-xlarge count-text">labs</div>
                                     </div>
+                                </div>
+                                <div class="w3-container w3-margin-top inner-content">
+                                    <table class="depts w3-table w3-bordered">
+                                      <tr>
+                                        <th><i class="fa fa-share-alt w3-xlarge w3-text-purple"></i> Department Name</th>
+                                        <th><i class="fa fa-cog w3-xlarge w3-text-purple"></i> Department Head</th>
+                                      </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

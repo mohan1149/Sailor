@@ -46,11 +46,11 @@
             </a>
             <div class="content">
                 <div class="links ">
-                    <a href="/api/manage/schools" class=''><?php echo $$strings['about']?></a>
-                    <a href="/api/manage/schools" class=''><?php echo $$strings['contact']?></a>
-                    <a href="/api/manage/staff" class=''><?php echo $$strings['faq']?></a>
-                    <a href="/api/add/staff" class=''><?php echo $$strings['help']?></a>
-                    <a href="/api/manage/staff" class=''><?php echo $$strings['howtouse']?></a>
+                    <a href="/coming/soon" class=''><?php echo $$strings['about']?></a>
+                    <a href="/coming/soon" class=''><?php echo $$strings['contact']?></a>
+                    <a href="/coming/soon" class=''><?php echo $$strings['faq']?></a>
+                    <a href="/coming/soon" class=''><?php echo $$strings['help']?></a>
+                    <a href="/coming/soon" class=''><?php echo $$strings['howtouse']?></a>
                     <a href="/logout" class='logout'><?php echo $$strings['logout']?></a>
                 </div>
             </div>

@@ -72,8 +72,10 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/view/timetable/{id}','api\Content\ClassController@viewTimetable');
     //Articles related routes
     Route::get('/add/article',function() {return view('addArticle');});
-    Route::get('manage/articles','api\Content\ArticlesController@manageArticles');
-    Route::post('publish/article','api\Content\ArticlesController@publishArticle');
+    Route::get('/view/article/',function() {return view('viewArticle');});
+    Route::get('/manage/articles','api\Content\ArticlesController@manageArticles');
+    Route::post('/publish/article','api\Content\ArticlesController@publishArticle');
+    Route::get('/delete/article/{id}','api\Content\ArticlesController@deleteArticle');
     //onlines classes
     Route::get('/webrtc',function(){ return view('onlineClasses');});
     //student related routes
@@ -93,6 +95,8 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::post('/update/lab/{id}','api\Content\LabsController@updateLab');
     Route::get('/manage/employees',function(){ return view('csoon');});
     Route::get('/manage/leaves',function(){ return view('csoon');});
+
+    Route::get('/coming/soon',function(){ return view('csoon');});
 
     Route::get('/add/notification','api\Content\NotificationsController@addNotification');
 });

@@ -45,12 +45,27 @@ class ArticlesController extends Controller
         }
     }
     public function manageArticles(){
-        $user_id = $_SESSION['user_id'];
-        $articles = DB::table('articles')
-            ->where('user_id',$user_id)
-            ->limit(8)
-            ->orderBy('id')
-            ->get();
-        return view('manageArticles',['articles'=>$articles]);
+      try{
+          $user_id = $_SESSION['user_id'];
+          $articles = DB::table('articles')
+              ->where('user_id',$user_id)
+              ->orderBy('id','desc')
+              ->get();
+          return view('manageArticles',['articles'=>$articles]);
+      }catch(\Exception $e){
+        return view('excep');
+      }
+    }
+
+    public function deleteArticle(Request $request){
+      try{
+        $art_id = $request['id'];
+        $delete = DB::table('articles')
+          ->where('id',$art_id)
+          ->delete();
+        return redirect('/manage/articles');
+      }catch(\Exception $e){
+        return view('excep');
+      }
     }
 }
