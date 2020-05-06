@@ -159,6 +159,36 @@ class StaffController extends Controller
     }
 
     public function viewStaff(Request $request){
-      return view('csoon');
+      $staff_id = base64_decode($request['id']);
+      $staff_data = [];
+      try{
+        $staff = DB::table('teacher')
+          ->where('id',$staff_id)
+          ->first();
+        $school_id = $staff->school_id;
+        $periods   = DB::table('school')
+          ->where('id',$school_id)
+          ->select(['periods'])
+          ->first();
+        $school_periods = $periods->periods;
+        $weeks = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+        $timetable = [];
+        foreach ($weeks as $week) {
+          for($i = 1; $i <= $school_periods; $i++){
+            $timetable[$week][$i] = DB::table('timetable')
+              ->join('class','timetable.class_id','=','class.id')
+              ->whereRaw($week."->'".$i."'->>'staff_id' = ? ",[$staff_id])
+              ->selectRaw($week."->'".$i."'->>'subject' as subject,class_id,class.value")
+              ->first($week);
+          }
+        }        
+        $staff_data['staff']    = $staff;
+        $staff_data['timetable'] = $timetable;
+        return view('viewStaff',['staff_data'=>$staff_data]);
+      }catch(\Exception $e){
+        return $e->getMessage();
+        return view('excep');
+      }
+      return $staff_id;
     }
 }
