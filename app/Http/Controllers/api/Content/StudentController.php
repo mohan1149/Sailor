@@ -177,7 +177,7 @@ class StudentController extends Controller
       }
       return redirect('/manage/students');
     }catch(\Exception $e){
-      return response()->json($e->getMessage(),500);
+      return view('excep');
     }
   }
 
@@ -193,6 +193,21 @@ class StudentController extends Controller
   }
 
   public function viewStudent(Request $request){
-    return view('csoon');
+    try{
+      $stud_id = base64_decode($request['id']);
+      $stud_data = [];
+      $student = DB::table('student')
+        ->join('school','school.id','=','student.school_id')
+        ->join('departments','departments.id','=','student.dept_id')
+        ->join('grades','grades.id','=','student.grade_id')
+        ->join('class','class.id','=','student.class_id')
+        ->where('student.id',$stud_id)
+        ->first();
+      $stud_data['student'] = $student;
+      return view('viewStudent',['student_data'=>$stud_data]);
+    }catch(\Exception $e){
+      return $e->getMessage();
+      return view('excep');
+    }
   }
 }

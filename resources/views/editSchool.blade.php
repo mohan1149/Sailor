@@ -36,7 +36,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:200;
                 text-align:center;
             }
             .intro{
@@ -61,6 +61,7 @@
                 width:50%;
                 border-radius:30px;
                 background-color: rgb(61, 94, 161)!important;
+                color: #fff !important;
             }
             .add-institute{
                 margin:10px;
@@ -78,13 +79,18 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue"></i> Edit Institute</b></h5>
+            <ul class="breadcrumb">
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/manage/schools">Manage Institutes</a></li>
+              <li><a href="">Edit Institute</a></li>
+              <li><?php echo $schools[0]->school_name ?></li>
+            </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
                 <form action='/update/school/<?php echo $schools[0]->id ?>' method="POST" class="w3-center" enctype="multipart/form-data">
                     @csrf
-                    <?php 
+                    <?php
                         foreach($schools as $school){
                             ?>
                                 <div class='form-group'>

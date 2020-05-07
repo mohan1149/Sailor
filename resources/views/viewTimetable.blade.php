@@ -65,7 +65,7 @@
             }
             .data a {
                 text-decoration:none;
-            }            
+            }
             li h3{
                 color: #fff;
                 padding: 0 25px;
@@ -84,7 +84,7 @@
                 text-decoration: none !important;
                 text-transform: uppercase !important;
                 font-family: 'Nunito', sans-serif !important;
-                padding: 10px !important; 
+                padding: 10px !important;
             }
             .monday, .tuesday, .wednesday, .thursday, .friday, .saturday{
                 display:none;
@@ -105,11 +105,16 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5 class="w3-xlarge"><b><i class="fa fa-bell w3-text-blue w3-xlarge"></i> View Timetable</b></h5>
-        </header>        
+          <ul class="breadcrumb">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/manage/class">Manage Classes</a></li>
+            <li><a href="">Timetable</a></li>
+            <li><?php echo base64_decode($_GET['cl']); ?></li>
+          </ul>
+        </header>
         <div class="w3-row-padding w3-margin w3-margin w3-white w3-card">
-            <div class="w3-margin-top">                
-                <?php 
+            <div class="w3-margin-top">
+                <?php
                     $weeks = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
                     foreach($weeks as $week){
                         ?>
@@ -121,7 +126,7 @@
                             <tr class="w3-white">
                                 <th><i class='fa fa-clock-o w3-text-purple w3-xlarge'></i> <span class="w3-small"> Period</span></th>
                                 <th><i class='fa fa-book w3-text-purple w3-xlarge'></i> <span class="w3-small"> SUbject</span></th>
-                                <th><i class='fa fa-black-tie w3-text-purple w3-xlarge'></i> <span class="w3-small"> Staff</span></th>                            
+                                <th><i class='fa fa-black-tie w3-text-purple w3-xlarge'></i> <span class="w3-small"> Staff</span></th>
                             </tr>
                             <?php
                             $day = json_decode($timetable->$week);
@@ -131,14 +136,14 @@
                                         <td><?php echo $key?></td>
                                         <td><?php echo $weekday->subject?></td>
                                         <td><?php echo $weekday->staff?></td>
-                                    </tr>                                                              
+                                    </tr>
                                 <?php
                             }
                             ?>
                         </table>
                         <?php
-                    }                    
-                ?>                
+                    }
+                ?>
             </div>
         </div>
     </div>

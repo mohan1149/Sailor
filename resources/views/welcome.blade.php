@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="w3-half right w3-dark-grey">
-                <select class="w3-right language" style="margin:5px;">
+                <!-- <select class="w3-right language" style="margin:5px;">
                     <?php
                         $languages = ['English','Arabic','Hindi'];
                         foreach($languages as $lan){
@@ -117,7 +117,7 @@
                             }
                         }
                     ?>
-                </select>
+                </select> -->
                 <div class="right-container">
                     <div class="content">
                         <div class='signup-form'>
@@ -141,7 +141,7 @@
                                 </div>
                             </form>
                             <a class="w3-right" href="/forgot/password" style="margin-right:20px;"><?php echo $$strings['forgotpwd']?></a>
-                            <a class="w3-left" href="/staff/login" style="margin-left:20px;"><?php echo 'Staff Login'?></a>
+                            <!-- <a class="w3-left" href="/staff/login" style="margin-left:20px;"><?php echo 'Staff Login'?></a> -->
                         </div>
                     </div>
                 </div>

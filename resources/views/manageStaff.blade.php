@@ -74,8 +74,10 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
-            <a class=""><i class="fa fa-cogs w3-text-blue w3-xlarge"></i> Manage Staff</a>
-            <a href = "/add/staff" class="w3-button"><i class="fa fa-plus w3-text-blue"></i> Add Staff</a>
+            <ul class="breadcrumb">
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/manage/staff">Manage Staff</a></li>              
+            </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="school-tables">

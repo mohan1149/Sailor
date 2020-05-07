@@ -78,7 +78,12 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Edit Lab</b></h5>
+          <ul class="breadcrumb">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/manage/labs">Manage Labs</a></li>
+            <li><a href="">Edit Lab</a></li>
+            <li><?php echo $lab_data->name; ?></li>
+          </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">

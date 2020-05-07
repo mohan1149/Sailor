@@ -96,7 +96,12 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5 class="w3-xlarge"><b><i class="fa fa-eye w3-text-blue w3-xlarge"></i> View Department</b></h5>
+            <ul class="breadcrumb">
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/manage/departments">Manage Departments</a></li>
+              <li><a href="">View Department</a></li>
+              <li><?php echo $responseData['dep']->d_name; ?></li>
+            </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
@@ -106,7 +111,7 @@
                             <img class="w3-margin logo "src="<?php echo $responseData['dep']->logo;?>" width="100%">
                         </div>
                         <div class="w3-container w3-text-black">
-                            <h2><?php echo $responseData['dep']->d_name?></h2>
+                            <h2><?php echo $responseData['dep']->d_name ?></h2>
                         </div>
                         <div class="w3-container">
                             <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['dep']->email?></p>

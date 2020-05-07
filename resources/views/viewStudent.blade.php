@@ -73,9 +73,9 @@
         <header class="w3-container" style="padding-top:22px">
           <ul class="breadcrumb">
             <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/manage/staff">Manage Staff</a></li>
-            <li><a href="">View Staff</a></li>
-            <li><?php echo $staff_data['staff']->username?></li>
+            <li><a href="/manage/students">Manage Students</a></li>
+            <li><a href="">View Student</a></li>
+            <li><?php echo $student_data['student']->fname?></li>
           </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
@@ -83,16 +83,18 @@
                 <div class="w3-row">
                     <div class="w3-third s_info">
                         <div class="w3-display-container school-logo">
-                            <img class="w3-margin logo "src="<?php echo $staff_data['staff']->profile ?>" width="100%">
+                            <img class="w3-margin logo "src="<?php echo $student_data['student']->photo ?>" width="100%">
                         </div>
                         <div class="w3-container w3-text-black">
-                            <h2><?php echo $staff_data['staff']->username?></h2>
+                            <h2><?php echo $student_data['student']->fname.' '.$student_data['student']->lname ?></h2>
                         </div>
                         <div class="w3-container">
-                            <p><i class="fa fa-black-tie fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $staff_data['staff']->staff_id ?></p>
-                            <p><i class="fa fa-graduation-cap fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $staff_data['staff']->designation ?></p>
-                            <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $staff_data['staff']->email ?></p>
-                            <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $staff_data['staff']->phone ?></p>
+                            <p><i class="fa fa-black-tie fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $student_data['student']->sid ?></p>
+                            <p><i class="fa fa-bank fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $student_data['student']->school_name ?></p>
+                            <p><i class="fa fa-share-alt fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $student_data['student']->d_name ?></p>
+                            <p> <i class="fa fa-calendar w3-margin-right w3-xlarge w3-text-red"></i><?php echo ' '.$student_data['student']->year ?><i class="fa fa-book fa-fw w3-large w3-text-red w3-xlarge"></i><?php echo $student_data['student']->value ?></p>
+                            <!-- <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $student_data['student']->email ?></p>
+                            <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $student_data['student']->phone ?></p> -->
                         </div>
                     </div>
                     <div class="w3-twothird s_data">
@@ -104,35 +106,7 @@
                                       <i class="fa fa-plus w3-right"></i>
                                   </button>
                                   <div class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table timetable">
-                                    <table class="w3-table w3-bordered">
-                                      <?php
-                                        foreach ($staff_data['timetable'] as $key => $week) {
-                                          ?>
-                                            <tr>
-                                              <td class="week"><?php echo $key; ?></td>
-                                              <td>
-                                                <table>
-                                                  <th><i class="fa fa-clock-o w3-text-purple w3-large"></i> Period</th>
-                                                  <th><i class="fa fa-book w3-text-purple w3-large"></i> Subject</th>
-                                                  <th><i class="fa fa-bank w3-text-purple w3-large"></i> Class</th>
-                                                  <?php
-                                                    foreach ($week as $key => $day) {
-                                                      ?>
-                                                        <tr>
-                                                          <td><span><?php echo $key?></span></td>
-                                                          <td><span><?php echo isset($day->subject) ? $day->subject : "N/A";?></span></td>
-                                                          <td><span><?php echo isset($day->value) ? $day->value : "N/A";?></span></td>
-                                                        </tr>
-                                                      <?php
-                                                    }
-                                                   ?>
-                                                 </table>
-                                              </td>
-                                            </tr>
-                                          <?php
-                                        }
-                                      ?>
-                                    </table>
+                                      content
                                   </div>
                                   <button class="w3-indigo  w3-margin w3-button w3-block w3-left-align staff-show" id ="syllabus">
                                       Syllabus

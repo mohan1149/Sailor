@@ -21,7 +21,7 @@
             .subjects{
                 color: #636b6f;
                 font-family: 'Nunito', sans-serif;
-                font-weight: 600;   
+                font-weight: 600;
                 text-transform:uppercase;
                 letter-spacing:.1rem
             }
@@ -43,7 +43,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:200;
                 text-align:center;
             }
             .intro{
@@ -84,7 +84,7 @@
                 document.getElementById('final_subs').value = window.subjects.toString();
             }
             window.subjects = [];
-            <?php 
+            <?php
                 foreach($class['subjects'] as $subject){
                     ?>
                         window.subjects.push("<?php echo $subject;?>");
@@ -100,8 +100,13 @@
     <!-- Sidebar/menu -->
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
-        <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Edit Class</b></h5>
+        <header class="w3-container" style="padding-top:22px">            
+            <ul class="breadcrumb">
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/manage/class">Manage Classes</a></li>
+              <li><a href="">Edit Class</a></li>
+              <li><?php echo $class['class']->value; ?></li>
+            </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
@@ -112,14 +117,14 @@
                     @csrf
                     <div class='form-group'>
                         <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                        <input value="<?php echo $class['class']->value?>"required type='text' class="form-input"autofocus name='className' placeholder='Ex: X-Spark' >
+                        <input value="<?php echo $class['class']->value ?>"required type='text' class="form-input"autofocus name='className' placeholder='Ex: X-Spark' >
                     </div>
                     <div class='form-group'>
                         <span style="width:20%!important"class="form-input w3-button w3-indigo add-subject">Add Subject</span>
                     </div>
                     <div class="w3-margin subjects-list">
                         <span class="subjects">Subjects</span>
-                        <?php 
+                        <?php
                             foreach($class['subjects'] as $key => $subject){
                                 ?>
                                     <span value="<?php echo $subject?>" id="sub-<?php echo $key?>"class="w3-button subject w3-blue w3-margin-bottom"><?php echo $subject?> <i class="fa fa-times"></i></span>

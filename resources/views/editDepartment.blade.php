@@ -36,7 +36,7 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:200;
                 text-align:center;
             }
             .intro{
@@ -78,7 +78,12 @@
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-pencil w3-text-blue w3-xlarge"></i> Edit Department</b></h5>
+          <ul class="breadcrumb">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/manage/departments">Manage Departments</a></li>
+            <li><a href="">Edit Department</a></li>
+            <li><?php echo $dep_data->d_name; ?></li>
+          </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
@@ -89,7 +94,7 @@
                     @csrf
                     <div class='form-group'>
                         <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
-                        <input value="<?php echo $dep_data->d_name?>"required type='text' class="form-input"autofocus name='dept-name' placeholder='Eg: Science Department' >
+                        <input value="<?php echo $dep_data->d_name ?>"required type='text' class="form-input"autofocus name='dept-name' placeholder='Eg: Science Department' >
                     </div>
                     <div class='form-group'>
                         <span><i class='fa fa-envelope w3-text-blue w3-xlarge'></i></span>

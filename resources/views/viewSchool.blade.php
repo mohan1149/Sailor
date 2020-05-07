@@ -56,8 +56,13 @@
     <!-- Sidebar/menu -->
     @include('dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
-        <header class="w3-container" style="padding-top:22px">
-            <h5 class="w3-xlarge"><b><i class="fa fa-eye w3-text-blue w3-xlarge"></i> View Institute</b></h5>
+        <header class="w3-container" style="padding-top:22px">            
+            <ul class="breadcrumb">
+              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/manage/schools">Manage Institutes</a></li>
+              <li><a href="">View Institute</a></li>
+              <li><?php echo $responseData['school']->school_name ?></li>
+            </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
@@ -67,7 +72,7 @@
                             <img class="w3-margin logo "src="<?php echo $responseData['school']->logo_path?>" width="100%">
                         </div>
                         <div class="w3-container w3-text-black">
-                            <h2><?php echo $responseData['school']->school_name?></h2>
+                            <h2><?php echo $responseData['school']->school_name ?></h2>
                         </div>
                         <div class="w3-container">
                             <p><i class="fa fa-map-marker fa-fw w3-margin-right w3-large w3-text-red w3-xlarge"></i><?php echo $responseData['school']->school_address?></p>
