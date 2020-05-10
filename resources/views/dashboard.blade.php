@@ -8,6 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
         <title>Sailor | Dashboard</title>
         <!-- Styles -->
         <style>
@@ -94,10 +95,18 @@
                     <h4><a href="/add/studying/year">Add Year <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
             </div>
+            <div class="w3-quarter menu-item">
+                <div class="w3-container w3-padding-16 w3-card">
+                    <div class="w3-left"><i class="fa fa-black-tie w3-xxxlarge"></i></div>
+                    <div class="w3-clear"></div>
+                    <h4><a href="/add/employee">Add Employee <i class="fa fa-chevron-right"></i></a></h4>
+                </div>
+            </div>
         </div>
-        <header class="w3-container" style="">
-            <h5><b><i class="fa fa-th"></i> Administration</b></h5>
-        </header>
+        <!-- Bar Graphs -->
+        <div class="w3-container w3-card w3-margin w3-white" id="container" style="width: 97%;">
+		        <canvas id="institute-canvas"></canvas>
+	      </div>
         <div class="w3-row-padding w3-margin-bottom">
           <div class="w3-quarter menu-item">
               <div class="w3-container w3-padding-16 w3-card">
@@ -149,6 +158,8 @@
         </div>
     </div>
     </body>
+    <!-- load script for bar graph -->
+    <script src="/js/getInstituteData.js"></script>
     <footer class='footer w3-bottom'>
         @include('footer')
     </footer>

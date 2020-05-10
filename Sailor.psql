@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped from database version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -592,14 +592,8 @@ ALTER TABLE ONLY public.web_notifications ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 COPY public.articles (id, user_id, likes, created, title, html_link) FROM stdin;
-6	1	0	2020-03-23 10:22:37	Mohan	http://127.0.0.1:8000/storage/articles/Mohan9a62527619f1011de3748b1992f42ef5.html
-7	1	0	2020-03-23 10:47:36	Mohan two	http://127.0.0.1:8000/storage/articles/Mohan_two4ae5ec31d0643583dd725511c74d7502.html
-8	1	0	2020-03-23 16:22:07	Mohan two three	http://127.0.0.1:8000/storage/articles/Mohan_two_three9e234e66dab282b90f3c2fb4b3f5cb14.html
-9	1	0	2020-03-23 16:22:28	qwerty tqfd q qjegi qiq	http://127.0.0.1:8000/storage/articles/qwerty_tqfd_q_qjegi_qiqdd593812b7503bc57d20392cdd14fc51.html
-10	1	0	2020-03-23 16:22:51	qwertyuiuytre sdfghjhg sdfg	http://127.0.0.1:8000/storage/articles/qwertyuiuytre_sdfghjhg_sdfg0712130cd182c5255bc289b058d227d1.html
-11	1	0	2020-03-23 16:25:08	itr1jhasc  qywgd  ieuy	http://127.0.0.1:8000/storage/articles/itr1jhasc__qywgd__ieuy273f943eff3fb3a65ff58ef63b0d7509.html
-12	1	0	2020-04-17 17:17:51	fregrhtjykuli;[]['p;olikgf	http://127.0.0.1:8000/storage/articles/fregrhtjykuli;[]['p;olikgfa83cb97bcec76e44b956336f76e99146.html
-13	1	0	2020-04-17 17:18:07	qwertyui	http://127.0.0.1:8000/storage/articles/qwertyui43a95e09112cc73de98bb641c2a9c16d.html
+14	1	0	2020-05-05 06:40:53	Mohan	http://127.0.0.1:8000/storage/articles/Mohan2da5599ae16e5db08cb90d3e49b657d8.html
+15	1	0	2020-05-05 06:44:18	qwerty mohan	http://127.0.0.1:8000/storage/articles/qwerty_mohan28bfd0516f3e5920572cff11701c7114.html
 \.
 
 
@@ -609,6 +603,8 @@ COPY public.articles (id, user_id, likes, created, title, html_link) FROM stdin;
 
 COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) FROM stdin;
 99	X-Spark	-1	16	4	3
+100	X-Leo	-1	16	4	3
+101	X-Gold	-1	14	4	1
 \.
 
 
@@ -617,10 +613,10 @@ COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) F
 --
 
 COPY public.departments (id, d_name, school_id, email, website, logo) FROM stdin;
-1	Computers	14	com@sailor.com	http://testschool.com	http://127.0.0.1:8000/storage/dep_logos/222974a0dd290fb364715901e6f5e895.jpg
 8	Department of Computer Science	20	cse@aits.com	http://cseaits.com	http://127.0.0.1:8000/storage/dep_logos/60970428c7a81da51b2c9ff31c5cc42d.png
 9	Department of Computers	21	deptc@ssc.com	httpss://deptc.ssc.com	http://127.0.0.1:8000/storage/dep_logos/8c5c2e57d6369756249e9d554f4d2add.png
-3	CSE	16	cse@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/dep_logos/40eed6e2d88d04ecd8fa2c5dc6b8e770.ico
+1	Department of Planning	14	deptplanning@sailor.com	https://planning.albsc.com	http://127.0.0.1:8000/storage/dep_logos/c940c4c70fb39ffd3826ff512d74e188.png
+3	CSE	16	cse@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/dep_logos/236bef144de9de641b7162aff060bc18.png
 \.
 
 
@@ -630,6 +626,8 @@ COPY public.departments (id, d_name, school_id, email, website, logo) FROM stdin
 
 COPY public.grades (id, school_id, year) FROM stdin;
 1	16	qa
+3	16	B.Tech III
+4	16	B.Tech IV
 \.
 
 
@@ -639,8 +637,8 @@ COPY public.grades (id, school_id, year) FROM stdin;
 
 COPY public.labs (id, name, school_id, dept_id, machines) FROM stdin;
 1	Neumann Lab	16	3	50
-2	Amarthya Sen Lab	14	1	40
-3	Auto Cad	16	3	30
+3	Datastax Lab	16	3	30
+2	Auto Desk Maya 3D Lab	14	1	40
 \.
 
 
@@ -660,13 +658,13 @@ COPY public.school (id, school_name, school_address, school_owner_id, phone, ema
 12	1234234567	kuwait	11	67667749	zebed123@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/b8f358678cad5e6a62550beb51434d88.jpg	4	30	\N	1
 3	Update check	whbkhwkjdhwkd	11	fghjkl	hi@g.com	http://testschool.com	http://127.0.0.1:8000/school_logos/adb6ebf21e15db0ab33e8b5423ad76e9.	4	12	\N	1
 2	BVBHSs	9/89-JU/RA	11	7896541230	bvbhs@gmail.com	http://testschool.com	http://127.0.0.1:8000/school_logos/bf8956a5781b7e465e942a10540a8a64.	4	\N	\N	1
-16	amam school_name school_name school_name	Jahra, Kuwait	1	1234567	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/e1be37ec0992e415231d407c44e7751d.jpg	4	55	14701A0500	1
-14	wertywdgw d	Nadalur,Kadapa,A	1	1234567	krishnareddy3029@live.com	https://prathibhahs.com	http://127.0.0.1:8000/school_logos/776e202cad230125416905cb1529f4d5.png	4	52	7895463213	1
 13	AITS	Rajamapet	1	1234567890	aits@aits.com	https://aits.com	http://127.0.0.1:8000/school_logos/80a5fe04d8a413a3f881413013c7297f.jpg	4	50	14701A0549	0
 15	sri test high school	Jahra, Kuwait	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/67ca33ac4400ea5e123731f842972acd.jpg	4	50	\N	0
 21	Sailor School of Computing	Street 214, Trinity Square, Canada	4	987654321	ssc@mail.com	https://ssc.edu.ac	http://127.0.0.1:8000/storage/school_logos/a32eac57ba0478fccdb963d277d40b5b.png	4	40	14701A0549	1
 18	BVBHS	Kuwat,Kadapa,AP	1	234567890	mohan@sailor.com	http://testschool.com	http://127.0.0.1:8000/storage/school_logos/0e0d275b3e4e17e82fccf8c3a0a8e27f.png	4	40	234567890	0
 17	Test School2	Kuwat,Kadapa,AP	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/school_logos/bfcf5486f53444d1372a05b37cb02332.jpg	4	45	7412369852	0
+14	Al Bnedi School Of Engineering	Jahra,Kuwait,	1	+965 67441122	albsc@sailor.com	https://albsc.com.kw	http://127.0.0.1:8000/storage/school_logos/cc8647af201a5938c0474e85ef64b952.png	4	52	KW369852	1
+16	Al Bnedi School Of Computing	Jahra, Kuwait	1	+965 67441122	absc@sailor.com	https://albsc.com.kw	http://127.0.0.1:8000/storage/school_logos/75dba8312753287f8803b18b7e00d6bf.png	4	55	KW698574	1
 \.
 
 
@@ -678,6 +676,10 @@ COPY public.student (id, fname, lname, father_name, mother_name, phone, email, a
 8	Mohan Krishna	Velegacherla	Ramana Reddy	Jayamma	+91 8074966828	mohan.velegacherla@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	76	http://127.0.0.1:8000/storage/student_images/8c3d4e3043f10d66ad5adabf350085dd.ico	14701A0549	Gender
 9	Mohan	Velegacherla	Ramana Reddy	Jayamma	67661149	krishnareddy3029@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	72	http://127.0.0.1:8000/storage/student_images/73e917c0caf233bbbf767df2022b2c7e.png	14701A0548	Male
 10	Mohan Krishna	Velegacherla	Ramana Reddy	Jayamma	+91 8074966828	admin@doclinik.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	72	http://127.0.0.1:8000/storage/student_images/83edaf8b2c0c06ff15b25380084f02bd.png	14701A0149	Male
+13	Mohan	Velegacherla	Ramana Reddy	Jayamma	+91 8074966828	mohan.velegacherla@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	99	http://127.0.0.1:8000/storage/student_images/575c4c5e7f00ffbf01e520be71b04a65.png	14701A0500	Male
+14	uygtfrew	qedwqed	we	qstudent	+91 8074966828	admin@doclinik.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	99	http://127.0.0.1:8000/storage/student_images/09920fd16ebc9440ca4182cc3eb2d98c.png	14701A0501	Male
+15	uygtfrew	student	student	student	+91 8074966828	doclinik@admin.com	Sai Nagar, Rajampet, Kadapa.	16	3	3	99	http://127.0.0.1:8000/storage/student_images/3d9d27af30f16fae480790cd56ccaab9.png	14701A0402	Male
+16	class-sort	class-sort	class-sort	class-sort	+91 8074966828	krishnareddy3029@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	4	3	99	http://127.0.0.1:8000/storage/student_images/edf18aa927d0a5d52f707e2ab9588848.png	14701A0503	Male
 \.
 
 
@@ -687,6 +689,8 @@ COPY public.student (id, fname, lname, father_name, mother_name, phone, email, a
 
 COPY public.subjects (id, class_id, subjects_list) FROM stdin;
 111	99	["Operating Systems","System Programming","Web Programming","Data Structures"]
+112	100	["Sub1","Sub2","Sub3","Sub4"]
+113	101	[null,null,null,null]
 \.
 
 
@@ -704,16 +708,16 @@ COPY public.teacher (id, username, phone, email, school_id, designation, departm
 7	test	test	test@gmail.com	4	MBA	\N	\N	\N	\N
 8	Loki	789456123	harijavvaji6@gmail.com	3	B.Tech	\N	\N	\N	\N
 9	mohan	12345	zebed123@gmail.com	13	mteh	\N	\N	\N	\N
-12	Mohan Reddy	67661149	krishnareddy3029@gmail.com	14	B.Tech	1	43	\N	\N
 15	Jhone Doe	9876543210	jd@ssc.com	21	Msc Computers	9	-1	\N	\N
 16	Banner Bruce	9876543210	bb@ssc.com	21	MS Computers	9	-1	\N	\N
 17	Jermy	987654321	jb@ssc.com	21	MS Computers	9	-1	\N	\N
 18	Robin Hart	78945123	rh@ssc.com	21	MS Computers	9	-1	\N	\N
 10	Amulya	9876543	amulya@sailor.com	14	btech	1	\N	\N	\N
 20	Hawk	12345678	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/af985c62bad374d3ff69ab19a38213e1.png	145655655
-19	Banner	9876543	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/4c4acc8802e098b840509a8bc0ff3525.jpg	12345678
-21	Stark	234567	jb@ssc.com	16	Msc Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/1bc2e3be337dd4670b8ac6e1f20f242b.png	98765
 22	Rodgers	9876368	jb@ssc.com	16	MCA	3	-1	http://127.0.0.1:8000/storage/staff_images/65aaf2c1afd17e48ae7e63a0a0be4236.png	857192
+21	Stark	234567	jb@ssc.com	16	Msc Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/d451b316895095b01e187ca13946c644.png	98765
+19	Banner	9876543	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/5f5f3adafd23939c882f426e093b6d38.png	12345678
+12	Mohan Reddy	67661149	krishnareddy3029@gmail.com	14	B.Tech	1	43	http://127.0.0.1:8000/storage/staff_images/db12fd711470da8e863b870a9824b378.png	14701059
 \.
 
 
@@ -723,6 +727,8 @@ COPY public.teacher (id, username, phone, email, school_id, designation, departm
 
 COPY public.timetable (id, class_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday) FROM stdin;
 2	99	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}
+3	100	{"1":{"staff_id":"19","staff":"Banner","subject":"Sub1"},"2":{"staff_id":"21","staff":"Stark","subject":"Sub2"},"3":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"4":{"staff_id":"20","staff":"Hawk","subject":"Sub4"}}	{"1":{"staff_id":"19","staff":"Banner","subject":"Sub1"},"2":{"staff_id":"21","staff":"Stark","subject":"Sub2"},"3":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"4":{"staff_id":"20","staff":"Hawk","subject":"Sub4"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Sub4"},"2":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"3":{"staff_id":"21","staff":"Stark","subject":"Sub2"},"4":{"staff_id":"19","staff":"Banner","subject":"Sub1"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Sub1"},"2":{"staff_id":"22","staff":"Rodgers","subject":"Sub2"},"3":{"staff_id":"21","staff":"Stark","subject":"Sub3"},"4":{"staff_id":"19","staff":"Banner","subject":"Sub4"}}	{"1":{"staff_id":"21","staff":"Stark","subject":"Sub1"},"2":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"3":{"staff_id":"20","staff":"Hawk","subject":"Sub2"},"4":{"staff_id":"19","staff":"Banner","subject":"Sub3"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}
+4	101	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}
 \.
 
 
@@ -749,14 +755,14 @@ COPY public.web_notifications (id, title, read, posted_on, description) FROM std
 -- Name: articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.articles_id_seq', 13, true);
+SELECT pg_catalog.setval('public.articles_id_seq', 15, true);
 
 
 --
 -- Name: class_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.class_id_seq', 99, true);
+SELECT pg_catalog.setval('public.class_id_seq', 101, true);
 
 
 --
@@ -770,7 +776,7 @@ SELECT pg_catalog.setval('public.departments_id_seq', 9, true);
 -- Name: grades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.grades_id_seq', 2, true);
+SELECT pg_catalog.setval('public.grades_id_seq', 4, true);
 
 
 --
@@ -791,14 +797,14 @@ SELECT pg_catalog.setval('public.school_id_seq', 21, true);
 -- Name: student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.student_id_seq', 11, true);
+SELECT pg_catalog.setval('public.student_id_seq', 16, true);
 
 
 --
 -- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.subjects_id_seq', 111, true);
+SELECT pg_catalog.setval('public.subjects_id_seq', 113, true);
 
 
 --
@@ -812,7 +818,7 @@ SELECT pg_catalog.setval('public.teacher_id_seq', 22, true);
 -- Name: timetable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.timetable_id_seq', 2, true);
+SELECT pg_catalog.setval('public.timetable_id_seq', 4, true);
 
 
 --

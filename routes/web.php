@@ -24,7 +24,7 @@ Route::post('sent/password/reset/link','MailController@sendPasswordResetLink');
 Route::group(['middleware' => ['app.access']], function() {
     //dashboard related RouteServiceProvider
     Route::get('/dashboard',function(){ return view('dashboard');});
-    Route::get('data','api\Content\DashboardController@getDashboardData');
+    Route::get('get/institute/graph-data/','api\Content\DashboardController@getInstituteGraphData');
     //user related routes
     Route::get('/logout','api\User\UserController@logout');
     Route::get('/profile','api\User\UserController@getProfile');
