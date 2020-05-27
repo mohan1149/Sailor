@@ -76,42 +76,43 @@
     </header>
     <body class="w3-light-grey">
     <!-- Sidebar/menu -->
-    @include('dashboardSidebar')
+    @if($_SESSION['ins'] == 'college')
+        @include('college.dashboardSidebar')
+    @else
+        @include('school.dashboardSidebar')
+    @endif
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
             <ul class="breadcrumb">
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/manage/staff">Manage Staff</a></li>
               <li><a href="">Edit Staff</a></li>
-              <li><?php echo $staff_data->username; ?></li>
+              <li><?php echo $staff_data->teacher_name; ?></li>
             </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
-            <div class="add-institute">
-                <div class="instructions">
-                    <h4>Instructions</h4>
-                </div>
+            <div class="add-institute">                
                 <form action='/update/staff/<?php echo $staff_data->id?>' method="POST" enctype="multipart/form-data">
                     @csrf
                         <div class='form-group'>
                             <span><i class='fa fa-id-badge w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->staff_id ?>" class="form-input" type='text' name='staff_id' placeholder='ID' >
+                            <input value="<?php echo $staff_data->teacher_reg_id ?>" class="form-input" type='text' name='staff_id' placeholder='ID' >
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->username ?>"class="form-input" type='text' name='staffname' placeholder='staff name' >
+                            <input value="<?php echo $staff_data->teacher_name ?>"class="form-input" type='text' name='staffname' placeholder='staff name' >
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-phone w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->phone?>" class="form-input" type='tel' placeholder='phone' name='phone'>
+                            <input value="<?php echo $staff_data->teacher_phone?>" class="form-input" type='tel' placeholder='phone' name='phone'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-envelope w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->email?>" class="form-input"  type='email' placeholder='email' name='email'>
+                            <input value="<?php echo $staff_data->teacher_email?>" class="form-input"  type='email' placeholder='email' name='email'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->designation?>" class="form-input" type='text' placeholder='designation' name='designation'>
+                            <input value="<?php echo $staff_data->teacher_designation?>" class="form-input" type='text' placeholder='designation' name='designation'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-image w3-xlarge w3-text-blue'></i></span>

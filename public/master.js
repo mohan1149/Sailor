@@ -10,6 +10,35 @@ $(document).ready(function(){
         location.assign(location.pathname + "?lan=" + e.target.value);
     });
     /*end*/
+    $('.form-next').click(function(){
+        $('.ins-select').removeClass('w3-hide');
+        $('.user-basic').hide('slow');
+    });
+    $('.c-pwd').keyup(function(){
+        let cpwd = $(this).val();
+        let opwd  = $('.o-pwd').val();
+        if(cpwd == opwd){
+            $('.user-signup').prop('disabled', false);
+            $('.correct').removeClass('w3-hide');
+            $('.incorrect').addClass('w3-hide');
+        }else{
+            $('.incorrect').removeClass('w3-hide');
+            $('.user-signup').prop('disabled', true);
+            $('.correct').addClass('w3-hide');
+        }
+    });    
+    $('.dd-outer').mouseenter(function(){
+        let cls = $(this).attr('id'); 
+        $(this).children().last().removeClass('fa-chevron-right');
+        $(this).children().last().addClass('fa-chevron-down');
+        $('.' + cls).slideDown();
+    });    
+    $('.dd-content').mouseleave(function(){
+        $(this).slideUp();
+        let id = $(this).attr('id');
+        $('#' + id).children().last().addClass('fa-chevron-right');
+        $('#' + id).children().last().removeClass('fa-chevron-down');
+    });
 
     /* code to validate periods is integer
     start*/
@@ -99,27 +128,33 @@ $(document).ready(function(){
     start*/
     $('.select-school').change(function(){
         let id = $(this).val();
-        axios.get('/get/departs-grades/' + id)
-        .then(function(response){
-            //dynamic deps
-            let deps = "<select onchange = 'getGrades()' class='form-input department' name='department'>";
-            deps+= "<option value='-0'>Department</option>;                                                                                                                       </option>";
-            response.data.deps.map((data)=>{
-              deps+= "<option value='"+ data.id+"'>"+ data.d_name+"</option>";
-            });
-            deps+= "</select>";
-            $('.department').replaceWith(deps);
-            //dynamic classes
-            let classes = "<select class='form-input grade' name='grade'>";
-            response.data.classes.map((data)=>{
-                classes+= "<option value='"+ data.id+"'>"+ data.year+"</option>";
-            });
-            classes+= "</select>";
-            $('.grade').replaceWith(classes);
+        let ins_key =  $($(this)[0].selectedOptions[0]).attr('id');      
+        let depts = window.ins_data[ins_key].ins_depts;
+        let dept_select = "<select name='department' class='form-input department'>";
+        depts.map(function(dept){
+            dept_select += "<option value="+ dept.id +">"+ dept.dept_name+"</option>";
         });
+        $('.department').replaceWith(dept_select);
+        let years = window.ins_data[ins_key].ins_years;
+        let year_select = "<select name='year' class='form-input year'>";
+        years.map(function(year){
+            year_select += "<option value="+ year.id +">"+ year.grade_year+"</option>";
+        });
+        $('.year').replaceWith(year_select);
+          
     });
     /*end*/
-    /* code to toggle between schools
+    $('.school_change').change(function(){        
+        let ins_key =  $($(this)[0].selectedOptions[0]).attr('id');
+        let years = window.school_data[ins_key].school_years;
+        let year_select = "<select onchange='updateClass("+ins_key+")' name='grade' class='form-input grade'>";
+        years.map(function(year,index){
+            year_select += "<option id="+ index +" value="+ year.year_id +">"+ year.year_name+"</option>";
+        });
+        $('.grade').replaceWith(year_select);
+    });
+
+    /* code to toggle between schools and depts
     start*/
     $('.staff-show').click(function(){
       if(toggle_class_name !== '.'+$(this).attr('id')){
@@ -136,7 +171,6 @@ $(document).ready(function(){
         }else{
           $(toggle_class_name).addClass('inactive');
           if($(this).children().hasClass('fa-plus')){
-
             $(toggle_class_name).addClass('active');
             $(toggle_class_name).removeClass('inactive');
             $(this).children().addClass('fa-minus');
@@ -220,7 +254,7 @@ $(document).ready(function(){
         $('.subject-modal').hide();
         let subject = $('.subject-name').val();
         let sub_class  = subject.replace(/ /gi,'_');
-        let button = "<span style='margin-left:4px;'onclick='hide("+sub_class+")' id ="+sub_class+" class='w3-button w3-blue w3-margin-bottom'>"+ subject +"<i class='fa fa-times'></i></span>";
+        let button = "<span style='margin-left:4px;'onclick='hide("+sub_class+")' id ="+sub_class+" class='w3-button w3-blue w3-margin-bottom'>"+ subject +"<i class='fa fa-times w3-margin-left'></i></span>";
         $('.subjects-list').append(button);
         window.subjects.push(subject);
         $('#final_subs').attr('value',window.subjects.toString());
@@ -232,22 +266,14 @@ $(document).ready(function(){
       $(this).removeClass('unread');
     });
 
-    //student Search inside table
-    $(".student-search").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $(".student-data-table tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //generic search code on tables
+    $('.search').on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".searchable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
       });
-    });
-
-    // staff search inside table
-    $(".staff-search").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $(".staff-data-table tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-
+    
     $('.school').change(function (){
         let id    = $(this).val();
         window.school_id = id;
@@ -288,4 +314,156 @@ $(document).ready(function(){
                 inverse = !inverse;
             });
         });
+
+    $('.perm_button').click(function(){
+        $('.perm_button').removeClass('active');
+        $(this).addClass('active'); 
+        let id = $(this).attr('id');
+        $('.perm_container').removeClass('active-wrapper');
+        $('.perm_container').addClass('inactive-wrapper');
+        $('.'+id).removeClass('inactive-wrapper');        
+        $('.'+id).addClass('active-wrapper');  
+    });
+
+    $('.assign-role').click(function(){
+        $('.role-assign-modal').show();
+    });
+
+    // assign roles to users
+    let school_id = '';
+    let user_id   = '';
+    let dept_id   = '';
+    let role      = '';
+    $('.select-role').change(function(){
+        role = $(this).val();        
+        if(role == 2){
+            $('.select-hod').hide();
+            $('.select-admin').show();
+            $('.select-principal').hide();
+            $('.select-data-entry').hide();
+            $('.select-data-entry').hide();
+            $('.select-teaching-staff').hide();    
+        }
+        else{
+            if(role == 3){
+                $('.select-hod').hide();
+                $('.select-admin').hide();
+                $('.select-principal').show();
+                $('.select-data-entry').hide();
+                $('.select-data-entry').hide();
+                $('.select-teaching-staff').hide();
+            }
+            else{
+                if(role == 4){
+                    $('.select-hod').show();
+                    $('.select-admin').hide();
+                    $('.select-principal').hide();
+                    $('.select-data-entry').hide();
+                    $('.select-data-entry').hide();
+                    $('.select-teaching-staff').hide();
+                }
+                else{
+                    if(role == 5){
+                        $('.select-hod').hide();
+                        $('.select-admin').hide();
+                        $('.select-principal').hide();
+                        $('.select-data-entry').hide();
+                        $('.select-data-entry').show();
+                        $('.select-teaching-staff').hide();
+                    }
+                    else{
+                        //6
+                        $('.select-hod').hide();
+                        $('.select-admin').hide();                    
+                        $('.select-principal').hide();
+                        $('.select-data-entry').hide();
+                        $('.select-data-entry').hide();
+                        $('.select-teaching-staff').show();                                                
+                    }
+                }
+            }
+        }
+    });
+
+    $('.select-institute').change(function(){
+        let sid = $(this).val();
+        let select = "<select class='w3-input w3-margin-top select-dept'>"        
+        window.school_data[sid].dept_data.map(function(dept){
+            select += "<option value="+ dept.id +">"+ dept.d_name +"</option>"
+        });
+        select+= "</select>";
+        $('.select-dept').replaceWith(select);
+        school_id = window.school_data[sid].school_id;
+    });
+
+    $('.assign-confirm').click(function(){        
+        if(role == 2){
+            //admin
+            user_id   = $('.2').val();
+            school_id = '';
+            dept_id   = '';
+        }
+        else{
+            if(role == 3){
+                //principal
+                user_id   = $('.3').val();
+                school_id = $('.prin-school').val();
+                dept_id   = '';
+            }
+            else{
+                if(role == 4){
+                    //hod
+                    user_id   = $('.4').val();                    
+                    dept_id   = $('.select-dept').val();
+                }
+                else{
+                    if(role == 5){
+                        //data entry
+                        user_id   = $('.5').val();
+                        dept_id   = '';
+                        school_id = '';
+                    }
+                    else{
+                        //teaching staff
+                        user_id   = $('.6').val();
+                        school_id = $('.ts-school').val();
+                        dept_id   = '';
+                    }
+                }
+            }
+        }
+        axios({
+            method: 'post',
+            url: "/assign/user/role",
+            data: {
+              role_id   : role,
+              user_id   : user_id,
+              school_id : school_id,
+              dept_id   : dept_id
+            }
+        })
+        .then((response)=>{
+            if(response.status == 200){
+                location.assign('/permissions');;
+            }
+            else{
+                alert('User is already assigned with diffrent role.');
+            }
+        }).catch((error)=>{
+            alert('User is already assigned with diffrent role.');
+        });
+    });
+
+    $('.dept-add').click(function(){
+        if($('.toggler').hasClass('fa-toggle-off')){
+            $('.toggler').removeClass('fa-toggle-off');
+            $('.toggler').addClass('fa-toggle-on');
+        }else{
+            $('.toggler').addClass('fa-toggle-off');
+            $('.toggler').removeClass('fa-toggle-on');
+        }     
+        $('.dept-toggle').toggleClass('w3-hide');
+        $('.clsss-toggle').toggle();
+    });
 });
+

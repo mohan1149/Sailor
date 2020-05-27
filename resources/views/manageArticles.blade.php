@@ -55,6 +55,13 @@
                         <th><i class='fa fa-heart w3-text-purple w3-xlarge'></i> Likes</th>
                     </tr>
                     <?php
+                        if(count($articles) == 0){
+                            ?>
+                            <tr>
+                                <td><i class="fa fa-exclamation-triangle w3-xlarge w3-text-red"></i> Articles Data Not Available</td>
+                            </tr>
+                            <?php
+                        }
                         foreach($articles as $article)
                             {
                             ?>

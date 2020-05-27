@@ -1,4 +1,4 @@
-let labels     = ['Departments', 'Staff', 'Students', 'Labs'];
+let labels     = ['Departments', 'Employees', 'Teaching Staff', 'Students', 'Labs'];
 let graph_sets = [];
 axios({
   method:'get',
@@ -14,6 +14,7 @@ axios({
       borderWidth: 1,
       data:[
         dataset.depts_count,
+        dataset.emps_count,
         dataset.staff_count,
         dataset.studs_count,
         dataset.labs_count

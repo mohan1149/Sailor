@@ -10,6 +10,8 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="<?php echo asset('w3.css')?>">
+        <script type="text/javascript" src="<?php echo asset('jquery.min.js')?>"></script>
+        <script type="text/javascript" src="<?php echo asset('master.js')?>"></script>
         <!-- Styles -->
         <style>
             html, body {
@@ -37,14 +39,15 @@
             }
             .title{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;   
+                font-weight:500;   
                 text-align:center;
             }
             .intro{
                 font-family: 'Nunito', sans-serif;
-                font-weight:200;
+                font-weight:500;
                 margin-left:50px;
                 margin-right:50px;
+                font-size:20px;
             }
             .form-input{
                 width:80%;
@@ -56,11 +59,13 @@
                 margin-left:2px;
                 height:40px;
                 font-size:25;
+                background:#fff;            
             }
             .form-submit{
                 width:50%;
                 border-radius:30px;
                 background-color: rgb(61, 94, 161);
+                font-size:22px;
             }
         </style>
     </head>
@@ -90,31 +95,64 @@
                 <div class="right-container">
                     <div class="content">
                         <div class='signup-form'>
-                            <h2 class="title">Welcome to Sailor</h2>
-                            <h5 class="intro">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
-                            </h5>
-                            <form action='/signup' method="POST" class="w3-center">
-                                @csrf
-                                <div class='form-group'>
-                                    <span><i class='fa fa-user'></i></span>
-                                    <input class="form-input" type='text' name='username' placeholder='username' autofocus>
+                            <h2 class="title">Welcome to Sailor</h2>                            
+                            <form action='/signup' method="POST" class="w3-center" enctype="multipart/form-data">
+                                @csrf                                
+                                <div class="user-basic">
+                                    <h5 class="intro">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                                    </h5>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-user w3-xlarge fa-fw'></i></span>
+                                        <input required class="form-input" type='text' name='username' placeholder='username' autofocus>
+                                    </div>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-phone w3-xlarge fa-fw'></i></span>
+                                        <input required  class="form-input" type='tel' placeholder='phone' name='phone'>
+                                    </div>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-envelope w3-xlarge fa-fw'></i></span>
+                                        <input  required class="form-input" type='email' placeholder='email' name='email'>
+                                    </div>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-lock w3-xlarge fa-fw'></i></span>
+                                        <input required  class="form-input o-pwd" type='password' placeholder='password' name='password'>
+                                    </div>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-lock w3-xlarge fa-fw'></i></span>
+                                        <input  required class="form-input c-pwd" type='password' placeholder='confirm password'>
+                                    </div>
+                                    <div class='form-group incorrect w3-hide'>
+                                        <span><i class='fa fa-times w3-xlarge fa-fw'></i></span>
+                                        <span class="w3-text-red w3-xlarge">Passwords did not matched.</span>
+                                    </div>
+                                    <div class='form-group correct w3-hide'>
+                                        <span><i class='fa fa-check w3-xlarge fa-fw'></i></span>
+                                        <span class="w3-text-white w3-xlarge">Passwords matched.</span>
+                                    </div>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-image w3-xlarge fa-fw'></i></span>
+                                        <input class="form-input" type='file' name='profile'>
+                                    </div>
+                                    <div class='form-group'>
+                                        <input class="form-submit form-next w3-button" type='button' value="Next">
+                                    </div>                                  
                                 </div>
-                                <div class='form-group'>
-                                    <span><i class='fa fa-phone'></i></span>
-                                    <input class="form-input" type='tel' placeholder='phone' name='phone'>
-                                </div>
-                                <div class='form-group'>
-                                    <span><i class='fa fa-envelope'></i></span>
-                                    <input class="form-input" type='email' placeholder='email' name='email'>
-                                </div>
-                                <div class='form-group'>
-                                    <span><i class='fa fa-lock'></i></span>
-                                    <input class="form-input" type='password' placeholder='password' name='password'>
-                                </div>
-                                <div class='form-group'>
-                                    <input class="form-submit w3-button" type='submit' value="Sign Up">
-                                </div>
+                                <div class="w3-hide ins-select">
+                                    <h5 class="intro">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                                    </h5>
+                                    <div class='form-group'>
+                                        <span><i class='fa fa-bank w3-xlarge fa-fw'></i></span>
+                                        <select class="form-input" name="app_for">
+                                            <option value="college">College</option>
+                                            <option value="school">School</option>
+                                        </select>
+                                    </div>
+                                    <div class='form-group'>
+                                        <input class="form-submit w3-button user-signup" type='submit' value="Sign Up">
+                                    </div>
+                                </div>                           
                             </form>
                         </div>
                     </div>

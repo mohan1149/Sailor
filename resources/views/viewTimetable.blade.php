@@ -102,12 +102,16 @@
     </header>
     <body class="w3-light-grey">
     <!-- Sidebar/menu -->
-    @include('dashboardSidebar')
+    @if($_SESSION['ins'] == 'college')
+        @include('college.dashboardSidebar')
+    @else
+        @include('school.dashboardSidebar')
+    @endif
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
           <ul class="breadcrumb">
             <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/manage/class">Manage Classes</a></li>
+            <li><a href="/manage/classes">Manage Classes</a></li>
             <li><a href="">Timetable</a></li>
             <li><?php echo base64_decode($_GET['cl']); ?></li>
           </ul>

@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.12 (Ubuntu 10.12-0ubuntu0.18.04.1)
+-- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -78,11 +78,12 @@ ALTER SEQUENCE public.articles_id_seq OWNED BY public.articles.id;
 
 CREATE TABLE public.class (
     id integer NOT NULL,
-    value character varying,
-    class_teacher integer,
-    school_id integer,
-    num_subjects integer,
-    dept_id integer
+    class_name character varying,
+    class_ins_id integer,
+    class_num_subjects integer,
+    class_dept_id integer,
+    class_ins_type character varying,
+    class_year integer
 );
 
 
@@ -111,16 +112,60 @@ ALTER SEQUENCE public.class_id_seq OWNED BY public.class.id;
 
 
 --
+-- Name: college; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.college (
+    id integer NOT NULL,
+    clg_name character varying,
+    clg_address text,
+    clg_owner integer,
+    clg_phone character varying,
+    clg_email character varying,
+    clg_website character varying,
+    clg_logo character varying,
+    clg_periods integer,
+    clg_period_len integer,
+    clg_reg_num character varying
+);
+
+
+ALTER TABLE public.college OWNER TO sailor;
+
+--
+-- Name: college_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.college_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.college_id_seq OWNER TO sailor;
+
+--
+-- Name: college_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.college_id_seq OWNED BY public.college.id;
+
+
+--
 -- Name: departments; Type: TABLE; Schema: public; Owner: sailor
 --
 
 CREATE TABLE public.departments (
     id integer NOT NULL,
-    d_name character varying,
-    school_id integer,
-    email character varying,
-    website character varying,
-    logo character varying
+    dept_name character varying,
+    dept_ins_id integer,
+    dept_email character varying,
+    dept_website character varying,
+    dept_logo character varying,
+    dept_ins_type character varying
 );
 
 
@@ -149,13 +194,59 @@ ALTER SEQUENCE public.departments_id_seq OWNED BY public.departments.id;
 
 
 --
+-- Name: emplyoee; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.emplyoee (
+    id integer NOT NULL,
+    emp_username character varying,
+    emp_reg_num character varying,
+    emp_institute integer,
+    emp_depart integer,
+    emp_join_date date,
+    emp_phone character varying,
+    emp_email character varying,
+    emp_photo character varying,
+    emp_password character varying,
+    emp_owner integer,
+    emp_designation character varying,
+    emp_device_token character varying
+);
+
+
+ALTER TABLE public.emplyoee OWNER TO sailor;
+
+--
+-- Name: emplyoee_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.emplyoee_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.emplyoee_id_seq OWNER TO sailor;
+
+--
+-- Name: emplyoee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.emplyoee_id_seq OWNED BY public.emplyoee.id;
+
+
+--
 -- Name: grades; Type: TABLE; Schema: public; Owner: sailor
 --
 
 CREATE TABLE public.grades (
     id integer NOT NULL,
-    school_id integer,
-    year character varying
+    grade_ins_id integer,
+    grade_year character varying,
+    grade_ins_type character varying
 );
 
 
@@ -221,6 +312,78 @@ ALTER SEQUENCE public.labs_id_seq OWNED BY public.labs.id;
 
 
 --
+-- Name: permissions; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.permissions (
+    id integer NOT NULL,
+    perm_name character varying,
+    perm_description text,
+    perm_code integer,
+    perm_role integer
+);
+
+
+ALTER TABLE public.permissions OWNER TO sailor;
+
+--
+-- Name: permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.permissions_id_seq OWNER TO sailor;
+
+--
+-- Name: permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.permissions_id_seq OWNED BY public.permissions.id;
+
+
+--
+-- Name: roles; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.roles (
+    id integer NOT NULL,
+    role_name character varying,
+    role_code integer
+);
+
+
+ALTER TABLE public.roles OWNER TO sailor;
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.roles_id_seq OWNER TO sailor;
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
+
+
+--
 -- Name: school; Type: TABLE; Schema: public; Owner: sailor
 --
 
@@ -228,15 +391,14 @@ CREATE TABLE public.school (
     id integer NOT NULL,
     school_name character varying,
     school_address text,
-    school_owner_id character varying,
-    phone character varying,
-    email character varying,
-    website character varying,
-    logo_path character varying,
-    periods integer,
-    period_length integer,
-    reg_num character varying,
-    status integer
+    school_owner character varying,
+    school_phone character varying,
+    school_email character varying,
+    school_website character varying,
+    school_logo character varying,
+    school_periods integer,
+    school_period_length integer,
+    school_reg_num character varying
 );
 
 
@@ -283,7 +445,8 @@ CREATE TABLE public.student (
     class_id integer,
     photo character varying,
     sid character varying,
-    gender character varying
+    gender character varying,
+    ins_type character varying
 );
 
 
@@ -318,7 +481,7 @@ ALTER SEQUENCE public.student_id_seq OWNED BY public.student.id;
 CREATE TABLE public.subjects (
     id integer NOT NULL,
     class_id integer,
-    subjects_list text
+    subjects_list json
 );
 
 
@@ -352,15 +515,16 @@ ALTER SEQUENCE public.subjects_id_seq OWNED BY public.subjects.id;
 
 CREATE TABLE public.teacher (
     id integer NOT NULL,
-    username character varying,
-    phone character varying,
-    email character varying,
-    school_id integer,
-    designation character varying,
-    department integer,
-    class_teacher_for integer,
-    profile character varying,
-    staff_id character varying
+    teacher_name character varying,
+    teacher_phone character varying,
+    teacher_email character varying,
+    teacher_ins_id integer,
+    teacher_designation character varying,
+    teacher_dept integer,
+    teacher_profile character varying,
+    teacher_reg_id character varying,
+    teacher_join_date date,
+    teacher_ins_type character varying
 );
 
 
@@ -430,6 +594,43 @@ ALTER SEQUENCE public.timetable_id_seq OWNED BY public.timetable.id;
 
 
 --
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.user_roles (
+    id integer NOT NULL,
+    user_id integer,
+    role_id integer,
+    school_id integer,
+    dept_id integer
+);
+
+
+ALTER TABLE public.user_roles OWNER TO sailor;
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.user_roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_roles_id_seq OWNER TO sailor;
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.user_roles_id_seq OWNED BY public.user_roles.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: sailor
 --
 
@@ -439,7 +640,8 @@ CREATE TABLE public.users (
     email character varying(255) NOT NULL,
     password character varying(255) NOT NULL,
     phone character varying,
-    profile character varying
+    profile character varying,
+    app_for character varying
 );
 
 
@@ -518,10 +720,24 @@ ALTER TABLE ONLY public.class ALTER COLUMN id SET DEFAULT nextval('public.class_
 
 
 --
+-- Name: college id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.college ALTER COLUMN id SET DEFAULT nextval('public.college_id_seq'::regclass);
+
+
+--
 -- Name: departments id; Type: DEFAULT; Schema: public; Owner: sailor
 --
 
 ALTER TABLE ONLY public.departments ALTER COLUMN id SET DEFAULT nextval('public.departments_id_seq'::regclass);
+
+
+--
+-- Name: emplyoee id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.emplyoee ALTER COLUMN id SET DEFAULT nextval('public.emplyoee_id_seq'::regclass);
 
 
 --
@@ -536,6 +752,20 @@ ALTER TABLE ONLY public.grades ALTER COLUMN id SET DEFAULT nextval('public.grade
 --
 
 ALTER TABLE ONLY public.labs ALTER COLUMN id SET DEFAULT nextval('public.labs_id_seq'::regclass);
+
+
+--
+-- Name: permissions id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.permissions ALTER COLUMN id SET DEFAULT nextval('public.permissions_id_seq'::regclass);
+
+
+--
+-- Name: roles id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_id_seq'::regclass);
 
 
 --
@@ -574,6 +804,13 @@ ALTER TABLE ONLY public.timetable ALTER COLUMN id SET DEFAULT nextval('public.ti
 
 
 --
+-- Name: user_roles id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.user_roles ALTER COLUMN id SET DEFAULT nextval('public.user_roles_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: sailor
 --
 
@@ -592,8 +829,6 @@ ALTER TABLE ONLY public.web_notifications ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 COPY public.articles (id, user_id, likes, created, title, html_link) FROM stdin;
-14	1	0	2020-05-05 06:40:53	Mohan	http://127.0.0.1:8000/storage/articles/Mohan2da5599ae16e5db08cb90d3e49b657d8.html
-15	1	0	2020-05-05 06:44:18	qwerty mohan	http://127.0.0.1:8000/storage/articles/qwerty_mohan28bfd0516f3e5920572cff11701c7114.html
 \.
 
 
@@ -601,10 +836,20 @@ COPY public.articles (id, user_id, likes, created, title, html_link) FROM stdin;
 -- Data for Name: class; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) FROM stdin;
-99	X-Spark	-1	16	4	3
-100	X-Leo	-1	16	4	3
-101	X-Gold	-1	14	4	1
+COPY public.class (id, class_name, class_ins_id, class_num_subjects, class_dept_id, class_ins_type, class_year) FROM stdin;
+106	XI-Spark	4	5	13	college	16
+108	IX-Sec B	25	6	0	school	16
+\.
+
+
+--
+-- Data for Name: college; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.college (id, clg_name, clg_address, clg_owner, clg_phone, clg_email, clg_website, clg_logo, clg_periods, clg_period_len, clg_reg_num) FROM stdin;
+2	Sailor College of Mechanicl Engineering	Street 214, Trinity Square, Banglore	1	98746543210	scme@sailor.com	https://scme.com	http://127.0.0.1:8000/storage/college_logos/efe908e96699f3470996d7759e180461.png	4	50	IN2020124
+1	Sailor College of Computing	Street 214, Trinity Square, Banglore	1	80749668282	scc@sailor.com	https://scc.edu.ac.com	http://127.0.0.1:8000/storage/college_logos/bcbcf4c90a5188df059a212d94e28e3c.png	5	40	IN2020123
+4	Sailor College Of Technology and Science	Rajampet, Kadapa,India	13	8074966828	krishnareddy3029@gmail.com	https://scts.ac.com	http://127.0.0.1:8000/storage/college_logos/7d7a01e52d97d52feff92f58aac09d15.png	5	50	IN2020SCTS
 \.
 
 
@@ -612,11 +857,34 @@ COPY public.class (id, value, class_teacher, school_id, num_subjects, dept_id) F
 -- Data for Name: departments; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.departments (id, d_name, school_id, email, website, logo) FROM stdin;
-8	Department of Computer Science	20	cse@aits.com	http://cseaits.com	http://127.0.0.1:8000/storage/dep_logos/60970428c7a81da51b2c9ff31c5cc42d.png
-9	Department of Computers	21	deptc@ssc.com	httpss://deptc.ssc.com	http://127.0.0.1:8000/storage/dep_logos/8c5c2e57d6369756249e9d554f4d2add.png
-1	Department of Planning	14	deptplanning@sailor.com	https://planning.albsc.com	http://127.0.0.1:8000/storage/dep_logos/c940c4c70fb39ffd3826ff512d74e188.png
-3	CSE	16	cse@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/dep_logos/236bef144de9de641b7162aff060bc18.png
+COPY public.departments (id, dept_name, dept_ins_id, dept_email, dept_website, dept_logo, dept_ins_type) FROM stdin;
+13	Department of Computer Science	4	csdept@scts.com	https://cs.scts.ac.com	http://127.0.0.1:8000/storage/dep_logos/88ea701ad91c4c9dd4562e3a03aeb977.png	college
+14	Department of Civil Engineering	4	cedept@scts.com	https://ce.scts.ac.com	http://127.0.0.1:8000/storage/dep_logos/c304517ba75176d86c27f15913d35f13.png	college
+16	Science Deparment	25	dept.sc@sshe.com	http://sd.sshe.com	http://127.0.0.1:8000/storage/dep_logos/4e8944d5d81b293e5d4bc98f029921b6.png	school
+17	Department of Maths	25	mathdept@sshe.com	https://math.sshe.com	http://127.0.0.1:8000/storage/dep_logos/5c7679b50bb7040d1582cb927a8e5ad2.png	school
+19	Department of English	27	sspe@sailor.com	https://english.sspe.com	http://127.0.0.1:8000/storage/dep_logos/20cacc3fd75178a175dfc05d7e266aac.png	school
+\.
+
+
+--
+-- Data for Name: emplyoee; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.emplyoee (id, emp_username, emp_reg_num, emp_institute, emp_depart, emp_join_date, emp_phone, emp_email, emp_photo, emp_password, emp_owner, emp_designation, emp_device_token) FROM stdin;
+5	Mohan Reddy	14701A0549	4	13	2006-03-01	8079466828	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/1c62f2004780b073c72ef6fdf5c14c4b.png	password	13	MS Computers	token
+6	Drax	14701A0550	4	13	2018-02-05	987654321	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/071db269cdab071596e14c653f34a6d3.png	password	13	Msc Computers	token
+7	Gamora	14701A0551	4	13	2019-04-20	987654321	krishnareddy3029@live.com	http://127.0.0.1:8000/storage/staff_images/674587548d71ca82c111fcf80259a446.png	password	13	B.Tech	token
+8	Gamora	14701A0552	4	13	2019-12-24	98746543210	mohan@sailor.com	http://127.0.0.1:8000/storage/staff_images/1de85b13fa0dd8b25c7c6c3978a1bfb1.png	password	13	Phd	token
+9	Hunt	14701A0553	4	13	2020-05-17	98746543210	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/4cb40c5ebdf58393b8bec3a5f188ba29.png	password	13	B.Tech	token
+10	Rodgers	14701A0554	4	13	2020-05-11	456988754	mathdept@sshe.com	http://127.0.0.1:8000/storage/staff_images/01cdb56b59f8464a29cdc9bba7e34575.png	password	13	B.Tech	token
+11	Mohan Reddy	14701A0539	25	16	2020-05-03	98746543210	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/7fdc4281f6b8ac6d7fd4ec5e6b88d72f.png	password	14	MS Computers	token
+12	Gamora	14701A0538	25	16	2020-05-11	789874866553	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/ca91571db7bd4a92a9e758a59728ead1.png	password	14	B.Tech	token
+13	Groot	14701A0537	25	16	2020-05-03	987654321	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/5c3ddfd4469b1d25305e8af3b07fa917.png	password	14	Msc Computers	token
+14	Hunt	14701A0536	25	16	2020-04-08	456988754	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/e79a19767a1f8526a1989c4ab02ea34c.png	password	14	MBA	token
+15	Robin Hart	14701A0535	25	16	2019-06-04	80749668282	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/125d8846f62c3440a0eca8e2cf331d3b.png	password	14	MCA	token
+16	Amulya	14701A0534	25	17	2019-08-15	987654321	mohan.velegacherla@gmail.com	http://127.0.0.1:8000/storage/staff_images/85ef95b41970e415088402640eabfc86.png	password	14	PHD Applied Mathematics	token
+17	Mohan Reddy	14701A0549	25	16	2020-05-03	789	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/emp_images/fd2151333ed8948c2554fe21c65ad3df.png	$2y$10$AOLpZD.mvA2M5oRszE2q5O82keSL4nQFnu9FgzjT5fxGgI4ncWwCu	14	Lab Technician	device_token
+18	Thor	14701A0520	27	19	2020-05-03	234567890	krishnareddy3029@gmail.com	http://127.0.0.1:8000/storage/staff_images/82f16a6fc8c035582635a7925500e8cc.png	password	14	MA English	token
 \.
 
 
@@ -624,10 +892,20 @@ COPY public.departments (id, d_name, school_id, email, website, logo) FROM stdin
 -- Data for Name: grades; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.grades (id, school_id, year) FROM stdin;
-1	16	qa
-3	16	B.Tech III
-4	16	B.Tech IV
+COPY public.grades (id, grade_ins_id, grade_year, grade_ins_type) FROM stdin;
+5	4	Intermedaite 1st Year	college
+6	4	Intermedaite 2nd Year	college
+8	25	IV Grade	school
+9	25	V Grade	school
+10	25	VI Grade	school
+11	25	VII Grade	school
+12	25	I Grade	school
+13	25	II Grade	school
+14	25	III Grade	school
+15	25	VIII Grade	school
+16	25	IX Grade	school
+17	25	X Grade	school
+18	27	I Grade	school
 \.
 
 
@@ -636,9 +914,27 @@ COPY public.grades (id, school_id, year) FROM stdin;
 --
 
 COPY public.labs (id, name, school_id, dept_id, machines) FROM stdin;
-1	Neumann Lab	16	3	50
-3	Datastax Lab	16	3	30
-2	Auto Desk Maya 3D Lab	14	1	40
+\.
+
+
+--
+-- Data for Name: permissions; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.permissions (id, perm_name, perm_description, perm_code, perm_role) FROM stdin;
+\.
+
+
+--
+-- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.roles (id, role_name, role_code) FROM stdin;
+1	admin	2
+2	principal	3
+3	hod	4
+4	data-entry	5
+5	teaching-staff	6
 \.
 
 
@@ -646,25 +942,9 @@ COPY public.labs (id, name, school_id, dept_id, machines) FROM stdin;
 -- Data for Name: school; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.school (id, school_name, school_address, school_owner_id, phone, email, website, logo_path, periods, period_length, reg_num, status) FROM stdin;
-1	yui	test address	12	dfghjk	hy@g.c	http://testschool.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
-4	qwertyuio	9/89-JU/RA	11	ertyuiop	krishnareddy3029@gmail.com	https://google.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
-5	oiuytgfd	hfqshqvngsgqjsgjwygdjhwbjh	11	plokijuhgf	hjujhdkjwdkjhkj@nbkbw.com	https://fvgbhjkl.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
-6	Prathibha	Nadalur,Kadapa,A{	11	8079466828	prathibhahs@gmail.com	https://prathibhahs.com	 http://appserver.local:8000/school_logos/a1d3b597c8f8e53d4b9b282cfd8d8fef.svg	4	\N	\N	1
-7	GHSchool	Nadalur,Kadapa,AP	11	7896543210	javvajihari6@gmail.com	https://prathibhahs.com	http://appserver.local:8000/school_logos/831b7f9bb718f4980baa3436708ef8bc.svg	4	\N	\N	1
-8	qwertgyhjuk	wfefewf	11	rftghyjkl;p	tghyjukl@vbnm.com	hhtp://google.com	http://appserver.local:8000/school_logos/e78848d33f3619c4ccff08d7a0f165c3.svg	4	\N	\N	1
-10	Test School	Nadalur,Kadapa,AP	11	897456516546	test@yahoo.com	https://prathibhahs.com	http://appserver.local:8000/school_logos/4cf7850c6569c5726b55260125c1ae8f.svg	4	52	\N	1
-11	Tesr	fdgfgvxkhjhg	11	tffufdut	krishnareddy309@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/f6df398682348654f4631791221d2ee2.	4	40	\N	1
-12	1234234567	kuwait	11	67667749	zebed123@gmail.com	https://google.com	http://127.0.0.1:8000/school_logos/b8f358678cad5e6a62550beb51434d88.jpg	4	30	\N	1
-3	Update check	whbkhwkjdhwkd	11	fghjkl	hi@g.com	http://testschool.com	http://127.0.0.1:8000/school_logos/adb6ebf21e15db0ab33e8b5423ad76e9.	4	12	\N	1
-2	BVBHSs	9/89-JU/RA	11	7896541230	bvbhs@gmail.com	http://testschool.com	http://127.0.0.1:8000/school_logos/bf8956a5781b7e465e942a10540a8a64.	4	\N	\N	1
-13	AITS	Rajamapet	1	1234567890	aits@aits.com	https://aits.com	http://127.0.0.1:8000/school_logos/80a5fe04d8a413a3f881413013c7297f.jpg	4	50	14701A0549	0
-15	sri test high school	Jahra, Kuwait	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/school_logos/67ca33ac4400ea5e123731f842972acd.jpg	4	50	\N	0
-21	Sailor School of Computing	Street 214, Trinity Square, Canada	4	987654321	ssc@mail.com	https://ssc.edu.ac	http://127.0.0.1:8000/storage/school_logos/a32eac57ba0478fccdb963d277d40b5b.png	4	40	14701A0549	1
-18	BVBHS	Kuwat,Kadapa,AP	1	234567890	mohan@sailor.com	http://testschool.com	http://127.0.0.1:8000/storage/school_logos/0e0d275b3e4e17e82fccf8c3a0a8e27f.png	4	40	234567890	0
-17	Test School2	Kuwat,Kadapa,AP	1	234567890987654	mohan@sailor.com	http://sailor.com	http://127.0.0.1:8000/storage/school_logos/bfcf5486f53444d1372a05b37cb02332.jpg	4	45	7412369852	0
-14	Al Bnedi School Of Engineering	Jahra,Kuwait,	1	+965 67441122	albsc@sailor.com	https://albsc.com.kw	http://127.0.0.1:8000/storage/school_logos/cc8647af201a5938c0474e85ef64b952.png	4	52	KW369852	1
-16	Al Bnedi School Of Computing	Jahra, Kuwait	1	+965 67441122	absc@sailor.com	https://albsc.com.kw	http://127.0.0.1:8000/storage/school_logos/75dba8312753287f8803b18b7e00d6bf.png	4	55	KW698574	1
+COPY public.school (id, school_name, school_address, school_owner, school_phone, school_email, school_website, school_logo, school_periods, school_period_length, school_reg_num) FROM stdin;
+25	Sailor School of Higher Education	Street 214, Trinity Square, Banglore	14	8079466828	sshe@sailor.com	https://sshe.com	http://127.0.0.1:8000/storage/school_logos/db6e247b9955264548b3907f797fcbe6.png	5	40	IN2020SSHE
+27	Sailor School of Primary Education	Street 214, Trinity Square, Banglore	14	98746543210	mohan.vvelegacherla@gmail.com	https://sspe.com	http://127.0.0.1:8000/storage/school_logos/847f46c748a1c578980604b9f2ef4284.png	7	40	IN2020SSPE
 \.
 
 
@@ -672,14 +952,9 @@ COPY public.school (id, school_name, school_address, school_owner_id, phone, ema
 -- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.student (id, fname, lname, father_name, mother_name, phone, email, address, school_id, grade_id, dept_id, class_id, photo, sid, gender) FROM stdin;
-8	Mohan Krishna	Velegacherla	Ramana Reddy	Jayamma	+91 8074966828	mohan.velegacherla@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	76	http://127.0.0.1:8000/storage/student_images/8c3d4e3043f10d66ad5adabf350085dd.ico	14701A0549	Gender
-9	Mohan	Velegacherla	Ramana Reddy	Jayamma	67661149	krishnareddy3029@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	72	http://127.0.0.1:8000/storage/student_images/73e917c0caf233bbbf767df2022b2c7e.png	14701A0548	Male
-10	Mohan Krishna	Velegacherla	Ramana Reddy	Jayamma	+91 8074966828	admin@doclinik.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	72	http://127.0.0.1:8000/storage/student_images/83edaf8b2c0c06ff15b25380084f02bd.png	14701A0149	Male
-13	Mohan	Velegacherla	Ramana Reddy	Jayamma	+91 8074966828	mohan.velegacherla@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	99	http://127.0.0.1:8000/storage/student_images/575c4c5e7f00ffbf01e520be71b04a65.png	14701A0500	Male
-14	uygtfrew	qedwqed	we	qstudent	+91 8074966828	admin@doclinik.com	Sai Nagar, Rajampet, Kadapa.	16	1	3	99	http://127.0.0.1:8000/storage/student_images/09920fd16ebc9440ca4182cc3eb2d98c.png	14701A0501	Male
-15	uygtfrew	student	student	student	+91 8074966828	doclinik@admin.com	Sai Nagar, Rajampet, Kadapa.	16	3	3	99	http://127.0.0.1:8000/storage/student_images/3d9d27af30f16fae480790cd56ccaab9.png	14701A0402	Male
-16	class-sort	class-sort	class-sort	class-sort	+91 8074966828	krishnareddy3029@gmail.com	Sai Nagar, Rajampet, Kadapa.	16	4	3	99	http://127.0.0.1:8000/storage/student_images/edf18aa927d0a5d52f707e2ab9588848.png	14701A0503	Male
+COPY public.student (id, fname, lname, father_name, mother_name, phone, email, address, school_id, grade_id, dept_id, class_id, photo, sid, gender, ins_type) FROM stdin;
+24	Mohan	Reddy	Ramana Reddy	Jayamma	80749668282	krishnareddy3029@gmail.com	Street 214, Trinity Square, Banglore	25	16	0	108	http://127.0.0.1:8000/storage/student_images/de679911beb32d8fdbcfca72d619b86e.png	14701A0549	Male	school
+25	Amulya	Reddy	Raja	Nagaveni	9876543210	krishnareddy3029@gmail.com	Street 214, Trinity Square, Banglore	25	16	0	108	http://127.0.0.1:8000/storage/student_images/38d337aea2e706c457e8bd9bf0488f76.png	14701A0550	Gender	school
 \.
 
 
@@ -688,9 +963,9 @@ COPY public.student (id, fname, lname, father_name, mother_name, phone, email, a
 --
 
 COPY public.subjects (id, class_id, subjects_list) FROM stdin;
-111	99	["Operating Systems","System Programming","Web Programming","Data Structures"]
-112	100	["Sub1","Sub2","Sub3","Sub4"]
-113	101	[null,null,null,null]
+118	106	["Operating Systems","IT Fundamentals","Web Programming","Data Structures","Java Programming"]
+119	107	["Telugu","Hindi","English","Maths","Science"]
+120	108	["Telugu","Hindi","English","Maths","Science","Social"]
 \.
 
 
@@ -698,26 +973,19 @@ COPY public.subjects (id, class_id, subjects_list) FROM stdin;
 -- Data for Name: teacher; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.teacher (id, username, phone, email, school_id, designation, department, class_teacher_for, profile, staff_id) FROM stdin;
-1	Mohan	80749668282	krishnareddy3029@gmail.com	2	B.Tech	\N	\N	\N	\N
-2	Amulya	9000137502	amulya4@gmail.com	3	B.Tech	\N	\N	\N	\N
-3	Tenil	7894561230	test@yahoo.com	2	MBA	\N	\N	\N	\N
-4	Loki	4563217890	test@testmail.com	2	Phd	\N	\N	\N	\N
-5	Thor	9876543210	hammer@thor.com	4	Phd	\N	\N	\N	\N
-6	dummy	7896543210	dummy@mail.com	2	MCA	\N	\N	\N	\N
-7	test	test	test@gmail.com	4	MBA	\N	\N	\N	\N
-8	Loki	789456123	harijavvaji6@gmail.com	3	B.Tech	\N	\N	\N	\N
-9	mohan	12345	zebed123@gmail.com	13	mteh	\N	\N	\N	\N
-15	Jhone Doe	9876543210	jd@ssc.com	21	Msc Computers	9	-1	\N	\N
-16	Banner Bruce	9876543210	bb@ssc.com	21	MS Computers	9	-1	\N	\N
-17	Jermy	987654321	jb@ssc.com	21	MS Computers	9	-1	\N	\N
-18	Robin Hart	78945123	rh@ssc.com	21	MS Computers	9	-1	\N	\N
-10	Amulya	9876543	amulya@sailor.com	14	btech	1	\N	\N	\N
-20	Hawk	12345678	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/af985c62bad374d3ff69ab19a38213e1.png	145655655
-22	Rodgers	9876368	jb@ssc.com	16	MCA	3	-1	http://127.0.0.1:8000/storage/staff_images/65aaf2c1afd17e48ae7e63a0a0be4236.png	857192
-21	Stark	234567	jb@ssc.com	16	Msc Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/d451b316895095b01e187ca13946c644.png	98765
-19	Banner	9876543	mohan@sailor.com	16	MS Computers	3	-1	http://127.0.0.1:8000/storage/staff_images/5f5f3adafd23939c882f426e093b6d38.png	12345678
-12	Mohan Reddy	67661149	krishnareddy3029@gmail.com	14	B.Tech	1	43	http://127.0.0.1:8000/storage/staff_images/db12fd711470da8e863b870a9824b378.png	14701059
+COPY public.teacher (id, teacher_name, teacher_phone, teacher_email, teacher_ins_id, teacher_designation, teacher_dept, teacher_profile, teacher_reg_id, teacher_join_date, teacher_ins_type) FROM stdin;
+41	Mohan Reddy	98746543210	krishnareddy3029@gmail.com	25	MSC Computer Science	16	http://127.0.0.1:8000/storage/staff_images/7fdc4281f6b8ac6d7fd4ec5e6b88d72f.png	14701A0539	2020-05-03	school
+42	Gamora	789874866553	krishnareddy3029@gmail.com	25	B.Tech	16	http://127.0.0.1:8000/storage/staff_images/ca91571db7bd4a92a9e758a59728ead1.png	14701A0538	2020-05-11	school
+35	Mohan Reddy	8079466828	krishnareddy3029@gmail.com	4	MS Computers	13	http://127.0.0.1:8000/storage/staff_images/1c62f2004780b073c72ef6fdf5c14c4b.png	14701A0549	2006-03-01	college
+38	Gamora	98746543210	mohan@sailor.com	4	Phd	13	http://127.0.0.1:8000/storage/staff_images/1de85b13fa0dd8b25c7c6c3978a1bfb1.png	14701A0552	2019-12-24	college
+37	Groot	987654321	krishnareddy3029@live.com	4	B.Tech	13	http://127.0.0.1:8000/storage/staff_images/674587548d71ca82c111fcf80259a446.png	14701A0551	2019-04-20	college
+39	Hunt	98746543210	krishnareddy3029@gmail.com	4	B.Tech	13	http://127.0.0.1:8000/storage/staff_images/4cb40c5ebdf58393b8bec3a5f188ba29.png	14701A0553	2020-05-17	college
+40	Rodgers	456988754	mathdept@sshe.com	4	B.Tech	13	http://127.0.0.1:8000/storage/staff_images/01cdb56b59f8464a29cdc9bba7e34575.png	14701A0554	2020-05-11	college
+43	Groot	987654321	krishnareddy3029@gmail.com	25	Msc Computers	16	http://127.0.0.1:8000/storage/staff_images/5c3ddfd4469b1d25305e8af3b07fa917.png	14701A0537	2020-05-03	school
+44	Hunt	456988754	krishnareddy3029@gmail.com	25	MBA	16	http://127.0.0.1:8000/storage/staff_images/e79a19767a1f8526a1989c4ab02ea34c.png	14701A0536	2020-04-08	school
+45	Robin Hart	80749668282	krishnareddy3029@gmail.com	25	MCA	16	http://127.0.0.1:8000/storage/staff_images/125d8846f62c3440a0eca8e2cf331d3b.png	14701A0535	2019-06-04	school
+46	Amulya	987654321	mohan.velegacherla@gmail.com	25	PHD Applied Mathematics	17	http://127.0.0.1:8000/storage/staff_images/85ef95b41970e415088402640eabfc86.png	14701A0534	2019-08-15	school
+47	Thor	234567890	krishnareddy3029@gmail.com	27	MA English	19	http://127.0.0.1:8000/storage/staff_images/82f16a6fc8c035582635a7925500e8cc.png	14701A0520	2020-05-03	school
 \.
 
 
@@ -726,9 +994,17 @@ COPY public.teacher (id, username, phone, email, school_id, designation, departm
 --
 
 COPY public.timetable (id, class_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday) FROM stdin;
-2	99	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Operating Systems"},"2":{"staff_id":"19","staff":"Banner","subject":"System Programming"},"3":{"staff_id":"21","staff":"Stark","subject":"Web Programming"},"4":{"staff_id":"22","staff":"Rodgers","subject":"Data Structures"}}
-3	100	{"1":{"staff_id":"19","staff":"Banner","subject":"Sub1"},"2":{"staff_id":"21","staff":"Stark","subject":"Sub2"},"3":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"4":{"staff_id":"20","staff":"Hawk","subject":"Sub4"}}	{"1":{"staff_id":"19","staff":"Banner","subject":"Sub1"},"2":{"staff_id":"21","staff":"Stark","subject":"Sub2"},"3":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"4":{"staff_id":"20","staff":"Hawk","subject":"Sub4"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Sub4"},"2":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"3":{"staff_id":"21","staff":"Stark","subject":"Sub2"},"4":{"staff_id":"19","staff":"Banner","subject":"Sub1"}}	{"1":{"staff_id":"20","staff":"Hawk","subject":"Sub1"},"2":{"staff_id":"22","staff":"Rodgers","subject":"Sub2"},"3":{"staff_id":"21","staff":"Stark","subject":"Sub3"},"4":{"staff_id":"19","staff":"Banner","subject":"Sub4"}}	{"1":{"staff_id":"21","staff":"Stark","subject":"Sub1"},"2":{"staff_id":"22","staff":"Rodgers","subject":"Sub3"},"3":{"staff_id":"20","staff":"Hawk","subject":"Sub2"},"4":{"staff_id":"19","staff":"Banner","subject":"Sub3"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}
-4	101	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}
+5	106	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"5":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"35","staff":"Mohan Reddy","subject":"Operating Systems"},"2":{"staff_id":"38","staff":"Gamora","subject":"IT Fundamentals"},"3":{"staff_id":"37","staff":"Groot","subject":"Web Programming"},"4":{"staff_id":"39","staff":"Hunt","subject":"Data Structures"},"5":{"staff_id":"40","staff":"Rodgers","subject":"Java Programming"}}	{"1":{"staff_id":"35","staff":"Mohan Reddy","subject":"Operating Systems"},"2":{"staff_id":"38","staff":"Gamora","subject":"IT Fundamentals"},"3":{"staff_id":"37","staff":"Groot","subject":"Web Programming"},"4":{"staff_id":"39","staff":"Hunt","subject":"Data Structures"},"5":{"staff_id":"40","staff":"Rodgers","subject":"Java Programming"}}	{"1":{"staff_id":"35","staff":"Mohan Reddy","subject":"Operating Systems"},"2":{"staff_id":"38","staff":"Gamora","subject":"IT Fundamentals"},"3":{"staff_id":"37","staff":"Groot","subject":"Web Programming"},"4":{"staff_id":"39","staff":"Hunt","subject":"Data Structures"},"5":{"staff_id":"40","staff":"Rodgers","subject":"Java Programming"}}	{"1":{"staff_id":"35","staff":"Mohan Reddy","subject":"Operating Systems"},"2":{"staff_id":"38","staff":"Gamora","subject":"IT Fundamentals"},"3":{"staff_id":"37","staff":"Groot","subject":"Web Programming"},"4":{"staff_id":"39","staff":"Hunt","subject":"Data Structures"},"5":{"staff_id":"40","staff":"Rodgers","subject":"Java Programming"}}	{"1":{"staff_id":"35","staff":"Mohan Reddy","subject":"Operating Systems"},"2":{"staff_id":"38","staff":"Gamora","subject":"IT Fundamentals"},"3":{"staff_id":"37","staff":"Groot","subject":"Web Programming"},"4":{"staff_id":"39","staff":"Hunt","subject":"Data Structures"},"5":{"staff_id":"40","staff":"Rodgers","subject":"Java Programming"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"5":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}
+6	107	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"5":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Telugu"},"2":{"staff_id":"","staff":"taff Name","subject":"Hindi"},"3":{"staff_id":"","staff":"taff Name","subject":"English"},"4":{"staff_id":"","staff":"taff Name","subject":"Maths"},"5":{"staff_id":"","staff":"taff Name","subject":"Science"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Telugu"},"2":{"staff_id":"","staff":"taff Name","subject":"Hindi"},"3":{"staff_id":"","staff":"taff Name","subject":"English"},"4":{"staff_id":"","staff":"taff Name","subject":"Maths"},"5":{"staff_id":"","staff":"taff Name","subject":"Science"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Telugu"},"2":{"staff_id":"","staff":"taff Name","subject":"Hindi"},"3":{"staff_id":"","staff":"taff Name","subject":"English"},"4":{"staff_id":"","staff":"taff Name","subject":"Maths"},"5":{"staff_id":"","staff":"taff Name","subject":"Science"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Telugu"},"2":{"staff_id":"","staff":"taff Name","subject":"Hindi"},"3":{"staff_id":"","staff":"taff Name","subject":"English"},"4":{"staff_id":"","staff":"taff Name","subject":"Maths"},"5":{"staff_id":"","staff":"taff Name","subject":"Science"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Telugu"},"2":{"staff_id":"","staff":"taff Name","subject":"Hindi"},"3":{"staff_id":"","staff":"taff Name","subject":"English"},"4":{"staff_id":"","staff":"taff Name","subject":"Maths"},"5":{"staff_id":"","staff":"taff Name","subject":"Science"}}	{"1":{"staff_id":"","staff":"taff Name","subject":"Telugu"},"2":{"staff_id":"","staff":"taff Name","subject":"Hindi"},"3":{"staff_id":"","staff":"taff Name","subject":"English"},"4":{"staff_id":"","staff":"taff Name","subject":"Maths"},"5":{"staff_id":"","staff":"taff Name","subject":"Science"}}
+7	108	{"1":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"2":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"3":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"4":{"staff_id":"","staff":"taff Name","subject":"Subject Name"},"5":{"staff_id":"","staff":"taff Name","subject":"Subject Name"}}	{"1":{"staff_id":"41","staff":"Mohan Reddy","subject":"Telugu"},"2":{"staff_id":"42","staff":"Gamora","subject":"Hindi"},"3":{"staff_id":"43","staff":"Groot","subject":"English"},"4":{"staff_id":"46","staff":"Amulya","subject":"Maths"},"5":{"staff_id":"45","staff":"Robin Hart","subject":"Science"}}	{"1":{"staff_id":"41","staff":"Mohan Reddy","subject":"Telugu"},"2":{"staff_id":"42","staff":"Gamora","subject":"Hindi"},"3":{"staff_id":"43","staff":"Groot","subject":"English"},"4":{"staff_id":"46","staff":"Amulya","subject":"Maths"},"5":{"staff_id":"45","staff":"Robin Hart","subject":"Science"}}	{"1":{"staff_id":"41","staff":"Mohan Reddy","subject":"Telugu"},"2":{"staff_id":"42","staff":"Gamora","subject":"Hindi"},"3":{"staff_id":"43","staff":"Groot","subject":"English"},"4":{"staff_id":"46","staff":"Amulya","subject":"Maths"},"5":{"staff_id":"45","staff":"Robin Hart","subject":"Science"}}	{"1":{"staff_id":"41","staff":"Mohan Reddy","subject":"Telugu"},"2":{"staff_id":"42","staff":"Gamora","subject":"Hindi"},"3":{"staff_id":"43","staff":"Groot","subject":"English"},"4":{"staff_id":"46","staff":"Amulya","subject":"Maths"},"5":{"staff_id":"45","staff":"Robin Hart","subject":"Science"}}	{"1":{"staff_id":"41","staff":"Mohan Reddy","subject":"Telugu"},"2":{"staff_id":"42","staff":"Gamora","subject":"Hindi"},"3":{"staff_id":"43","staff":"Groot","subject":"English"},"4":{"staff_id":"46","staff":"Amulya","subject":"Maths"},"5":{"staff_id":"45","staff":"Robin Hart","subject":"Science"}}	{"1":{"staff_id":"41","staff":"Mohan Reddy","subject":"Telugu"},"2":{"staff_id":"42","staff":"Gamora","subject":"Hindi"},"3":{"staff_id":"43","staff":"Groot","subject":"English"},"4":{"staff_id":"46","staff":"Amulya","subject":"Maths"},"5":{"staff_id":"46","staff":"Amulya","subject":"Science"}}
+\.
+
+
+--
+-- Data for Name: user_roles; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.user_roles (id, user_id, role_id, school_id, dept_id) FROM stdin;
 \.
 
 
@@ -736,10 +1012,9 @@ COPY public.timetable (id, class_id, sunday, monday, tuesday, wednesday, thursda
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: sailor
 --
 
-COPY public.users (id, username, email, password, phone, profile) FROM stdin;
-1	mohan1149	krishnareddy3029@gmail.com	$2y$10$a75H0pWHclcA5tia9gQY/e.LPlAx7V7DN7jgmoCChLm4SG8GM3Rm6	67667749	\N
-2	qwertyuio	krishnareddy3029@live.com	$2y$10$pAZt5vLYkMuIFnvd9wSO.uzJCF0WQhm.rertiXZjWwpCyVW5z4C9e	asdfghjk	\N
-3	test	mohan.velegacherla@gmail.com	$2y$10$UJlAF2KX.T6vCxdUQtMDxeMUDUq2zAVfVr56U74/quXfZH8p50iqa	123455	\N
+COPY public.users (id, username, email, password, phone, profile, app_for) FROM stdin;
+13	mohan1149	krishnareddy3029@gmail.com	$2y$10$gCJ.ED9NZUEJTIoVuG9kYeIYhUtqIiObop8VG8hW9.w8g4ZHKwsrS	80749668282	http://127.0.0.1:8000/storage/user_profiles/bc77e10fa6b692dac86f26df5bb35339.png	college
+14	mohan3029	mohan.vvelegacherla@gmail.com	$2y$10$zpfyReZiZ48YpjUvazgcjOP8MIeoc7ELA5ingk1cJzzlnKzYfgk8y	8079466828	http://127.0.0.1:8000/storage/user_profiles/8ead1a879715944e87dc886b9062c8b5.png	school
 \.
 
 
@@ -762,21 +1037,35 @@ SELECT pg_catalog.setval('public.articles_id_seq', 15, true);
 -- Name: class_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.class_id_seq', 101, true);
+SELECT pg_catalog.setval('public.class_id_seq', 108, true);
+
+
+--
+-- Name: college_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.college_id_seq', 4, true);
 
 
 --
 -- Name: departments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.departments_id_seq', 9, true);
+SELECT pg_catalog.setval('public.departments_id_seq', 19, true);
+
+
+--
+-- Name: emplyoee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.emplyoee_id_seq', 18, true);
 
 
 --
 -- Name: grades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.grades_id_seq', 4, true);
+SELECT pg_catalog.setval('public.grades_id_seq', 18, true);
 
 
 --
@@ -787,45 +1076,66 @@ SELECT pg_catalog.setval('public.labs_id_seq', 3, true);
 
 
 --
+-- Name: permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.permissions_id_seq', 1, false);
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.roles_id_seq', 1, false);
+
+
+--
 -- Name: school_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.school_id_seq', 21, true);
+SELECT pg_catalog.setval('public.school_id_seq', 27, true);
 
 
 --
 -- Name: student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.student_id_seq', 16, true);
+SELECT pg_catalog.setval('public.student_id_seq', 25, true);
 
 
 --
 -- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.subjects_id_seq', 113, true);
+SELECT pg_catalog.setval('public.subjects_id_seq', 120, true);
 
 
 --
 -- Name: teacher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.teacher_id_seq', 22, true);
+SELECT pg_catalog.setval('public.teacher_id_seq', 47, true);
 
 
 --
 -- Name: timetable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.timetable_id_seq', 4, true);
+SELECT pg_catalog.setval('public.timetable_id_seq', 7, true);
+
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.user_roles_id_seq', 6, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 4, true);
+SELECT pg_catalog.setval('public.users_id_seq', 14, true);
 
 
 --
@@ -872,7 +1182,15 @@ ALTER TABLE ONLY public.student
 --
 
 ALTER TABLE ONLY public.teacher
-    ADD CONSTRAINT unique_staff_id UNIQUE (staff_id);
+    ADD CONSTRAINT unique_staff_id UNIQUE (teacher_reg_id);
+
+
+--
+-- Name: user_roles unique_user_id; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.user_roles
+    ADD CONSTRAINT unique_user_id UNIQUE (user_id);
 
 
 --
@@ -889,28 +1207,6 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: school_school_owner_id_idx; Type: INDEX; Schema: public; Owner: sailor
---
-
-CREATE INDEX school_school_owner_id_idx ON public.school USING btree (school_owner_id);
-
-
---
--- Name: teacher_email_idx; Type: INDEX; Schema: public; Owner: sailor
---
-
-CREATE INDEX teacher_email_idx ON public.teacher USING btree (email);
-
-
---
--- Name: teacher fk_school_id; Type: FK CONSTRAINT; Schema: public; Owner: sailor
---
-
-ALTER TABLE ONLY public.teacher
-    ADD CONSTRAINT fk_school_id FOREIGN KEY (school_id) REFERENCES public.school(id);
 
 
 --

@@ -5,6 +5,7 @@
 <!DOCTYPE html>
     <head>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script type="text/javascript" src="<?php echo asset('jquery.min.js')?>"></script>
         <script type="text/javascript" src="<?php echo asset('master.js')?>"></script>
         <script type="text/javascript" src="<?php echo asset('axios.min.js')?>"></script>
@@ -26,13 +27,10 @@
                 text-transform: uppercase;
                 font-family: 'Nunito', sans-serif;
             }
-            .menu{
-                cursor:pointer;
-            }
             ul.breadcrumb {
               padding: 10px 16px;
               list-style: none;
-              background-color: #eee;
+              background-color: #fff;
             }
             ul.breadcrumb li {
               display: inline;
@@ -50,6 +48,16 @@
             ul.breadcrumb li a:hover {
               color: #01447e;
               text-decoration: underline;
+            }
+            .search-container{
+              width: 40vw;
+              margin: 10px;
+              border: 2px solid grey;
+            }
+            .search{
+              border: none;
+              width: 90%;
+              padding: 10px;
             }
         </style>
     </head>
