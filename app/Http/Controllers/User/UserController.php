@@ -24,7 +24,7 @@ class UserController extends Controller
         $password = Hash::make( strip_tags($request['password']));
         $hex       = bin2hex(openssl_random_pseudo_bytes(16));
         $img_type  = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
-        move_uploaded_file($_FILES['profile']['tmp_name'],storage_path()."/app/public/user_profiles/".$hex.'.'.$img_type);
+        move_uploaded_file($_FILES['profile']['tmp_name'],"storage/user_profiles/".$hex.'.'.$img_type);
         try{
             $query = DB::table('users')
                 ->insertGetId([
@@ -102,6 +102,7 @@ class UserController extends Controller
 						return redirect('/college/dashboard');
 					}elseif($user->app_for == 'school'){
 						$_SESSION['ins'] = 'school';
+						$_SESSION['lang'] ='English';
 						return redirect('/school/dashboard');
 					}else{
 						return view('excep',['error'=>"Invalid Route"]);

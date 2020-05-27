@@ -36,7 +36,7 @@ class DepartmentController extends Controller
         $dept_ins_type = $request['type'];
         $hex           = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
-        move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/dep_logos/".$hex.'.'.$imageFileType);
+        move_uploaded_file($_FILES['logo']['tmp_name'],"storage/dep_logos/".$hex.'.'.$imageFileType);
         try{
             $query = DB::table('departments')
                 ->insert([
@@ -155,7 +155,7 @@ class DepartmentController extends Controller
         $hex           = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
         if($imageFileType !== ''){
-            move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/dep_logos/".$hex.'.'.$imageFileType);
+            move_uploaded_file($_FILES['logo']['tmp_name'],"storage/dep_logos/".$hex.'.'.$imageFileType);
             try{
                 $query = DB::table('departments')
                     ->where('id',$dep_id)

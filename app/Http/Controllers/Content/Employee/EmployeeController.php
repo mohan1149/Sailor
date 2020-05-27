@@ -45,7 +45,7 @@ class EmployeeController extends Controller
 		$emp_join_date    = $request['doj'];
 		try{
 			$type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
-			move_uploaded_file($_FILES['profile']['tmp_name'],storage_path()."/app/public/emp_images/".$hex.'.'.$type);
+			move_uploaded_file($_FILES['profile']['tmp_name'],"storage/emp_images/".$hex.'.'.$type);
 			$query = DB::table('emplyoee')
 				->insertGetId(
 				[

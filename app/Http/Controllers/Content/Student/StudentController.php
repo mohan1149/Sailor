@@ -197,7 +197,7 @@ class StudentController extends Controller
     try{
       $type    = strtolower(pathinfo($_FILES['photo']['name'],PATHINFO_EXTENSION));
       if($type != ''){
-        move_uploaded_file($_FILES['photo']['tmp_name'],storage_path()."/app/public/student_images/".$hex.'.'.$type);
+        move_uploaded_file($_FILES['photo']['tmp_name'],"storage/student_images/".$hex.'.'.$type);
         $query = DB::table('student')
           ->where('id',$stud_id)
           ->update([

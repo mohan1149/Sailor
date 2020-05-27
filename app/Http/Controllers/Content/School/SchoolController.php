@@ -23,7 +23,7 @@ class SchoolController extends Controller
         $school_reg_num       = strip_tags($request['reg-num']);        
         $hex                  = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
-        move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/school_logos/".$hex.'.'.$imageFileType);
+        move_uploaded_file($_FILES['logo']['tmp_name'],"storage/school_logos/".$hex.'.'.$imageFileType);
         try{
             $query = DB::table('school')
                 ->insertGetId([
@@ -136,10 +136,10 @@ class SchoolController extends Controller
         $school_periods       = strip_tags($request['periods']);
         $school_period_length = strip_tags($request['period-length']);
         $school_reg_num       = strip_tags($request['reg-num']);         
-        $imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));        
+        $imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION)); 
         if($imageFileType !== ''){
             $hex = bin2hex(openssl_random_pseudo_bytes(16));
-            move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/school_logos/".$hex.'.'.$imageFileType);
+            move_uploaded_file($_FILES['logo']['tmp_name'],"storage/school_logos/".$hex.'.'.$imageFileType);
             try{
                 $query = DB::table('school')
                     ->where('id', $request['id'])

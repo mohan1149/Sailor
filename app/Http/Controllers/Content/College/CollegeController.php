@@ -28,7 +28,7 @@ class CollegeController extends Controller
         $clg_reg_num    = strip_tags($request['reg-num']);        
         $hex            = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType  = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
-        move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/college_logos/".$hex.'.'.$imageFileType);
+        move_uploaded_file($_FILES['logo']['tmp_name'],"storage/college_logos/".$hex.'.'.$imageFileType);
         try{
             $query = DB::table('college')
                 ->insertGetId([
@@ -152,7 +152,7 @@ class CollegeController extends Controller
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
         if($imageFileType !== ''){
-            move_uploaded_file($_FILES['logo']['tmp_name'],storage_path()."/app/public/college_logos/".$hex.'.'.$imageFileType);
+            move_uploaded_file($_FILES['logo']['tmp_name'],"storage/college_logos/".$hex.'.'.$imageFileType);
             try{
                 $query = DB::table('college')
                     ->where('id', $request['id'])

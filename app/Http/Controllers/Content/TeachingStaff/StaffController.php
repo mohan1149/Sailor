@@ -45,7 +45,7 @@ class StaffController extends Controller
         $hex                 = bin2hex(openssl_random_pseudo_bytes(16));
         try{
           $type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
-          move_uploaded_file($_FILES['profile']['tmp_name'],storage_path()."/app/public/staff_images/".$hex.'.'.$type);
+          move_uploaded_file($_FILES['profile']['tmp_name'],"storage/staff_images/".$hex.'.'.$type);
             $query = DB::table('teacher')
               ->insertGetId(
                 [
@@ -166,7 +166,7 @@ class StaffController extends Controller
         $hex               = bin2hex(openssl_random_pseudo_bytes(16));
         $type              = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
         if($type !=''){
-          move_uploaded_file($_FILES['profile']['tmp_name'],storage_path()."/app/public/staff_images/".$hex.'.'.$type);
+          move_uploaded_file($_FILES['profile']['tmp_name'],"storage/staff_images/".$hex.'.'.$type);
           $update = DB::table('teacher')
             ->where('id',$staff_id)
             ->update([

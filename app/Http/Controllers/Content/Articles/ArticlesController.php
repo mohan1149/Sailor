@@ -16,7 +16,7 @@ class ArticlesController extends Controller
         $data      = $request['article'];
         $html_link = str_ireplace(" ", "_", $title.$hex.".html");
         try{
-            $art_html = fopen(storage_path()."/app/public/articles/".$html_link, "w");
+            $art_html = fopen("storage/articles/".$html_link, "w");
             $write    = fwrite($art_html, $data);
             $url      = $basepath.Storage::url('articles/'.$html_link);
         }catch(\Exception $e){
