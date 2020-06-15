@@ -60,11 +60,11 @@
     </header>
     <body class="w3-light-grey">
     <!-- Sidebar/menu -->
-    @include('dashboardSidebar')
+    @include('school.dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
           <ul class="breadcrumb">
-            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/school/dashboard">Dashboard</a></li>
             <li><a href="">Manage Labs</a></li>
           </ul>
         </header>
@@ -73,17 +73,17 @@
             <div>
                     <?php
                         if(count($response_data) !=0 ){
-                          foreach($response_data as $employee){
+                          foreach($response_data as $school){
                               ?>
                                   <div class="w3-container w3-margin w3-accordion">
-                                      <button class="w3-indigo  w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $employee['id']?>">
-                                          <?php echo $employee['school_name']; ?>
+                                      <button class="w3-indigo  w3-button w3-block w3-left-align staff-show" id ="school-<?php echo $school['id']?>">
+                                          <?php echo $school['school_name']; ?>
                                           <i class="fa fa-plus w3-right"></i>
                                       </button>
-                                      <div class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table school-<?php echo $employee['id']?>">
+                                      <div class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table school-<?php echo $school['id']?>">
                                         <?php
-                                            if(count($employee['dept_data']) !=0){
-                                                foreach ($employee['dept_data'] as $dept) {
+                                            if(count($school['dept_data']) !=0){
+                                                foreach ($school['dept_data'] as $dept) {
                                                 ?>
                                                     <button class="w3-indigo w3-button w3-block w3-left-align class-show" id ="dept-<?php echo $dept['id']?>">
                                                         <?php echo $dept['dept_name']; ?>
@@ -99,19 +99,18 @@
                                                                 ?>
                                                                     <tr>
                                                                         <td>
-                                                                            <i class="fa fa-exclamation-triangle"></i><span> No classes are added to this department</span>
+                                                                            <i class="fa fa-exclamation-triangle"></i><span> No labs are added to this department</span>
                                                                         </td>
                                                                     </tr>
                                                                 <?php
                                                             }else{
-                                                                if(count($dept['lab_data']['labs']) != 0){
-                                                                    foreach($dept['lab_data']['labs'] as $key => $lab){
+                                                                if(count($dept['lab_data']) != 0){
+                                                                    foreach($dept['lab_data'] as $key => $lab){
                                                                         ?>
                                                                             <tr>
                                                                                 <td><?php echo $lab->name?></td>
                                                                                 <td><?php echo $lab->machines?></td>
-                                                                                <td><a href='/edit/lab/<?php echo base64_encode($lab->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                                                <!-- <td><a href='/view/lab/<?php echo base64_encode($lab->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td> -->
+                                                                                <td><a href='/edit/lab/<?php echo base64_encode($lab->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>                                                                                
                                                                                 <td><a href='javascript:void(0)' url = "/delete/lab/<?php echo $lab->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
                                                                             </tr>
                                                                         <?php
@@ -134,9 +133,8 @@
                                             ?>
                                               <div class=" w3-container w3-panel w3-red">
                                                   <p>
-                                                        <i class="fa fa-exclamation-triangle w3-jumbo"></i>
-                                                            NO DEPARTMENTS ADDED.
-                                                        <a class="" href="/add/department">CLICK HERE TO TO ADD</a>
+                                                        <i class="fa fa-exclamation-triangle w3-xumbo"></i>
+                                                         No data added.
                                                   </p>
                                               </div>
                                             <?php
@@ -150,9 +148,8 @@
                           ?>
                               <div class="w3-panel w3-red">
                                   <p>
-                                      <i class="fa fa-exclamation-triangle w3-jumbo"></i>
-                                        NO CLASSES ADDED TO SAILOR SYSTEM.
-                                        <a class="" href="/add/class">CLICK HERE TO TO ADD</a>
+                                      <i class="fa fa-exclamation-triangle w3-xlarge"></i>
+                                        No data added.                                        
                                   </p>
                               </div>
                           <?php
@@ -170,7 +167,7 @@
                     <h2>Are you sure to Delete?</h2>
                 </header>
                 <div class="w3-container">
-                    <p class="w3-dark-text-grey w3-xlarge">Once you delete,all class related information such as staff linked,students will be removed from the Sailor System.</p>
+                    <p class="w3-dark-text-grey w3-xlarge">Once you delete all related information will be removed from the Sailor System.</p>
                     <button class="w3-red w3-margin w3-button w3-xlarge delete-confirm">Sure! Delete</button>
                     <button class="w3-green w3-margin w3-button w3-xlarge" onclick="document.getElementById('delete-modal').style.display='none'" >Cancel</button>
                 </div>

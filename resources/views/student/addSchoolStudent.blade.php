@@ -111,22 +111,22 @@
                         <div id = "bio-info">
                           <div class='form-group'>
                               <span><i class='fa fa-id-badge w3-xlarge w3-text-blue'></i></span>
-                              <input class="form-input" type='text' name='reg-id' placeholder='student id' >
+                              <input required class="form-input" type='text' name='reg-id' placeholder='student id' >
                           </div>
                           <div class='form-group'>
                               <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
-                              <input class="form-input" type='text' name='fname' placeholder='first name' >
+                              <input required class="form-input" type='text' name='fname' placeholder='first name' >
                           </div>
                           <div class='form-group'>
                               <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
-                              <input class="form-input" type='text' name='lname' placeholder='last name' >
+                              <input required class="form-input" type='text' name='lname' placeholder='last name' >
                           </div>
                           <div class='form-group'>
                               <span><i class='fa fa-venus-mars w3-xlarge w3-text-blue'></i></span>
                               <select  class="form-input" name='gender'>
                                 <option vlaue="-1">Gender</option>
-                                <option vlaue="1">Male</option>
-                                <option value="0">Female</option>
+                                <option vlaue="Male">Male</option>
+                                <option value="Female">Female</option>
                               </select>
                           </div>
                           <div class='form-group'>
@@ -161,7 +161,7 @@
                                   <?php
                                       foreach($return_data as $key => $school){                                          
                                           ?>
-                                              <option id="<?php echo $key; ?>" value=<?php echo $school['school_id'];?>><?php echo $school['school_name'] ?></option>
+                                              <option id="<?php echo $key; ?>" value= "<?php echo $school['school_id'];?>" ><?php echo $school['school_name'] ?></option>
                                           <?php
                                       }
                                   ?>
@@ -180,13 +180,15 @@
                               </select>
                           </div>
                           <div class='form-group'>
-                              <span><i class='fa fa-image w3-text-blue w3-xlarge'></i></span>
-                              <input type='file' name='photo'accept="image/*" class="form-input">
-                          </div>
+                            <span><i class='fa fa-image w3-text-blue w3-xlarge'></i></span>
+                            <input id ="image" type='file' name='logo'  accept="image/*" class="form-input">
+                            <span><i class='fa fa-refresh w3-hide loader w3-spin w3-text-blue w3-xlarge'></i></span>                        
+                        </div>
+                        <input type="hidden" name="image_url" class = "image_url" value=""/>
                           <input type="hidden" name="type" value="school">
                           <input type="hidden" name="department" value="0">
                           <div class='form-group' style='text-align:center'>
-                              <input class="w3-button form-input form-submit" type='submit' value="Add">
+                              <input class="w3-button  w3-disabled form-input form-submit" type='submit' value="Add">
                           </div>
                         </div>
                     </form>
@@ -194,6 +196,51 @@
         </div>
     </div>
     </body>
+    <script>
+        $('#image').change(function(){
+            $('.loader').removeClass('w3-hide');            
+            var file = $('#image').prop('files')[0];
+            let filename = file.name;
+            let ext =  filename.substring(filename.lastIndexOf('.')+1, filename.length) || filename;
+            let image_name = Number(new Date()).toString()+'.'+ext;
+            var metadata = {
+                contentType: 'image/jpeg'
+            };
+            var storageRef = firebase.storage().ref();
+            var uploadTask = storageRef.child('student_images/' + image_name).put(file, metadata);		
+            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+            function(snapshot) {    
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED:
+                        console.log('Upload is paused');
+                    break;
+                    case firebase.storage.TaskState.RUNNING:
+                        console.log('Upload is running');
+                    break;
+                }
+            }, function(error) {
+                    switch (error.code) {
+                    case 'storage/unauthorized':      
+                    break;
+                    case 'storage/canceled':
+                    break;
+                    case 'storage/unknown':
+                    break;
+                }
+            }, function() {
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log('File available at', downloadURL);                    
+                    $('.loader').removeClass('fa-refresh');
+                    $('.loader').removeClass('w3-spin');
+                    $('.loader').addClass('fa-check');
+                    $('.form-submit').removeClass('w3-disabled');
+                    $('.image_url').attr('value',downloadURL)
+                });
+            });
+        });
+    </script>
     <footer class='footer w3-bottom'>
         @include('footer')
     </footer>

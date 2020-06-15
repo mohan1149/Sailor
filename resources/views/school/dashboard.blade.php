@@ -47,17 +47,16 @@
     <!-- Sidebar/menu -->
     @include('school.dashboardSidebar')
     <div class="w3-main"  style="margin-left:300px;margin-top:43px;">
-        <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-th"></i> Institute Management</b></h5>
+        <header class="w3-container" style="padding-top:22px">            
         </header>
         <div class="w3-row-padding w3-margin-bottom">
-            <!-- <div class="w3-quarter menu-item ">
+            <div class="w3-quarter menu-item ">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-bank w3-xxxlarge"></i></div>
                     <div class="w3-clear"></div>
-                    <h4><a href="/add/college"><?php echo $$strings['addinsti']?> <i class="fa fa-chevron-right"></i></a></h4>
+                    <h4><a href="/add/school"><?php echo $$strings['addinsti']?> <i class="fa fa-chevron-right"></i></a></h4>
                 </div>
-            </div> -->
+            </div>
             <div class="w3-quarter menu-item ">
                 <div class="w3-container w3-padding-16 w3-card">
                     <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>

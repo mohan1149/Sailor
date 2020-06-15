@@ -68,23 +68,23 @@
                     @csrf
                         <div class='form-group'>
                             <span><i class='fa fa-id-badge w3-xlarge w3-text-blue'></i></span>
-                            <input class="form-input" type='text' name='staff_id' placeholder='ID' >
+                            <input required class="form-input" type='text' name='staff_id' placeholder='ID' >
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
-                            <input class="form-input" type='text' name='staffname' placeholder='staff name' >
+                            <input required class="form-input" type='text' name='staffname' placeholder='staff name' >
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-phone w3-xlarge w3-text-blue'></i></span>
-                            <input  class="form-input" type='tel' placeholder='phone' name='phone'>
+                            <input required class="form-input" type='tel' placeholder='phone' name='phone'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-envelope w3-xlarge w3-text-blue'></i></span>
-                            <input class="form-input"  type='email' placeholder='email' name='email'>
+                            <input required class="form-input"  type='email' placeholder='email' name='email'>
                         </div>
                         <div class='form-group'>
                             <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input  class="form-input" type='text' placeholder='designation' name='designation'>
+                            <input required class="form-input" type='text' placeholder='designation' name='designation'>
                         </div>                        
                         <div class='form-group'>
                             <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
@@ -93,7 +93,7 @@
                                 <?php                                
                                     foreach($return_data as $key => $ins){                                        
                                         ?>
-                                            <option id="<?php echo $key; ?>" value=<?php echo $ins['ins_id'];?>><?php echo $ins['ins_name'] ?></option>
+                                            <option id="<?php echo $key; ?>" value= "<?php echo $ins['ins_id'];?> "><?php echo $ins['ins_name'] ?></option>
                                         <?php
                                     }
                                 ?>
@@ -108,21 +108,68 @@
                         <div class='form-group'> 
                             <p>Date Of Joining</p>                           
                             <span><i class='fa fa-calendar w3-xlarge w3-text-blue'></i></span>
-                            <input  class="form-input" type='date' name='doj'>                            
+                            <input class="form-input" type='date' name='doj'>                            
                         </div>                                               
                         <div class='form-group'>
-                            <span><i class='fa fa-image w3-xlarge w3-text-blue'></i></span>
-                            <input class="form-input" type='file' accept="image/*" name='profile'>
+                            <span><i class='fa fa-image w3-text-blue w3-xlarge'></i></span>
+                            <input id ="image" type='file' name='logo'  accept="image/*" class="form-input">
+                            <span><i class='fa fa-refresh w3-hide loader w3-spin w3-text-blue w3-xlarge'></i></span>                        
                         </div>
+                        <input type="hidden" name="image_url" class = "image_url" value=""/>
                         <input type="hidden" name="type" value="school">
                         <div class='form-group' style='text-align:center'>
-                            <input  class="w3-button form-input form-submit" type='submit' value="Add">
+                            <input  class="w3-button w3-disabled form-input form-submit" type='submit' value="Add">
                         </div>
                     </form>
             </div>
         </div>
     </div>
     </body>
+    <script>
+        $('#image').change(function(){
+            $('.loader').removeClass('w3-hide');            
+            var file = $('#image').prop('files')[0];
+            let filename = file.name;
+            let ext =  filename.substring(filename.lastIndexOf('.')+1, filename.length) || filename;
+            let image_name = Number(new Date()).toString()+'.'+ext;
+            var metadata = {
+                contentType: 'image/jpeg'
+            };
+            var storageRef = firebase.storage().ref();
+            var uploadTask = storageRef.child('staff_images/' + image_name).put(file, metadata);		
+            uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+            function(snapshot) {    
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case firebase.storage.TaskState.PAUSED:
+                        console.log('Upload is paused');
+                    break;
+                    case firebase.storage.TaskState.RUNNING:
+                        console.log('Upload is running');
+                    break;
+                }
+            }, function(error) {
+                    switch (error.code) {
+                    case 'storage/unauthorized':      
+                    break;
+                    case 'storage/canceled':
+                    break;
+                    case 'storage/unknown':
+                    break;
+                }
+            }, function() {
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log('File available at', downloadURL);                    
+                    $('.loader').removeClass('fa-refresh');
+                    $('.loader').removeClass('w3-spin');
+                    $('.loader').addClass('fa-check');
+                    $('.form-submit').removeClass('w3-disabled');
+                    $('.image_url').attr('value',downloadURL)
+                });
+            });
+        });
+    </script>
     <footer class='footer w3-bottom'>
         @include('footer')
     </footer>

@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-//use Edujugon\PushNotification\PushNotification;
 
 use \Pusher\Pusher;
 
@@ -58,54 +57,22 @@ class UserController extends Controller
         try {
             $user = DB::table('users')                
                 ->where('email',$email)
-				->first();
-			$emp = DB::table('emplyoee')
-				->where('emp_email',$email)
-				->join('user_roles','user_roles.user_id','=','emplyoee.id')
-				->join('roles','roles.role_code','=','user_roles.role_id')
-				->first();			
+				->first();					
             if(!$user){
-				if(!$emp){
-					$msg = 'EMAIL NOT FOUND.';
-					return view('emailNotExist',['msg'=>$msg]);
-				}else{					
-					if(Hash::check($password, $emp->emp_password)){
-						$_SESSION['MemberAccess'] = true;					
-						switch($emp->role_code){
-							case 2:
-								$_SESSION['user_id'] = $emp->emp_owner;
-								return redirect('/dashboard');								
-							case 3:
-								$_SESSION['school_id'] = $emp->school_id;
-								return redirect('/principal/'.$emp->emp_username);
-							case 4:
-								$_SESSION['school_id'] = $emp->school_id;
-								$_SESSION['dept_id']   = $emp->dept_id;								
-								return redirect('/hod/'.$emp->emp_username);
-							case 5:
-								$_SESSION['user_id'] = $emp->emp_owner;
-								return redirect('/data-entry/'.$emp->emp_username);
-							case 6:
-								$_SESSION['school_id'] = $emp->school_id;
-								return redirect('/teaching-staff/'.$emp->emp_username);
-						}						
-					}else{					
-						$msg = 'INCORRECT PASSWORD';
-						return view('emailNotExist',['msg'=>$msg]);
-					}
-				}
+				$msg = 'EMAIL NOT FOUND.';
+				return view('emailNotExist',['msg'=>$msg]);				
             }else{
                 if(Hash::check($password, $user->password)){
 					$_SESSION['user_id'] = $user->id;
 					if($user->app_for == 'college'){
 						$_SESSION['ins'] = 'college';
-						return redirect('/college/dashboard');
-					}elseif($user->app_for == 'school'){
-						$_SESSION['ins'] = 'school';
 						$_SESSION['lang'] ='English';
-						return redirect('/school/dashboard');
+						return redirect('/college/dashboard');
 					}else{
-						return view('excep',['error'=>"Invalid Route"]);
+						$_SESSION['ins']  = 'school';
+						$_SESSION['lang'] ='English';
+						$_SESSION['user'] = $user;
+						return redirect('/school/dashboard');
 					}                
                 }else{
                     $msg = 'INCORRECT PASSWORD';
@@ -149,6 +116,8 @@ class UserController extends Controller
       }
     }
 
+
+
     public function getPermissions(){
       try{
         $users = DB::table('user_roles')
@@ -161,8 +130,7 @@ class UserController extends Controller
           ->where('emp_owner',$_SESSION['user_id'])
           ->get();
         $institutes = DB::table('school')
-          ->where('school_owner_id',$_SESSION['user_id'])
-          ->where('status',1)
+          ->where('school_owner',$_SESSION['user_id'])          
           ->get();
         $ins_data = [];
         foreach($institutes as $institute){
@@ -178,7 +146,8 @@ class UserController extends Controller
         $return_data['institutes'] = $ins_data;
         $return_data['users']      = $users;
         return view('permissions',['return_data'=>$return_data]);
-      }catch(\Exception $e){        
+      }catch(\Exception $e){ 
+        return $e->getMessage();    
         return view('excep');
       }
     }
@@ -186,7 +155,7 @@ class UserController extends Controller
     public function getDeptsBySchoolId($school_id){
       try{
         $depts = DB::table('departments')
-          ->where('school_id',$school_id)
+          ->where('dept_ins_id',$school_id)
           ->get();
         return $depts;
       }catch(\Exception $e){
@@ -211,20 +180,5 @@ class UserController extends Controller
       }catch(\Exception $e){
         return response()->json('Failed',500);
       }
-    }
-
-    public function studentAccess(Request $request){
-        $socketId = $request->socket_id;
-        $channelName = $request->channel_name;
-
-        $pusher = new Pusher('83c9614fa128f8d6027a', '21cc55200cb583256bf2', '497574', [
-            'cluster' => 'ap2',
-            'encrypted' => true
-        ]);
-
-        $presence_data = ['name' => auth()->user()->name];
-        $key = $pusher->presence_auth($channelName, $socketId, auth()->id(), $presence_data);
-
-        return response($key);
     }
 }

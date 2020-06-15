@@ -78,7 +78,7 @@
     </header>
     <body class="w3-light-grey">
     <!-- Sidebar/menu -->
-    @include('dashboardSidebar')
+    @include('school.dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
       <header class="w3-container w3-margin" style="padding-top:22px">
         <ul class="breadcrumb">

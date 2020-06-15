@@ -25,8 +25,7 @@
             }
             .logo{
                 width:200px;
-                height:200px;
-                border-radius: 50%;
+                height:200px;                
                 margin-bottom: 15px;
             }
             .school-data .data-item{
@@ -42,7 +41,7 @@
                 font-family: 'Nunito', sans-serif;
                 letter-spacing: .1rem;
                 font-weight: 600;
-                cursor: pointer;
+                /* cursor: pointer; */
             }
             .inner-content table{
               display: none;
@@ -58,7 +57,7 @@
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">            
             <ul class="breadcrumb">
-              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/school/dashboard">Dashboard</a></li>
               <li><a href="/manage/colleges">Manage Schools</a></li>
               <li><a href="">View School</a></li>
               <li><?php echo $responseData['school']->school_name ?></li>
@@ -69,7 +68,7 @@
                 <div class="w3-row">
                     <div class="w3-third s_info">
                         <div class="w3-display-container school-logo">
-                            <img class="w3-margin logo "src="<?php echo $responseData['school']->school_logo?>" width="100%">
+                            <img class="w3-margin logo w3-round "src="<?php echo $responseData['school']->school_logo?>" width="100%">
                         </div>
                         <div class="w3-container w3-text-black">
                             <h2><?php echo $responseData['school']->school_name ?></h2>
@@ -110,11 +109,11 @@
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['emps']) ?></span>
                                         <div class="w3-xlarge count-text">employees</div>
                                     </div>
-                                    <div class="w3-quarter w3-col w3-center">
+                                    <!-- <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-laptop w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['labs']) ?></span>
                                         <div class="w3-xlarge count-text">labs</div>
-                                    </div>
+                                    </div> -->
                                 </div>                                
                             </div>
                         </div>
@@ -124,7 +123,4 @@
         </div>
     </div>
     </body>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

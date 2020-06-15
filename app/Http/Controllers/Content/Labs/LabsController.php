@@ -1,23 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\api\Content;
+namespace App\Http\Controllers\Content\Labs;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Controllers\api\Content\CollegeController;
+use App\Http\Controllers\Content\CommonController;
 class LabsController extends Controller
 {
-  private $schoolController;
+  private $commonController;
   public function __construct(){
-    $this->schoolController = new CollegeController();
+    $this->commonController = new CommonController();
   }
 
   public function addLab(){
-    $schools = $this->schoolController->getCollegesByUser();
-    return view('addLab',['schools'=>$schools]);
+    $schools = $this->commonController->getInstitutesByUser('school');
+    foreach($schools as $school){
+      $return_data  [] = [
+        'schoolId'   => $school->id,
+        'schoolName' => $school->school_name,
+        'ins_depts'  => $this->commonController->getDeptsByInsId($school->id)
+      ];
+    }
+    return view('labs.addLab',['schools'=>$return_data]);
   }
 
   public function storeLab(Request $request){
@@ -34,50 +41,43 @@ class LabsController extends Controller
           'machines'  => $machines,
         ]);
       return redirect('/manage/labs');
-    }catch(\Exception $e){
-      return view('excep');
+    }catch(\Exception $e){      
+      return view('excep',['error'=>$e->getMessage()]);
     }
   }
   public function manageLabs(){
     try{
-        $school_owner_id = $_SESSION['user_id'];
+        $owner = $_SESSION['user_id'];
         $response_data   = [];
-        $schools = DB::table('school')
-          ->where('school_owner_id',$school_owner_id)
-          ->where('status',1)
-          ->get();
+        $schools =$this->commonController->getInstitutesByUser('school');
         foreach ($schools as $school) {
           $response_data[] = [
-            'id'        => $school->id,
+            'id'          => $school->id,
             'school_name' => $school->school_name,
-            'dept_data' => $this->getDeptsBySchoolId($school->id),
+            'dept_data'   => $this->getDeptsByInsId($school->id)
           ];
-        }
-        return view('manageLabs',['response_data'=>$response_data]);
-    }catch(\Exception $e){
-        return view('excep');
+		}		
+        return view('labs.manageLabs',['response_data'=>$response_data]);
+    }catch(\Exception $e){      
+      return view('excep',['error'=>$e->getMessage()]);
     }
   }
 
-  public function getDeptsBySchoolId($school_id){
-    $return_data = [];
-    $deps = DB::table('departments')->where('school_id',$school_id)->get();
-      foreach ($deps as $dep) {
-        $return_data[] = [
-          'id'        => $dep->id,
-          'dept_name' => $dep->d_name,
-          'lab_data'  => $this->getClassesByDeptId($dep->id),
-        ];
-      }
-    return $return_data;
-  }
-
-  public function getClassesByDeptId($dept_id){
-    $return_data = [];
-    $return_data['labs'] = DB::table('labs')
-      ->where('dept_id',$dept_id)
-      ->get();
-  return $return_data;
+  public function getDeptsByInsId($ins_id){
+	try{
+		$return_data = [];
+		$depts = $this->commonController->getDeptsByInsId($ins_id);
+		foreach($depts as $dept){
+			$return_data[] = [
+				'id' => $dept->id,
+				'dept_name' => $dept->dept_name,
+				'lab_data' => $this->commonController->getLabsByDeptId($dept->id),
+			];
+		}
+		return $return_data;
+	}catch(\Exception $e){
+		return [];
+	}
   }
 
   public function editLab(Request $request){
@@ -86,9 +86,10 @@ class LabsController extends Controller
       $lab_data = DB::table('labs')
         ->where('id',$lab_id)
         ->first();
-      return view('editLab',['lab_data'=>$lab_data]);
+      return view('labs.editLab',['lab_data'=>$lab_data]);
     }catch(\Exception $e){
-      return view('excep');
+
+		return view('excep',['error'=>$e->getMessage()]);
     }
   }
 

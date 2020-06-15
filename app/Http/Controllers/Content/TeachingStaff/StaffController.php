@@ -42,10 +42,10 @@ class StaffController extends Controller
 		$teacher_dept        = strip_tags($request['department']);
 		$teacher_join_date   = $request['doj'];
 		$teacher_ins_type    = $request['type'];
-        $hex                 = bin2hex(openssl_random_pseudo_bytes(16));
+        //$hex                 = bin2hex(openssl_random_pseudo_bytes(16));
         try{
-          $type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
-          move_uploaded_file($_FILES['profile']['tmp_name'],"storage/staff_images/".$hex.'.'.$type);
+          //$type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
+          //move_uploaded_file($_FILES['profile']['tmp_name'],"storage/staff_images/".$hex.'.'.$type);
             $query = DB::table('teacher')
               ->insertGetId(
                 [
@@ -56,31 +56,32 @@ class StaffController extends Controller
                   'teacher_ins_id'      => $teacher_ins_id,
                   'teacher_dept'        => $teacher_dept,                  
                   'teacher_designation' => $teacher_designation,
-				  'teacher_profile'     => $request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
+				  'teacher_profile'     => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
 				  'teacher_join_date'   => $teacher_join_date,
 				  'teacher_ins_type'    => $teacher_ins_type
                 ]
               );
               $addEmp = DB::table('emplyoee')
                 ->insert([
-                  'emp_username'     => $teacher_name,
-                  'emp_reg_num'      => $teacher_reg_id,
-                  'emp_institute'    => $teacher_ins_id,
-                  'emp_depart'       => $teacher_dept,
-                  'emp_join_date'    => $teacher_join_date,
-                  'emp_phone'        => $teacher_phone,
-                  'emp_email'        => $teacher_email,
-                  'emp_photo'        => $request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),                  
-                  'emp_password'     => 'password',
-                  'emp_owner'        => $_SESSION['user_id'],
-                  'emp_designation'  => $teacher_designation,
-                  'emp_device_token' =>'token'
+                  'emp_username'        => $teacher_name,
+                  'emp_reg_num'         => $teacher_reg_id,
+                  'emp_institute'       => $teacher_ins_id,
+                  'emp_depart'          => $teacher_dept,
+                  'emp_join_date'       => $teacher_join_date,
+                  'emp_phone'           => $teacher_phone,
+                  'emp_email'           => $teacher_email,
+                  'emp_photo'           => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),                  
+                  'emp_password'        => Hash::make('password'),
+                  'emp_owner'           => $_SESSION['user_id'],
+                  'emp_designation'     => $teacher_designation,
+				  'emp_device_token'    =>'token',
+				  'teacher_foriegn_key' => $query,
                 ]);
             return redirect('/manage/staff');
         }catch(\Exception $e){          
           return view('excep',['error'=>$e->getMessage()]);
         }
-    }
+    } 
     public function manageStaff(){
     	try{
         	$school_owner_id = $_SESSION['user_id'];
@@ -150,7 +151,7 @@ class StaffController extends Controller
         $staff_data = DB::table('teacher')
           ->where('id',$staff_id)
           ->first();
-        return view('editStaff',['staff_data'=>$staff_data]);
+        return view('teaching_staff.editStaff',['staff_data'=>$staff_data]);
       }catch(\Exception $e){
         return view('excep');
       }
@@ -163,10 +164,10 @@ class StaffController extends Controller
         $staff_phone       = strip_tags($request['phone']);
         $staff_email       = strip_tags($request['email']);
         $staff_designation = strip_tags($request['designation']);
-        $hex               = bin2hex(openssl_random_pseudo_bytes(16));
-        $type              = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
-        if($type !=''){
-          move_uploaded_file($_FILES['profile']['tmp_name'],"storage/staff_images/".$hex.'.'.$type);
+        //$hex               = bin2hex(openssl_random_pseudo_bytes(16));
+        //$type              = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
+        if(strlen($request['image_url']) != 0){				
+          //move_uploaded_file($_FILES['profile']['tmp_name'],"storage/staff_images/".$hex.'.'.$type);
           $update = DB::table('teacher')
             ->where('id',$staff_id)
             ->update([
@@ -175,13 +176,24 @@ class StaffController extends Controller
               'teacher_phone'       => $staff_phone,
               'teacher_email'       => $staff_email,
               'teacher_designation' => $staff_designation,
-              'teacher_profile'     => $request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
+              'teacher_profile'     => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
 
             ]
-          );
+		  );
+			$update = DB::table('emplyoee')
+				->where('teacher_foriegn_key',$staff_id)
+				->update([
+					'emp_reg_num'     => $staff_sid,
+					'emp_username'    => $staff_name,
+					'emp_phone'       => $staff_phone,
+					'emp_email'       => $staff_email,
+					'emp_designation' => $staff_designation,
+					'emp_photo'       => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('staff_images/'.$hex.'.'.$type),
+				]
+			);
         }else{
           $update = DB::table('teacher')
-            ->where('id',$staff_id)
+		  	->where('id',$staff_id)
             ->update([
               'teacher_reg_id'     => $staff_sid,
               'teacher_name'        => $staff_name,
@@ -189,11 +201,22 @@ class StaffController extends Controller
               'teacher_email'       => $staff_email,
               'teacher_designation' => $staff_designation
             ]
-          );
+		  );
+		  $update = DB::table('emplyoee')
+		  ->where('teacher_foriegn_key',$staff_id)
+		  ->update([
+			  'emp_reg_num'     => $staff_sid,
+			  'emp_username'    => $staff_name,
+			  'emp_phone'       => $staff_phone,
+			  'emp_email'       => $staff_email,
+			  'emp_designation' => $staff_designation,			  
+		  ]
+	  );
         }
         return redirect('/manage/staff');
       }catch(\Exception $e){
-        return vuew('excep',['error'=>$e->getMessage()]);
+		  return $e->getMessage();
+        return view('excep',['error'=>$e->getMessage()]);
       }
     }
 

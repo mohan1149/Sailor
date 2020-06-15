@@ -46,7 +46,7 @@
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container w3-margin" style="padding-top:22px">
           <ul class="breadcrumb">
-            <li><a href="/school/dashboard">Dashboard</a></li>
+            <li><a href="/<?php echo $_SESSION['ins']?>/dashboard">Dashboard</a></li>
             <li><a href="">Manage Schools</a></li>
           </ul>            
         </header>
@@ -60,10 +60,14 @@
                                 <div class="w3-container">
                                     <div class="w3-round w3-margin w3-padding w3-left">
                                         <div class="">
-                                            <img class="w3-animate w3-animate-left" width="15%" src="<?php echo $school->school_logo?>">
+                                            <img class="w3-animate w3-round" style="width:200px;height:200px;" src="<?php echo $school->school_logo?>">
                                             <span class="w3-xlarge"><?php echo $school->school_name; ?></span>
                                         </div>
                                         <div class="w3-margin">                                         
+                                            <p>
+                                                <strong class="w3-half"><i class="fa fa-list w3-text-purple fa-fw"></i>SCHOOL ID</strong>
+                                                <span><?php echo $school->id ?></span>
+                                            </p>
                                             <p>
                                                 <strong class="w3-half"><i class="fa fa-list w3-text-purple fa-fw"></i>REG ID</strong>
                                                 <span><?php echo $school->school_reg_num ?></span>

@@ -5,14 +5,14 @@
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:0;width:300px;margin-top:15px;" id="mySidebar"><br>
         <div class="w3-container">
             <div class="">
-                <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
-                <span >Welcome, <strong>Mohan</strong></span><br>
+                <img src="<?php echo $_SESSION['user']->profile; ?>" class="w3-circle w3-margin-right" style="width:46px">
+                <span >Welcome, <strong><?php echo $_SESSION['user']->username;?></strong></span><br>
             </div>
             <div class="center-list user-nav">
                 <a href="/school/dashboard"><i title ="Home" class="fa fa-home" style="font-size:24px;"></i></a>
                 <a href="/profile" title ="Profile" ><i class="fa fa-user" style="font-size:24px;"></i></a>
                 <!-- <a href="/mailbox" title ="Mailbox" ><i class="fa fa-envelope" style="font-size:24px;"></i></a> -->
-                <a href="/notifications" title ="Notifcations"><i class="fa fa-bell" style="font-size:24px;"></i></a>
+                <!-- <a href="/notifications" title ="Notifcations"><i class="fa fa-bell" style="font-size:24px;"></i></a> -->
             </div>
         </div>
         <hr>
@@ -23,7 +23,7 @@
             <!-- side nav bar -->
 
             <!-- admissions -->
-            <div class="w3-margin dd-outer" id="admissions">
+            <!-- <div class="w3-margin dd-outer" id="admissions">
                 <i class="fa fa-user-plus w3-xlarge w3-text-blue"></i>
                 <span>admissions</span>
                 <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
@@ -31,7 +31,7 @@
             <div class="dd-content w3-light-grey admissions" id="admissions">
                 <a class="w3-bar-item w3-button" href="/manage/admissions"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage admissions</a>                    
                 <a class="w3-bar-item w3-button" href="/new/admission"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; New admission</a>                                        
-            </div>
+            </div> -->
             <div class="w3-margin dd-outer" id="school">
                 <i class="fa fa-bank w3-xlarge w3-text-blue"></i>
                 <span>Schools</span>
@@ -51,6 +51,17 @@
                 <a class="w3-bar-item w3-button" href="/manage/departments"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Departments</a>                
                 <a class="w3-bar-item w3-button" href="/add/department"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Department</a>                                        
             </div>
+            <!-- years -->
+            <div class="w3-margin dd-outer" id="years">
+                <i class="fa fa-calendar w3-xlarge w3-text-blue"></i>
+                <span>Grades(Years)</span>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+            </div>
+            <div class="dd-content w3-light-grey years" id="years">
+                    <a class="w3-bar-item w3-button" href="/manage/years"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; manage years or grades</a>  
+                <a class="w3-bar-item w3-button" href="/add/studying/year"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; add year or grade</a>                                                      
+            </div>
+
             <!-- classes -->
             <div class="w3-margin dd-outer" id="classes">
                 <i class="fa fa-book w3-xlarge w3-text-blue"></i>
@@ -92,7 +103,7 @@
                 <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Student</a>                                                                                            
             </div>
             <!-- examms -->
-            <div class="w3-margin dd-outer" id="examms">
+            <!-- <div class="w3-margin dd-outer" id="examms">
                 <i class="fa fa-edit w3-xlarge w3-text-blue"></i>
                 <span>exams</span>
                 <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
@@ -100,7 +111,7 @@
             <div class="dd-content w3-light-grey exams" id="exams">
                 <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Students</a>                    
                 <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Student</a>                                                                                            
-            </div>
+            </div> -->
             <!-- reports -->
             <div class="w3-margin dd-outer" id="reports">
                 <i class="fa fa-bar-chart w3-xlarge w3-text-blue"></i>
@@ -127,12 +138,14 @@
                 <span>Transport</span>
                 <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
             </div>
-            <div class="dd-content w3-light-grey transport" id="transport">
-                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Classes</a>                    
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Class</a>                                                                                            
+            <div class="dd-content w3-light-grey transport" id="transport">                                                 
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Driviers</a>
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Vehicles</a>
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Drivier</a>
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Vehicle</a>                
             </div>
             <!-- hostel -->
-            <div class="w3-margin dd-outer" id="hostel">
+            {{-- <div class="w3-margin dd-outer" id="hostel">
                 <i class="fa fa-building w3-xlarge w3-text-blue"></i>
                 <span>hostel</span>
                 <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
@@ -140,23 +153,25 @@
             <div class="dd-content w3-light-grey hostel" id="hostel">
                 <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Classes</a>                    
                 <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Class</a>                                                                                            
-            </div>
+            </div> --}}
             <!-- articles -->
-            <div class="w3-margin dd-outer" id="articles">
+            {{-- <div class="w3-margin dd-outer" id="articles">
                 <i class="fa fa-comments w3-xlarge w3-text-blue"></i>
                 <span>Articles</span>
                 <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+            </div> --}}
+            <!-- data-import -->
+            <div class="w3-margin dd-outer" id="data-import">
+                <i class="fa fa-download w3-xlarge w3-text-blue"></i>
+                <span>data import</span>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
             </div>
-            <div class="dd-content w3-light-grey articles" id="articles">
-                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Classes</a>                    
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Class</a>                                                                                            
+            <div class="dd-content w3-light-grey data-import" id="data-import">
+                <a class="w3-bar-item w3-button" href="/import/students"><i class="fa fa-graduation-cap fa-fw w3-large w3-text-blue"></i>&nbsp; Import students</a>                    
+                <a class="w3-bar-item w3-button" href="/import/staff"><i class="fa fa-black-tie fa-fw w3-large w3-text-blue"></i>&nbsp; import teaching staff</a>
+                <a class="w3-bar-item w3-button" href="/import/employees"><i class="fa fa-users fa-fw w3-large w3-text-blue"></i>&nbsp; import employees</a>
             </div>
-            <!-- <a href="/permissions" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-user-secret fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Permissions'?></a> -->
-            <a href="/data/import" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-download fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Data Import'?></a>               
-            <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-cloud fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Archives'?></a>    
-            <div class="w3-center w3-border-top w3-dark-grey app-credits w3-padding">
-                <p>Version 1.0 | All rights reserved | Sailor Softwares | 2020</p>                
-            </div>
+            <a href="/permissions" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-user-secret fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Permissions'?></a>
         </div>
     </nav>
     <style>

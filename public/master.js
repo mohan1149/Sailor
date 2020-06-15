@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
    // global variable to hold the delete route
     let delete_url = '';
     let toggle_class_name = '';
@@ -77,39 +76,25 @@ $(document).ready(function(){
     start*/
     $(".subjects").keyup(function(e){
         var num = e.target.value;
-        if(isNaN(num)){
-            alert('Please enter numbers only.');
-            $(".subjects").val('0');
+        let subs = "<div class='subjects_list'>";
+        for(i=1;i<=num;i++){
+            subs += "<div class='form-group'>";
+            subs += "<span>Subject "+ i +"</span>";
+            subs += "<input class='form-input' type='text' name='subject"+ i+"'>";
+            subs += "</div>";
         }
-        else{
-            let grids = num / 2;
-            if(grids !== 0){
-                let check = parseInt(grids);
-                let grid1 = grids;
-                let grid2 = grids;
-                if(check !== num / 2){
-                    grid1 = check + 1;
-                    grid2 = check;
-                }
-                for( i=1;i<=grid1;i++){
-                    let str = "<div class='form-group dyn-fg'>";
-                    str += "<span>Subject "+ i +"</span>";
-                    str += "<input class='form-input' type='text' name='subject"+ i+"'>";
-                    str += "</div>";
-                    $(".grid1").append(str);
-                }
-                for( i=grid1+1;i<=num;i++){
-                    let str = "<div class='form-group dyn-fg'>";
-                    str += "<span>Subject "+ i +"</span>";
-                    str += "<input class='form-input' type='text' name='subject"+ i+"'>";
-                    str += "</div>";
-                    $(".grid2").append(str);
-                }
-            }else{
-                $(".dyn-fg").remove();
-                $(".dyn-fg").remove();
-            }
+        $('.subjects_list').replaceWith(subs);                
+    });
+    $(".subjects").change(function(e){
+        var num = e.target.value;
+        let subs = "<div class='subjects_list'>";
+        for(i=1;i<=num;i++){
+            subs += "<div class='form-group'>";
+            subs += "<span>Subject "+ i +"</span>";
+            subs += "<input class='form-input' type='text' name='subject"+ i+"'>";
+            subs += "</div>";
         }
+        $('.subjects_list').replaceWith(subs);                
     });
     /*end*/
     /* code to toggle between departments,classes,staff and students content in school viewing
@@ -128,30 +113,43 @@ $(document).ready(function(){
     start*/
     $('.select-school').change(function(){
         let id = $(this).val();
-        let ins_key =  $($(this)[0].selectedOptions[0]).attr('id');      
+        let ins_key =  $($(this)[0].selectedOptions[0]).attr('id');  
+        console.log(window.ins_data);    
         let depts = window.ins_data[ins_key].ins_depts;
         let dept_select = "<select name='department' class='form-input department'>";
         depts.map(function(dept){
             dept_select += "<option value="+ dept.id +">"+ dept.dept_name+"</option>";
         });
         $('.department').replaceWith(dept_select);
+        
         let years = window.ins_data[ins_key].ins_years;
         let year_select = "<select name='year' class='form-input year'>";
         years.map(function(year){
             year_select += "<option value="+ year.id +">"+ year.grade_year+"</option>";
         });
         $('.year').replaceWith(year_select);
+
+        let staff = window.ins_data[ins_key].ins_staff;
+        let cl_teacher = "<select name='cl_teacher' class='form-input cl_teacher'>";
+        staff.map(function(teacher){
+            cl_teacher += "<option value="+ teacher.id +">"+ teacher.teacher_name+"</option>";
+        });
+        $('.cl_teacher').replaceWith(cl_teacher);
+        
+
+
           
     });
     /*end*/
-    $('.school_change').change(function(){        
+    $('.school_change').change(function(){                
         let ins_key =  $($(this)[0].selectedOptions[0]).attr('id');
         let years = window.school_data[ins_key].school_years;
         let year_select = "<select onchange='updateClass("+ins_key+")' name='grade' class='form-input grade'>";
+        year_select += "<option value='0'>Grade</option>";
         years.map(function(year,index){
             year_select += "<option id="+ index +" value="+ year.year_id +">"+ year.year_name+"</option>";
         });
-        $('.grade').replaceWith(year_select);
+        $('.grade').replaceWith(year_select);        
     });
 
     /* code to toggle between schools and depts
@@ -242,8 +240,8 @@ $(document).ready(function(){
         let svalue = $(this).attr('value');
         $(this).remove();
         $('.'+id).remove();
-        window.subjects = window.subjects.filter(function(value){ return value !== svalue;});
-        $('#final_subs').attr('value',window.subjects.toString());
+        window.subjects = window.subjects.filter(function(subject){ return subject.subject_name !== svalue;});
+        $('#final_subs').attr('value',JSON.stringify(window.subjects));
     });
 
     $('.add-subject').click(function(){
@@ -256,8 +254,12 @@ $(document).ready(function(){
         let sub_class  = subject.replace(/ /gi,'_');
         let button = "<span style='margin-left:4px;'onclick='hide("+sub_class+")' id ="+sub_class+" class='w3-button w3-blue w3-margin-bottom'>"+ subject +"<i class='fa fa-times w3-margin-left'></i></span>";
         $('.subjects-list').append(button);
-        window.subjects.push(subject);
-        $('#final_subs').attr('value',window.subjects.toString());
+        let subject_json = {            
+            'subject_name'       : subject,
+            'subject_completion' : 0
+        };
+        window.subjects.push(subject_json);
+        $('#final_subs').attr('value',JSON.stringify(window.subjects));
     });
 
     $('.notif-side-panel').click(function(){
@@ -465,5 +467,55 @@ $(document).ready(function(){
         $('.dept-toggle').toggleClass('w3-hide');
         $('.clsss-toggle').toggle();
     });
+
+    let syllabus_up_url = '';
+    let syllabus_up_val = '';
+    $('.btn_syllbus_up').click(function(){
+        syllabus_up_url = $(this).attr('url');
+        $('.syllabus_up').show();
+    });
+    $('.update_confirm').click(function(){
+        location.assign(syllabus_up_url +'/' + syllabus_up_val);
+    });
+    $('.up_value').click(function(){
+        syllabus_up_val = $(this).text();
+        $('.up_value').removeClass('w3-purple');
+        $('.up_value').addClass('w3-grey');
+        $(this).removeClass('w3-grey');
+        $(this).addClass('w3-purple');
+    });
+    $('.btn_add_chapters').click(function(){
+        $('.add_chapters').show();
+        let url = $(this).attr('url');
+        $('.add_chapter_form').attr('action',url);
+    });
+    $('.chapters').keyup(function(){
+        let chapters = $(this).val();
+        let input = "<div class='chapters_list w3-margin'>";
+        for(i=1;i<=chapters;i++){
+            input += "<input name='chapter"+ i +"' type='text' placeholder='chapter or unit name' class='w3-input w3-margin'>";            
+        }
+        input +="</div>";
+        $('.chapters_list').replaceWith(input);
+    });
+    $('.chapters').change(function(){
+        let chapters = $(this).val();
+        let input = "<div class='chapters_list w3-margin'>";
+        for(i=1;i<=chapters;i++){
+            input += "<input name='chapter"+ i +"' type='text' placeholder='chapter or unit name' class='w3-input w3-margin'>";            
+        }
+        input +="</div>";
+        $('.chapters_list').replaceWith(input);
+    });
+    $('.password_reset').click(function(){
+        let new_pwd = $('.new_pwd').val();
+        let con_pwd = $('.con_pwd').val();
+        if(new_pwd === con_pwd){
+            $('.pwd-submit').click();
+        }else{
+            $('.pwd_mismatch').removeClass('w3-hide');
+        }        
+    });
+
 });
 

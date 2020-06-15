@@ -80,16 +80,22 @@
             function hide(id){
                 id.style.display = 'none';
                 let val = id.id.replace(/_/gi,' ');
-                window.subjects = window.subjects.filter(function(value){ return value !== val;});
-                document.getElementById('final_subs').value = window.subjects.toString();
-            }
+                window.subjects = window.subjects.filter(function(subject){ return subject.subject_name !== val;});
+                document.getElementById('final_subs').value = JSON.stringify(window.subjects);
+            }   
             window.subjects = [];
             <?php
-                foreach($class['subjects'] as $subject){
-                    ?>
-                        window.subjects.push("<?php echo $subject;?>");
-                    <?php
-                }
+                if(isset($class['subjects'])){
+                    foreach($class['subjects'] as $subject){
+                        ?>
+                            var subject = {                            
+                                'subject_name'       : '<?php echo $subject->subject_name;?>',
+                                'subject_completion' : <?php echo $subject->subject_completion;?>
+                            };
+                            window.subjects.push(subject);
+                        <?php
+                    }
+                }                
             ?>
         </script>
     </head>
@@ -113,11 +119,8 @@
             </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
-            <div class="add-institute">
-                <div class="instructions">
-                    <h4>Instructions</h4>
-                </div>
-                <form action='/update/class/<?php echo $class['class']->class_id?>' method="POST" class="w3-center edit-class">
+            <div class="add-institute">                
+                <form action='/update/class/<?php echo $class['class']->class_id ?>' method="POST" class="w3-center edit-class">
                     @csrf
                     <div class='form-group'>
                         <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
@@ -129,15 +132,17 @@
                     <div class="w3-margin subjects-list">
                         <span class="subjects">Subjects</span>
                         <?php
-                            foreach($class['subjects'] as $key => $subject){
-                                ?>
-                                    <span value="<?php echo $subject?>" id="sub-<?php echo $key?>"class="w3-button subject w3-blue w3-margin-bottom"><?php echo $subject?> <i class="fa fa-times"></i></span>
-                                <?php
+                            if(isset($class['subjects'])){
+                                foreach($class['subjects'] as $key => $subject){
+                                    ?>
+                                        <span value="<?php echo $subject->subject_name ?>" id="sub-<?php echo $key?>"class="w3-button subject w3-blue w3-margin-bottom"><?php echo $subject->subject_name ?> <i class="fa fa-times"></i></span>
+                                    <?php
+                                }
                             }
                         ?>
                     </div>
                     <input type="hidden" value="" id="final_subs"name="subjects">
-                    <div class='form-group w3-center' >
+                    <div class='form-group w3-center'>
                         <input class="w3-button form-input form-submit"type='submit' value="Save">
                     </div>
                 </form>
@@ -161,16 +166,13 @@
                 <button class="w3-red w3-margin w3-button w3-xlarge" onclick="document.getElementById('subject-modal').style.display='none'" >Cancel</button>
             </div>
             <footer class="w3-container w3-dark-grey">
-                    <p>@Sailor Sytem </p>
+                <p>@Sailor Sytem </p>
             </footer>
         </div>
     </div>
     <!-- end -->
     </body>
-    <script>
-        document.getElementById('final_subs').value = window.subjects.toString();
+    <script>        
+        document.getElementById('final_subs').value = JSON.stringify(window.subjects);
     </script>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

@@ -81,4 +81,44 @@ class CommonController extends Controller
             return [];
         }
     }
+
+    public function getStaffByInsId($school_id){
+        try{
+            $staff = [];
+            $staff = DB::table('teacher')
+                ->where('teacher_ins_id',$school_id)
+                ->orderBy('teacher_name')
+                ->get();
+            return $staff;
+        }catch(\Exception $e){
+            return [];
+        }
+    }
+
+    public function getLabsByDeptId($dept_id){
+        try{
+            $labs = [];
+            $labs = DB::table('labs')
+                ->where('dept_id',$dept_id)
+                ->get();
+            return $labs;
+        }catch(\Exception $e){
+            return [];
+        }
+    }
+
+
+
+
+    public function dbtest(){
+        $pdo = DB::connection()->getPdo();
+        $item = 'CREATE TABLE IF NOT EXISTS item 
+            (
+                id SERIAL PRIMARY KEY,
+                item_name CHARACTER VARYING(100),
+                item_description CHARACTER VARYING(255)
+            );'
+        ; 
+        $pdo->exec($item);           
+    }
 }

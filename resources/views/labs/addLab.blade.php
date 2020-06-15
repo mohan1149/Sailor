@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Sailor | Edit Staff</title>
+        <title>Sailor | Add Lab</title>
         <!-- Styles -->
         <style>
             html, body {
@@ -67,66 +67,62 @@
             }
             .form-group{
                 margin-bottom:5px;
-                text-align: center;
             }
         </style>
+        <script>
+            window.ins_data = <?php echo json_encode($schools); ?>
+        </script>
     </head>
     <header class='w3-top'>
         @include('header')
     </header>
     <body class="w3-light-grey">
     <!-- Sidebar/menu -->
-    @if($_SESSION['ins'] == 'college')
-        @include('college.dashboardSidebar')
-    @else
-        @include('school.dashboardSidebar')
-    @endif
+    @include('school.dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
             <ul class="breadcrumb">
-              <li><a href="/dashboard">Dashboard</a></li>
-              <li><a href="/manage/staff">Manage Staff</a></li>
-              <li><a href="">Edit Staff</a></li>
-              <li><?php echo $staff_data->teacher_name; ?></li>
+              <li><a href="/school/dashboard">Dashboard</a></li>
+              <li><a href="/add/lab">Add Lab</a></li>
             </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
-            <div class="add-institute">                
-                <form action='/update/staff/<?php echo $staff_data->id?>' method="POST" enctype="multipart/form-data">
-                    @csrf
+            <div class="add-institute">
+                    <form action='/store/lab' method="POST" class="w3-center">
+                        @csrf
                         <div class='form-group'>
-                            <span><i class='fa fa-id-badge w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->teacher_reg_id ?>" class="form-input" type='text' name='staff_id' placeholder='ID' >
+                            <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
+                            <input required type='text' class="form-input"autofocus name='lab' placeholder='Ex: Von Neumann Lab' >
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-user w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->teacher_name ?>"class="form-input" type='text' name='staffname' placeholder='staff name' >
+                            <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
+                            <select required class="form-input select-school"name='school_id'>
+                                <option value="-1">Institute</option>
+                                <?php
+                                    foreach($schools as $key => $school){
+                                        ?>
+                                            <option id ="<?php echo $key?>" value= "<?php echo $school['schoolId'];?> "><?php echo $school['schoolName'] ?></option>
+                                        <?php
+                                    }
+                                ?>
+                            </select>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-phone w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->teacher_phone?>" class="form-input" type='tel' placeholder='phone' name='phone'>
+                            <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
+                            <select class="form-input department"name='department'>
+                                <option>Department</option>
+                            </select>
                         </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-envelope w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->teacher_email?>" class="form-input"  type='email' placeholder='email' name='email'>
+                        <div class="form-group">
+                            <span><i class='fa fa-laptop  w3-xlarge w3-text-blue'></i></span>
+                            <input required type='number' name='machines' class="subjects form-input" placeholder='Number of working machines' >
                         </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input value="<?php echo $staff_data->teacher_designation?>" class="form-input" type='text' placeholder='designation' name='designation'>
-                        </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-image w3-xlarge w3-text-blue'></i></span>
-                            <input  class="form-input" type='file' accept="image/*" name='profile'>
-                        </div>
-                        <div class='form-group' style='text-align:center'>
-                            <input  class="w3-button form-input form-submit" type='submit' value="Save">
+                        <div class='form-group w3-center' >
+                            <input class="w3-button form-input form-submit"type='submit' value="Save">
                         </div>
                     </form>
             </div>
         </div>
     </div>
     </body>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

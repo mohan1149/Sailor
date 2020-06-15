@@ -152,7 +152,4 @@
         </div>
     </div>
     </body>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

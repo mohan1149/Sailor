@@ -101,7 +101,7 @@
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
             <ul class="breadcrumb">
-              <li><a href="/dashboard">Dashboard</a></li>
+              <li><a href="/school/dashboard">Dashboard</a></li>
               <li><a href="/manage/departments">Manage Departments</a></li>
               <li><a href="">View Department</a></li>
               <li><?php echo $responseData['dep']->dept_name; ?></li>

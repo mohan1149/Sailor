@@ -23,6 +23,7 @@ class ClassController extends Controller
 				'ins_name'  => $ins_type == 'college' ? $institute->clg_name : $institute->school_name,
                 'ins_depts' => $this->commonController->getDeptsByInsId($institute->id),
                 'ins_years' => $this->commonController->getYearsByInsId($institute->id),
+                'ins_staff' => $this->commonController->getStaffByInsId($institute->id),
 			];
 		}
 		if($ins_type == 'college'){
@@ -38,6 +39,7 @@ class ClassController extends Controller
         $class_dept_id      = strip_tags($request['department']);
         $class_year         = $request['year'];
         $class_ins_type     = $request['type'];
+        $classTeacher       = $request['cl_teacher'];
         $query = '';
         try{
             $query = DB::table('class')
@@ -48,16 +50,21 @@ class ClassController extends Controller
                     'class_dept_id'      => $class_dept_id,
                     'class_ins_type'     => $class_ins_type,
                     'class_year'         => $class_year,
-                ]);
-            $subjects = [];
-            for($i=1; $i <= $class_num_subjects; $i++) {
+                    'class_teacher'      => $classTeacher,
+
+                ]);          
+            for($i = 1; $i <= $class_num_subjects; $i++) {
                 $subjects[] = $request['subject'.$i];
-            }        
-            $subs = json_encode($subjects);
+                $subjects_json[$i] = [
+                    'subject_name'       => $request['subject'.$i],
+                    'subject_completion' => 0,
+                    'subject_chapters'   => '',
+                ];
+            }            
             $res  = DB::table('subjects')
                 ->insert([
                     'class_id'      => $query,
-                    'subjects_list' => $subs
+                    'subjects_list' => json_encode($subjects_json)
                 ]);            
             $staff = DB::table('teacher')
                 ->where('teacher_ins_id',$class_ins_id)
@@ -74,7 +81,7 @@ class ClassController extends Controller
             $viewData['className'] = $class_name;
             $viewData['class_id']  = $query;            
             return view('timetable.addTimeTable',['viewData'=>$viewData]);
-        }catch(\Exception $e){            
+        }catch(\Exception $e){                      
             return view('excep',['error'=>$e->getMessage()]);
         }
     }
@@ -175,7 +182,10 @@ class ClassController extends Controller
                 $data[$i] = [
                     'staff_id' => substr($request[$week.'_'.$i.'_staff'],0,stripos($request[$week.'_'.$i.'_staff'],'_')),
                     'staff'    => substr($request[$week.'_'.$i.'_staff'],strripos($request[$week.'_'.$i.'_staff'],'_') + 1),
-                    'subject'  => $request[$week.'_'.$i.'_subject']
+                    'subject'  =>  [
+                        'key' => $i,
+                        'subject' => $request[$week.'_'.$i.'_subject'],
+                    ],                    
                 ];                
 
             }
@@ -218,21 +228,22 @@ class ClassController extends Controller
                 ->where('class.id',$class_id)
                 ->first();            
             if(isset($class_data->subjects_list)){
-                $subjects = $class_data->subjects_list;                
+                $subjects = $class_data->subjects_list;
+                $response_data['subjects'] = json_decode($subjects);       
             }            
-            $response_data['class'] = $class_data;
-            $response_data['subjects'] = json_decode($subjects);
+            $response_data['class'] = $class_data;                   
             return view('class.editClass',['class'=>$response_data]);
-        }catch(\Exception $e){            
+        }catch(\Exception $e){               
             return view('excep',['error' =>$e->getMessage()]);
         }
     }
 
     public function updateClass(Request $request){
         $class_id  = $request['id'];
-        $className = strip_tags($request['className']);
-        $subjects  = json_encode(explode(',',strip_tags($request['subjects'])));
-        $count     = count(explode(',',$subjects));        
+        $className = strip_tags($request['className']);        
+        $subjects  = json_decode($request['subjects']);
+        $count     = count($subjects);        
+        $subjects_json = [];                
         try{
             $updateClass = DB::table('class')
                 ->where('id',$class_id)
@@ -240,10 +251,17 @@ class ClassController extends Controller
                     'class_name'         => $className,
                     'class_num_subjects' => $count,
                 ]);
+            for($i = 0; $i< $count; $i++ ){                
+                $subjects_json[$i+1] = [
+                    'subject_name'       => $subjects[$i]->subject_name,
+                    'subject_completion' => $subjects[$i]->subject_completion,
+                    'subject_chapters'   => '',
+                ];
+            }
             $upSubjects = DB::table('subjects')
                 ->where('class_id',$class_id)
                 ->update([
-                    'subjects_list' => $subjects,
+                    'subjects_list' => json_encode($subjects_json),
                 ]);
             return redirect('/manage/classes');
         }catch(\Exception $e){
@@ -267,14 +285,57 @@ class ClassController extends Controller
             $class_data = DB::table('class')
                 ->where('id',$class_id)
                 ->first();
-            $stud_count = DB::table('student')
+            $students = DB::table('student')
                 ->where('class_id',$class_id)
-                ->count();
+                ->where('ins_type',$_SESSION['ins'])
+                ->get();
+            $subjects = DB::table('subjects')
+                ->where('class_id',$class_id)
+                ->first();
             $response_data['class_data'] = $class_data;
-            $response_data['students']   = $stud_count;
+            $response_data['students']   = $students;
+            $response_data['subjects']   = $subjects;
             return view('class.viewSchoolClass',['responseData'=>$response_data]);
+        }catch(\Exception $e){            
+            return view('excep',['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function updateSyllabus(Request $request){
+        try{
+            $class_id    = $request['class_id'];
+            $sub_index   = $request['subject_index'];
+            $sub_percent = $request['sub_percent'];
+            $update = DB::table('subjects')
+                ->where('class_id',$class_id)
+                ->update([
+                    "subjects_list->".$sub_index."->subject_completion" => $sub_percent,
+                ]);
+            return redirect('/manage/classes');
         }catch(\Exception $e){
-            return view('excep');
+            return view('excep',['error'=>$e->getMessage()]);
+        }
+    }
+
+    public function addChaptersToSubject(Request $request){
+        try{
+            $class_id  = $request['class_id'];
+            $sub_index = $request['subject_index'];
+            $count     = $request['chapters_count'];
+            for($i = 1;$i <= $count;$i++){
+                $chapters[$i] = [                    
+                    'chapter_name'      => $request['chapter'.$i],
+                    'chapter_compltion' => 0,
+                ];
+            }
+            $update = DB::table('subjects')
+                ->where('class_id',$class_id)
+                ->update([
+                    "subjects_list->".$sub_index."->subject_chapters" => $chapters,
+                ]);
+            return redirect('/manage/classes');
+        }catch(\Exception $e){
+            return $e->getMessage();
         }
     }
 }

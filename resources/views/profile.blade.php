@@ -92,18 +92,25 @@
         @include('header')
     </header>
     <body class="w3-light-grey">
-    <!-- Sidebar/menu -->
-    @include('dashboardSidebar')
+    <!-- Sidebar/menu -->    
+    @if($_SESSION['ins'] == 'college')
+        @include('college.dashboardSidebar')
+    @else
+        @include('school.dashboardSidebar')
+    @endif
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5 class="w3-xlarge"><b><i class="fa fa-user w3-text-blue w3-xlarge"></i> My Profile</b></h5>
+            <ul class="breadcrumb">
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="">Profile</a></li>
+            </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
                 <div class="w3-row">
                     <div class="w3-third s_info">
                         <div class="w3-display-container school-logo">
-                            <img class="w3-margin logo "src="<?php //echo $responseData['school']->logo_path?>" width="100%">
+                            <img class="w3-margin logo"src="<?php echo $user->profile; ?>" width="100%">
                         </div>
                         <div class="w3-container w3-text-black">
                             <h2><?php echo $user->username?></h2>
@@ -131,7 +138,4 @@
         </div>
     </div>
     </body>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

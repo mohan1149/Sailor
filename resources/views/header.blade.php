@@ -6,10 +6,28 @@
     <head>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script type="text/javascript" src="<?php echo asset('jquery.min.js')?>"></script>
-        <script type="text/javascript" src="<?php echo asset('master.js')?>"></script>
-        <script type="text/javascript" src="<?php echo asset('axios.min.js')?>"></script>
-        <link rel="stylesheet" href="<?php echo asset('w3.css')?>">
+        <link rel="stylesheet" href="/w3.css">
+        <script type="text/javascript" src="/jquery.min.js"></script>
+        <script type="text/javascript" src="/master.js"></script>
+        <script type="text/javascript" src="/axios.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>  
+        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-messaging.js"></script>  
+        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+        <script>            
+            var firebaseConfig = {
+                apiKey: "AIzaSyC9n71Dc_LAmQlbXG3q-aJ95ER6YZ4Rtxs",
+                authDomain: "sailor-server.firebaseapp.com",
+                databaseURL: "https://sailor-server.firebaseio.com",
+                projectId: "sailor-server",
+                storageBucket: "sailor-server.appspot.com",
+                messagingSenderId: "661317463566",
+                appId: "1:661317463566:web:adfbc6b9ebc03adfb5d65f",
+                measurementId: "G-G6C9F1EPX0"
+            };            
+            firebase.initializeApp(firebaseConfig);          
+          </script>
         <style>
             .center-list {
                 align-items: center;
@@ -63,7 +81,7 @@
     </head>
     <body>
         <div class="center-list w3-card w3-white" style='height:50px'>
-            <a href="/dashboard">
+            <a href="/<?php echo $_SESSION['ins']; ?>/dashboard">
                 <svg width="40" viewBox="0 0 268.2120056152344 267.4739990234375">
                     <g>
                         <svg viewBox="0 0 268.212 267.474" fill="#636b6f">

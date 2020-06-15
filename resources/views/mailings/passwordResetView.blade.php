@@ -41,12 +41,14 @@
         </svg>
       </div>
       <div style="width:70vw;margin:0 auto;background:#f1f1f1;">
-        <div style="text-align:center;margin:16px;">
-          <h2>Password Reset</h2>
+        <div style="text-align:center;margin:16px;padding-top:20px;">
+          <h2
+			style="margin-top:30px"
+          >Reset your password</h2>
         </div>
         <div style="margin:16px;">
           <span>
-              Seems like you forgot your password for {{$email}}. If this is true, click below to reset your password.
+              Seems like you forgot your Sailor ERP account password. If this is true, click below to reset your password.
           </span>
         </div>
         <div style="text-align:center;margin:16px;">
@@ -63,7 +65,7 @@
             Sailor Softwares, 121 Street, Al Farwaniya, Kuwait.
         </p>
       </div>
-      <div style="text-align:center">
+      <div style="text-align:center;padding-bottom:20px;">
         <p>
             Powered by Sailor Softwares | 2020
         </p>

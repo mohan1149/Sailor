@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Sailor | Add Lab</title>
+        <title>Sailor | Edit Lab</title>
         <!-- Styles -->
         <style>
             html, body {
@@ -75,54 +75,34 @@
     </header>
     <body class="w3-light-grey">
     <!-- Sidebar/menu -->
-    @include('dashboardSidebar')
+    @include('school.dashboardSidebar')
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
-            <h5><b><i class="fa fa-plus w3-text-blue w3-xlarge"></i> Add Lab</b></h5>
+          <ul class="breadcrumb">
+            <li><a href="/school/dashboard">Dashboard</a></li>
+            <li><a href="/manage/labs">Manage Labs</a></li>
+            <li><a href="">Edit Lab</a></li>
+            <li><?php echo $lab_data->name; ?></li>
+          </ul>
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">
-                <div class="instructions">
-                    <h4>Instructions</h4>
-                </div>
-                    <form action='/store/lab' method="POST" class="w3-center">
+                    <form action='/update/lab/<?php echo $lab_data->id?>' method="POST" class="w3-center">
                         @csrf
                         <div class='form-group'>
                             <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
-                            <input required type='text' class="form-input"autofocus name='lab' placeholder='Ex: Von Neumann Lab' >
-                        </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
-                            <select required class="form-input select-school"name='school_id'>
-                                <option value="-1">Institute</option>
-                                <?php
-                                    foreach($schools as $school){
-                                        ?>
-                                            <option value=<?php echo $school->id;?>><?php echo $school->school_name ?></option>
-                                        <?php
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class='form-group'>
-                            <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
-                            <select class="form-input department"name='department'>
-                                <option>Department</option>
-                            </select>
+                            <input value="<?php echo $lab_data->name ?>" required type='text' class="form-input"autofocus name='lab' placeholder='Ex: Von Neumann Lab' >
                         </div>
                         <div class="form-group">
                             <span><i class='fa fa-laptop  w3-xlarge w3-text-blue'></i></span>
-                            <input required type='tel' name='machines' class="subjects form-input" placeholder='Number of working machines' >
+                            <input value="<?php echo $lab_data->machines ?> "required type='tel' name='machines' class="subjects form-input" placeholder='Number of working machines' >
                         </div>
                         <div class='form-group w3-center' >
-                            <input class="w3-button form-input form-submit"type='submit' value="Save">
+                            <input class="w3-button form-input form-submit"type='submit' value="Update">
                         </div>
                     </form>
             </div>
         </div>
     </div>
     </body>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

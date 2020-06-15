@@ -21,9 +21,9 @@ class SchoolController extends Controller
         $school_periods       = strip_tags($request['periods']);
         $school_period_length = strip_tags($request['period-length']);
         $school_reg_num       = strip_tags($request['reg-num']);        
-        $hex                  = bin2hex(openssl_random_pseudo_bytes(16));
-        $imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
-        move_uploaded_file($_FILES['logo']['tmp_name'],"storage/school_logos/".$hex.'.'.$imageFileType);
+        //$hex                  = bin2hex(openssl_random_pseudo_bytes(16));
+        //$imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
+        //move_uploaded_file($_FILES['logo']['tmp_name'],"storage/school_logos/".$hex.'.'.$imageFileType);
         try{
             $query = DB::table('school')
                 ->insertGetId([
@@ -33,12 +33,19 @@ class SchoolController extends Controller
                     'school_phone'         => $school_phone,
                     'school_email'         => $school_email,
                     'school_website'       => $school_website,
-                    'school_logo'          => $request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
+                    'school_logo'          => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
                     'school_periods'       => $school_periods,
                     'school_period_length' => $school_period_length,
                     'school_reg_num'       => $school_reg_num,                                
                 ]
-            );        
+            );
+            $upStud = DB::table('student_attendence')
+                ->insertGetId([ 
+                    'sid'        => $query, 
+                    'percentage' => 0, 
+                    'month'      => date('m'),                      
+                ]
+            );    
             return redirect('/manage/schools');        
         }catch(\Exception $e){            
             return view('excep',['error'=>$e->getMessage()]);
@@ -135,11 +142,12 @@ class SchoolController extends Controller
         $school_address       = strip_tags($request['address']);
         $school_periods       = strip_tags($request['periods']);
         $school_period_length = strip_tags($request['period-length']);
-        $school_reg_num       = strip_tags($request['reg-num']);         
-        $imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION)); 
-        if($imageFileType !== ''){
-            $hex = bin2hex(openssl_random_pseudo_bytes(16));
-            move_uploaded_file($_FILES['logo']['tmp_name'],"storage/school_logos/".$hex.'.'.$imageFileType);
+        $school_reg_num       = strip_tags($request['reg-num']);
+        
+        //$imageFileType        = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION)); 
+        if( strlen($request['image_url']) != 0){            
+            //$hex = bin2hex(openssl_random_pseudo_bytes(16));
+            //move_uploaded_file($_FILES['logo']['tmp_name'],"storage/school_logos/".$hex.'.'.$imageFileType);
             try{
                 $query = DB::table('school')
                     ->where('id', $request['id'])
@@ -149,7 +157,7 @@ class SchoolController extends Controller
                         'school_phone'         => $school_phone,
                         'school_email'         => $school_email,
                         'school_website'       => $school_website,
-                        'school_logo'          => $request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
+                        'school_logo'          => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('school_logos/'.$hex.'.'.$imageFileType),
                         'school_periods'       => $school_periods,
                         'school_period_length' => $school_period_length,
                         'school_reg_num'       => $school_reg_num,

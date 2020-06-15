@@ -157,9 +157,11 @@
                               <input value="<?php echo $student->address?>"   class="form-input" type='text' placeholder='address' name='address'>
                           </div>
                           <div class='form-group'>
-                              <span><i class='fa fa-image w3-text-blue w3-xlarge'></i></span>
-                              <input type='file' name='photo'accept="image/*" class="form-input">
-                          </div>
+                                <span><i class='fa fa-image w3-text-blue w3-xlarge'></i></span>
+                                <input id ="image" type='file' name='logo'  accept="image/*" class="form-input">
+                                <span><i class='fa fa-refresh w3-hide loader w3-spin w3-text-blue w3-xlarge'></i></span>                        
+                            </div>
+                            <input type="hidden" name="image_url" class = "image_url" value=""/>
                           <div class='form-group' style='text-align:center'>
                               <input  class="w3-button form-input form-submit" type='submit' value="Update">
                           </div>                          
@@ -168,5 +170,50 @@
             </div>
         </div>
     </div>
+    <script>
+            $('#image').change(function(){
+                $('.loader').removeClass('w3-hide');            
+                var file = $('#image').prop('files')[0];
+                let filename = file.name;
+                let ext =  filename.substring(filename.lastIndexOf('.')+1, filename.length) || filename;
+                let image_name = Number(new Date()).toString()+'.'+ext;
+                var metadata = {
+                    contentType: 'image/jpeg'
+                };
+                var storageRef = firebase.storage().ref();
+                var uploadTask = storageRef.child('student_images/' + image_name).put(file, metadata);		
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+                function(snapshot) {    
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED:
+                            console.log('Upload is paused');
+                        break;
+                        case firebase.storage.TaskState.RUNNING:
+                            console.log('Upload is running');
+                        break;
+                    }
+                }, function(error) {
+                        switch (error.code) {
+                        case 'storage/unauthorized':      
+                        break;
+                        case 'storage/canceled':
+                        break;
+                        case 'storage/unknown':
+                        break;
+                    }
+                }, function() {
+                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                        console.log('File available at', downloadURL);                    
+                        $('.loader').removeClass('fa-refresh');
+                        $('.loader').removeClass('w3-spin');
+                        $('.loader').addClass('fa-check');
+                        $('.form-submit').removeClass('w3-disabled');
+                        $('.image_url').attr('value',downloadURL)
+                    });
+                });
+            });
+        </script>
     </body>    
 </html>

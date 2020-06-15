@@ -41,11 +41,11 @@ class EmployeeController extends Controller
 		$emp_owner        = $_SESSION['user_id'];
 		$emp_device_token = 'device_token';
 		$emp_password     = Hash::make('password');
-		$hex              = bin2hex(openssl_random_pseudo_bytes(16));
+		//$hex              = bin2hex(openssl_random_pseudo_bytes(16));
 		$emp_join_date    = $request['doj'];
 		try{
-			$type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
-			move_uploaded_file($_FILES['profile']['tmp_name'],"storage/emp_images/".$hex.'.'.$type);
+			//$type    = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
+			//move_uploaded_file($_FILES['profile']['tmp_name'],"storage/emp_images/".$hex.'.'.$type);
 			$query = DB::table('emplyoee')
 				->insertGetId(
 				[
@@ -56,7 +56,7 @@ class EmployeeController extends Controller
 					'emp_institute'    => $emp_institute,
 					'emp_depart'       => $emp_depart,                
 					'emp_designation'  => $emp_designation,
-					'emp_photo'        => $request->getSchemeAndHttpHost().Storage::url('emp_images/'.$hex.'.'.$type),
+					'emp_photo'        => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('emp_images/'.$hex.'.'.$type),
 					'emp_owner'        => $emp_owner,
 					'emp_device_token' => $emp_device_token,
 					'emp_join_date'    => $emp_join_date,

@@ -146,32 +146,7 @@
                                   </button>
                                   <div class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table attendence">
                                     Coming Soon..
-                                  </div>
-                                  <button class="w3-indigo  w3-margin w3-button w3-block w3-left-align staff-show" id ="syllabus">
-                                      Syllabus
-                                      <i class="fa fa-plus w3-right"></i>
-                                  </button>
-                                  <div class="inactive w3-table w3-bordered w3-margin w3-accordion-content content-table syllabus">
-                                    <table class="w3-table w3-bordered">
-                                        <th><i class="fa fa-book w3-text-purple w3-large"></i> Subject</th>
-                                        <th> <i class="fa fa-percent w3-text-purple w3-large"></i> Syllabus Completion</th>
-                                        <?php
-                                            $subjects = json_decode($student_data['class']['class_data']->subjects_list);
-                                            foreach($subjects as $subject){
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $subject; ?></td>
-                                                        <td>
-                                                            <div class="w3-light-grey w3-round-xlarge w3-padding">
-                                                                <div class="w3-container w3-center w3-round-xlarge w3-teal" style="width:90%">90 %</div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                <?php
-                                            }
-                                        ?>
-                                    </table>
-                                  </div>
+                                  </div>                    
                                   <button class="w3-indigo w3-margin w3-button w3-block w3-left-align staff-show" id ="leaves">
                                       Marks
                                       <i class="fa fa-plus w3-right"></i>

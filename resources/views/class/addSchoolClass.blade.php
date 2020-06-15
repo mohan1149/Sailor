@@ -101,27 +101,29 @@
                                 <?php                                
                                     foreach($return_data as $key => $ins){                                        
                                         ?>
-                                            <option id="<?php echo $key; ?>" value=<?php echo $ins['ins_id'];?>><?php echo $ins['ins_name'] ?></option>
+                                            <option id="<?php echo $key; ?>" value = "<?php echo $ins['ins_id'];?>" ><?php echo $ins['ins_name'] ?></option>
                                         <?php
                                     }
                                 ?>
                             </select>
                         </div>
                         <div class='form-group'>
-                            <span><i class='fa fa-share-alt w3-xlarge w3-text-blue'></i></span>
+                            <span><i class='fa fa-calendar w3-xlarge w3-text-blue'></i></span>
                             <select class="form-input year" name='year'>
                                 <option value="0">Grade</option>
                             </select>
-                        </div>                        
+                        </div>
+                        <div class='form-group'>
+                            <span><i class='fa fa-black-tie w3-xlarge w3-text-blue'></i></span>
+                            <select class="form-input cl_teacher" name='cl_teacher'>
+                                <option value="0">Class Teacher</option>
+                            </select>
+                        </div>                       
                         <div class="form-group">
                             <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                            <input required type='tel' name='subjects' class="subjects form-input" placeholder='Number of subjects' >
+                            <input required type='number' name='subjects' class="subjects form-input" placeholder='Number of subjects' >
                         </div>
-                        <div class="w3-row">
-                            <div class="w3-half grid1">
-                            </div>
-                            <div class="w3-half grid2">
-                            </div>
+                        <div class="w3-row subjects_list">                            
                         </div>
                         <input type="hidden" name="department" value="0">
                         <input type="hidden" name="type" value="school">
@@ -133,7 +135,4 @@
         </div>
     </div>
     </body>
-    <footer class='footer w3-bottom'>
-        @include('footer')
-    </footer>
 </html>

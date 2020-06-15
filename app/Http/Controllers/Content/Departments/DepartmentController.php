@@ -34,9 +34,9 @@ class DepartmentController extends Controller
         $dept_email    = strip_tags($request['email']);
         $dept_website  = strip_tags($request['website']);
         $dept_ins_type = $request['type'];
-        $hex           = bin2hex(openssl_random_pseudo_bytes(16));
-        $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
-        move_uploaded_file($_FILES['logo']['tmp_name'],"storage/dep_logos/".$hex.'.'.$imageFileType);
+        //$hex           = bin2hex(openssl_random_pseudo_bytes(16));
+        //$imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
+       // move_uploaded_file($_FILES['logo']['tmp_name'],"storage/dep_logos/".$hex.'.'.$imageFileType);
         try{
             $query = DB::table('departments')
                 ->insert([
@@ -44,7 +44,7 @@ class DepartmentController extends Controller
                     'dept_ins_id'   => $dept_ins_id,
                     'dept_email'    => $dept_email,
                     'dept_website'  => $dept_website,
-                    'dept_logo'     => $request->getSchemeAndHttpHost().Storage::url('dep_logos/'.$hex.'.'.$imageFileType),
+                    'dept_logo'     => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('dep_logos/'.$hex.'.'.$imageFileType),
                     'dept_ins_type' => $dept_ins_type
                 ]);
             if($query){
@@ -154,8 +154,8 @@ class DepartmentController extends Controller
         $website       = strip_tags($request['website']);
         $hex           = bin2hex(openssl_random_pseudo_bytes(16));
         $imageFileType = strtolower(pathinfo($_FILES['logo']['name'],PATHINFO_EXTENSION));
-        if($imageFileType !== ''){
-            move_uploaded_file($_FILES['logo']['tmp_name'],"storage/dep_logos/".$hex.'.'.$imageFileType);
+        if(strlen($request['image_url']) !== 0){
+            //move_uploaded_file($_FILES['logo']['tmp_name'],"storage/dep_logos/".$hex.'.'.$imageFileType);
             try{
                 $query = DB::table('departments')
                     ->where('id',$dep_id)
@@ -163,7 +163,7 @@ class DepartmentController extends Controller
                         'dept_name'    => $dept_name,
                         'dept_email'   => $email,
                         'dept_website' => $website,
-                        'dept_logo'    => $request->getSchemeAndHttpHost().Storage::url('dep_logos/'.$hex.'.'.$imageFileType),
+                        'dept_logo'    => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('dep_logos/'.$hex.'.'.$imageFileType),
                     ]);
                 if($query){
                     return redirect('/manage/departments');
