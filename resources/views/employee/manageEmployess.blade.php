@@ -122,7 +122,7 @@
                                                                                   <td><?php echo $staff->emp_designation?></td>
                                                                                   <td><?php echo $staff->emp_join_date?></td>
                                                                                   <td><a href='/edit/employee/<?php echo base64_encode($staff->id)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
-                                                                                  <td><a href='/view/employee/<?php echo base64_encode($staff->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>
+                                                                                  <!--<td><a href='/view/employee/<?php //echo base64_encode($staff->id)?>' class='w3-xlarge w3-text-purple' title='View'><i class="fa fa-eye"></i></a></td>-->
                                                                                   <td><a href='javascript:void(0)' url = "/delete/employee/<?php echo $staff->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
                                                                               </tr>
                                                                           <?php

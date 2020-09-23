@@ -191,10 +191,10 @@ class TeacherController extends Controller
                         'classStudents' => $this->getStudentsByClass($class->class_id),
                     ];
                 }
-            }
-            return $teacher_classes;
+            }            
+            return response()->json($teacher_classes, 200);
         }catch(\Exception $e){
-            return $e->getMessage();
+            return response()->json($e->getMessage(), 500);
         }
     }
 

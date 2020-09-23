@@ -122,4 +122,19 @@ class LabsController extends Controller
       return view('excep');
     }
   }
+  
+  public function labsByIns(Request $request){
+    try{
+      $ins_id = base64_decode($request['id']);
+		  $labs   = [];
+      $labs['ins_name'] = str_ireplace('_',' ',$request['ins']);
+      $labs['labs'] = DB::table('labs')
+        ->join('departments','departments.id','=','labs.dept_id')
+        ->where('labs.school_id',$ins_id)
+        ->get();
+      return view('labs.labsByIns',['labs'=>$labs]);
+    }catch(\Exception $e){
+      return $e->getMessage();
+    }
+  }
 }

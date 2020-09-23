@@ -89,7 +89,11 @@
                     @csrf
                     <div class='form-group'>
                         <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
-                        <input required type='text' class="form-input"autofocus name='year_value' placeholder='Eg: IV Grade' >
+                        <input required type='text' class="form-input"autofocus name='year_value' placeholder='Eg: IX Grade' >
+                    </div>
+                    <div class='form-group'>
+                        <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
+                        <input required type='number' class="form-input" name='year_numeric' placeholder='Numeric Value Eg: 9' >
                     </div>
                     <div class='form-group'>
                         <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>

@@ -10,7 +10,7 @@ axios({
     let g_set = {
       label:dataset.school_name,
       backgroundColor: '#'+ Math.floor(Math.random()*16777215).toString(16),
-      borderColor: '#'+ Math.floor(Math.random()*16777215).toString(16),
+      //borderColor: '#'+ Math.floor(Math.random()*16777215).toString(16),
       borderWidth: 1,
       data:[        
         dataset.depts_count,
@@ -18,7 +18,7 @@ axios({
         dataset.staff_count,
         dataset.studs_count        
 	  ],
-	  fill:false,
+	  fill:true,
     };
     graph_sets.push(g_set);
   });
@@ -29,7 +29,7 @@ axios({
   };
   var ctx = document.getElementById('institute-canvas').getContext('2d');
   window.myBar = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: barChartData,
     options: {
       responsive: true,

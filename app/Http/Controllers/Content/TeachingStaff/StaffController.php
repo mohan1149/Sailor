@@ -8,15 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Content\CommonController;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class StaffController extends Controller
 {
     private $commonController;    
     public function __construct(){
         $this->commonController = new CommonController();
-    }
-    public function addStaff(){
-		$return_data = [];
+	}
+	
+	public function getStaffAddData(){
 		$ins_type    = $_SESSION['ins'];
+		$return_data = [];
         $ins = $this->commonController->getInstitutesByUser($ins_type);
         foreach($ins as $institute){
 			$return_data[] = [
@@ -25,6 +28,11 @@ class StaffController extends Controller
 				'ins_depts' => $this->commonController->getDeptsByInsId($institute->id),
 			];
 		}
+		return $return_data;
+	}
+    public function addStaff(){
+		$ins_type    = $_SESSION['ins'];
+		$return_data = $this->getStaffAddData();
 		if($ins_type == 'college'){
 			return view('teaching_staff.addCollegeStaff',['return_data'=>$return_data]);
 		}else{
@@ -259,5 +267,103 @@ class StaffController extends Controller
 		return $e->getMessage();
         return view('excep',['error'=>$e->getMessage()]);
       }
-    }
+	}
+	
+	public function importStaffView(Request $request){
+		try{
+			$return_data = $this->getStaffAddData();
+			return view('teaching_staff.importStaff',['return_data'=>$return_data]);
+		}catch(\Exception $e){
+			return view('excep',['error'=>$e->getMessage()]);
+		}
+	}
+
+	public function importStaff(Request $request){
+		try{
+			$teacher_ins_id   = $request['ins_id'];
+			$teacher_dept     = $request['department'];
+			$teacher_ins_type = $_SESSION['ins'];			
+			$type = strtolower(pathinfo($_FILES['data_file']['name'],PATHINFO_EXTENSION));
+			if($type ==='xlsx'){
+				$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
+			}elseif($type === 'xls'){
+				$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xls');
+			}
+			$reader->setReadDataOnly(true);
+			$worksheetData = $reader->listWorksheetInfo($_FILES['data_file']['tmp_name']);			
+			foreach ($worksheetData as $worksheet) {
+				$sheetName = $worksheet['worksheetName'];				
+				$reader->setLoadSheetsOnly($sheetName);
+				$spreadsheet = $reader->load($_FILES['data_file']['tmp_name']);
+				$worksheet = $spreadsheet->getActiveSheet();				
+				$rows = $worksheet->toArray();
+				foreach($rows as $key => $row){			
+					$staff = array_unique($row);					
+					if($key != 0)
+					{								
+						if(
+							isset($staff[0]) &&
+							isset($staff[1]) &&
+							isset($staff[2]) &&
+							isset($staff[3]) &&
+							isset($staff[4]) 
+						){							
+							$teacher_reg_id      = $staff[0];
+							$teacher_name        = $staff[1];
+							$teacher_phone       = $staff[2];
+							$teacher_email       = $staff[3];
+							$teacher_designation = $staff[4];
+							$tid = DB::table('teacher')
+								->insertGetId([
+									'teacher_reg_id'      => $teacher_reg_id,
+									'teacher_name'        => $teacher_name,
+									'teacher_phone'       => $teacher_phone,
+									'teacher_email'       => $teacher_email,
+									'teacher_designation' => $teacher_designation,
+									'teacher_join_date'   => date('Y-m-d'),
+									'teacher_ins_id'      => $teacher_ins_id,
+									'teacher_ins_type'    => $teacher_ins_type,
+									'teacher_dept'        => $teacher_dept 
+								]
+							);
+							$insertIntoEmp = DB::table('emplyoee')
+								->insert([
+									'emp_username'        => $teacher_name,
+									'emp_reg_num'         => $teacher_reg_id,
+									'emp_institute'       => $teacher_ins_id,
+									'emp_depart'          => $teacher_dept,
+									'emp_join_date'       => date('Y-m-d'),
+									'emp_phone'           => $teacher_phone,
+									'emp_email'           => $teacher_email,
+									'emp_password'        => Hash::make('password'),
+									'emp_owner'           => $_SESSION['user_id'],
+									'emp_designation'     => $teacher_designation,
+									'emp_device_token'    => 'token',
+									'emp_ins_type'        => $teacher_ins_type,
+									'teacher_foriegn_key' => $tid,
+								]
+							);
+						}																						
+					}					
+				}
+			}			
+			return response()->json(1, 200);							
+		}catch(\Exception $e){
+			return response()->json($e->getMessage(), 500);
+		}
+	}
+
+	public function staffByIns(Request $request){
+		try{
+			$ins_id = base64_decode($request['id']);
+			$staff  = [];
+			$staff['ins_name'] = str_ireplace('_',' ',$request['ins']);
+			$staff['staff'] = DB::table('teacher')
+				->where('teacher_ins_id',$ins_id)
+				->get();
+			return view('teaching_staff.staffByIns',['staff'=>$staff]);
+		}catch(\Exception $e){
+			return response()->json($e->getMessage(), 500);
+		}
+	}
 }

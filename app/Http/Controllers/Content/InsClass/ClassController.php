@@ -338,4 +338,21 @@ class ClassController extends Controller
             return $e->getMessage();
         }
     }
+
+    public function classesByIns(Request $request){
+        try{
+            $ins_id = base64_decode($request['id']);
+            $classes['ins_name'] = str_ireplace('_',' ',$request['ins']);
+            $classes['classes']  = [];
+            $classes['classes']  = DB::table("class")
+                ->join("grades","grades.id","=","class_year")
+                ->where("class.class_ins_id",$ins_id)
+                ->orderBy("grades.grade_numeric")
+                ->select(["class.class_name","class.class_num_subjects","grades.grade_year","class.id"])
+                ->get();
+                return view('class.classesByIns',['classes'=>$classes]);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+    }
 }

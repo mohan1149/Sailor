@@ -35,13 +35,15 @@ class GradesController extends Controller
     public function addYear(Request $request){
         $year_value = $request['year_value'];
         $ins_id     = $request['ins_id'];
-        $ins_type   = $request['type'];
+		$ins_type   = $request['type'];
+		$garde_num  = $request['year_numeric'];
         try{
           $query = DB::table('grades')
             ->insert([
               'grade_ins_id'   => $ins_id,
               'grade_year'     => strip_tags($year_value),
-              'grade_ins_type' => $ins_type
+			  'grade_ins_type' => $ins_type,
+			  'grade_numeric'  => $garde_num,
             ]);
             return redirect('/manage/years');
         }catch(\Exception $e){
@@ -104,10 +106,12 @@ class GradesController extends Controller
 		try{
 			$gid = base64_decode($request['gid']);
 			$grade = strip_tags($request['year_value']);
+			$garde_num = $request['year_numeric'];
 			$update = DB::table('grades')
 				->where('id',$gid)
 				->update([
-					'grade_year' => $grade,
+					'grade_year'    => $grade,
+					'grade_numeric' => $garde_num,
 				]);
 			return redirect('/manage/years');
 		}catch(\Exception $e){

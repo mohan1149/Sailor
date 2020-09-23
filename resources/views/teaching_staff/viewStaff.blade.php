@@ -124,7 +124,7 @@
                                                       ?>
                                                         <tr>
                                                           <td><span><?php echo $key?></span></td>
-                                                          <td><span><?php echo isset($day->subject) ? $day->subject : "N/A";?></span></td>
+                                                          <td><span><?php echo isset($day->subject) ? json_decode($day->subject)->subject : "N/A";?></span></td>
                                                           <td><span><?php echo isset($day->class_name) ? $day->class_name : "N/A";?></span></td>
                                                         </tr>
                                                       <?php

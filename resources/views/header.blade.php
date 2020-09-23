@@ -36,9 +36,9 @@
                 /* height:50px; */
             }
             .links > a {
-                color: #636b6f;
+                color: #fff;
                 padding: 0 25px;
-                font-size: 13px;
+                font-size: 15px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
@@ -80,11 +80,11 @@
         </style>
     </head>
     <body>
-        <div class="center-list w3-card w3-white" style='height:50px'>
+        <div class="center-list w3-card" style='height:70px;background-color: rgb(61, 94, 161);'>
             <a href="/<?php echo $_SESSION['ins']; ?>/dashboard">
                 <svg width="40" viewBox="0 0 268.2120056152344 267.4739990234375">
                     <g>
-                        <svg viewBox="0 0 268.212 267.474" fill="#636b6f">
+                        <svg viewBox="0 0 268.212 267.474" fill="#fff">
                             <path d="M268.212,227.412c-9.872,12.646-22.085,27.813-31.956,40.062c-1.081,0-192.286-0.576-199.788-0.576  c-0.18,0-1.909-1.188-5.197-3.566c-6.413-3.999-12.799-9.583-19.194-16.717C4.197,238.185,0.18,231.447,0,226.331L268.212,227.412z   M86.672,207.057H20.581L86.672,0.541V207.057z M253.946,207.057H110.522V0L253.946,207.057z">
                             </path>
                         </svg>

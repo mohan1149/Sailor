@@ -62,7 +62,7 @@ class CommonController extends Controller
             $years = DB::table('grades')
                 ->where('grade_ins_id',$ins_id)
                 ->where('grade_ins_type',$_SESSION['ins'])
-                ->orderBy('grade_year')
+                ->orderBy('grade_numeric')
                 ->get();
             return $years;
         }catch(\Exception $e){

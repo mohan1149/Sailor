@@ -16,11 +16,11 @@ class UserController extends Controller
     public function signUp(Request $request)
     {
         session_start();
-        $username = strip_tags($request['username']);
-        $phone    = strip_tags($request['phone']);
-        $email    = strip_tags($request['email']);
-        $app_for  = $request['app_for'];
-        $password = Hash::make( strip_tags($request['password']));
+        $username  = strip_tags($request['username']);
+        $phone     = strip_tags($request['phone']);
+        $email     = strip_tags($request['email']);
+        $app_for   = $request['app_for'];
+        $password  = Hash::make( strip_tags($request['password']));
         $hex       = bin2hex(openssl_random_pseudo_bytes(16));
         $img_type  = strtolower(pathinfo($_FILES['profile']['name'],PATHINFO_EXTENSION));
         move_uploaded_file($_FILES['profile']['tmp_name'],"storage/user_profiles/".$hex.'.'.$img_type);
@@ -50,8 +50,7 @@ class UserController extends Controller
     }
 
     // login function for school owners
-    public function login(Request $request){
-        session_start();
+    public function login(Request $request){     
         $email      = strip_tags($request['email']);
         $password   = strip_tags($request['password']);
         try {
@@ -70,8 +69,9 @@ class UserController extends Controller
 						return redirect('/college/dashboard');
 					}else{
 						$_SESSION['ins']  = 'school';
-						$_SESSION['lang'] ='English';
-						$_SESSION['user'] = $user;
+						$_SESSION['lang'] = 'English';
+            $_SESSION['user'] = $user;
+            $_SESSION['role'] = 0;
 						return redirect('/school/dashboard');
 					}                
                 }else{
@@ -80,6 +80,7 @@ class UserController extends Controller
                 }
 			}
         }catch (\Exception $e) {
+            return $e->getMessage();
             return view('excep',['error'=>$e->getMessage()]);
         }
     }

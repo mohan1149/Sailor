@@ -106,4 +106,31 @@ class DashboardController extends Controller
 		  return 0;
 	  }
   }
+
+  public function getPostsAndNotif(){
+	try{
+		$user     = $_SESSION['user_id'];
+		$posts    = [];
+		$notifs   = [];
+		$response = [];
+		$schools = DB::table('school')
+			->where('school_owner',$user)
+			->get('id')
+			->toArray();
+		foreach($schools as $school){
+			$posts = DB::table('posts')
+				->where('ins_id',$school->id)
+				->get();
+			$notifs = DB::table('notifications')
+				->join('emplyoee','emplyoee.teacher_foriegn_key','=','notifications.notif_uid')
+				->where('notif_sid',$school->id)
+				->get();
+		}	
+		$response['posts']  = $posts;
+		$response['notifs'] = $notifs; 
+		return view('school.dashboard',['response'=>$response]);
+	}catch(\Exception $e){
+		return view('excep',['error'=>$e->getMessage()]);
+	}
+  }
 }

@@ -2,11 +2,11 @@
     include(app_path().'/translations/strings.php');
     $strings = $_SESSION['lang'];      
 ?>
-    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:0;width:300px;margin-top:15px;" id="mySidebar"><br>
+    <nav class="w3-sidebar w3-collapse w3-animate-left" style="z-index:0;width:300px;margin-top:35px;background-color: black;" id="mySidebar"><br>
         <div class="w3-container">
             <div class="">
                 <img src="<?php echo $_SESSION['user']->profile; ?>" class="w3-circle w3-margin-right" style="width:46px">
-                <span >Welcome, <strong><?php echo $_SESSION['user']->username;?></strong></span><br>
+                <span class="w3-text-white">Welcome, <strong><?php echo $_SESSION['user']->username;?></strong></span><br>
             </div>
             <div class="center-list user-nav">
                 <a href="/school/dashboard"><i title ="Home" class="fa fa-home" style="font-size:24px;"></i></a>
@@ -17,177 +17,177 @@
         </div>
         <hr>
         <div class="w3-container">
-            <h5 class="w3-xlarge"><?php echo $$strings['dashboard']?></h5>
+            <h5 class="w3-xlarge w3-text-white"><?php echo $$strings['dashboard']?></h5>
         </div>
         <div class="w3-bar-block sidenav">
             <!-- side nav bar -->
 
             <!-- admissions -->
             <!-- <div class="w3-margin dd-outer" id="admissions">
-                <i class="fa fa-user-plus w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-user-plus w3-xlarge w3-text-white"></i>
                 <span>admissions</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey admissions" id="admissions">
-                <a class="w3-bar-item w3-button" href="/manage/admissions"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage admissions</a>                    
-                <a class="w3-bar-item w3-button" href="/new/admission"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; New admission</a>                                        
+                <a class="w3-bar-item w3-button" href="/manage/admissions"><i class="fa fa-cogs fa-fw w3-large w3-text-white"></i>&nbsp; Manage admissions</a>                    
+                <a class="w3-bar-item w3-button" href="/new/admission"><i class="fa fa-plus fa-fw w3-large w3-text-white"></i>&nbsp; New admission</a>                                        
             </div> -->
             <div class="w3-margin dd-outer" id="school">
-                <i class="fa fa-bank w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-bank w3-xlarge w3-text-white"></i>
                 <span>Schools</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
-            <div class="dd-content w3-light-grey school" id="school">
-                <a class="w3-bar-item w3-button" href="/manage/schools"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Schools</a>                    
-                <a class="w3-bar-item w3-button" href="/add/school"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add School</a>                                        
+            <div class="dd-content w3-white school" id="school">
+                <a class="w3-bar-item w3-button" href="/manage/schools"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Schools</a>                    
+                <a class="w3-bar-item w3-button" href="/add/school"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add School</a>                                        
             </div>
             <!-- departments -->
             <div class="w3-margin dd-outer" id="depts">
-                <i class="fa fa-share-alt w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-share-alt w3-xlarge w3-text-white"></i>
                 <span>Departments</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey depts" id="depts">
-                <a class="w3-bar-item w3-button" href="/manage/departments"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Departments</a>                
-                <a class="w3-bar-item w3-button" href="/add/department"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Department</a>                                        
+                <a class="w3-bar-item w3-button" href="/manage/departments"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Departments</a>                
+                <a class="w3-bar-item w3-button" href="/add/department"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Department</a>                                        
             </div>
             <!-- years -->
             <div class="w3-margin dd-outer" id="years">
-                <i class="fa fa-calendar w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-calendar w3-xlarge w3-text-white"></i>
                 <span>Grades(Years)</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey years" id="years">
-                    <a class="w3-bar-item w3-button" href="/manage/years"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; manage years or grades</a>  
-                <a class="w3-bar-item w3-button" href="/add/studying/year"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; add year or grade</a>                                                      
+                    <a class="w3-bar-item w3-button" href="/manage/years"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; manage years or grades</a>  
+                <a class="w3-bar-item w3-button" href="/add/studying/year"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; add year or grade</a>                                                      
             </div>
 
             <!-- classes -->
             <div class="w3-margin dd-outer" id="classes">
-                <i class="fa fa-book w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-book w3-xlarge w3-text-white"></i>
                 <span>Classes</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey classes" id="classes">
-                <a class="w3-bar-item w3-button" href="/manage/classes"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Classes</a>                    
-                <a class="w3-bar-item w3-button" href="/add/class"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Class</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/classes"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Classes</a>                    
+                <a class="w3-bar-item w3-button" href="/add/class"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Class</a>                                                                                            
             </div>
             <!-- Teaching Staff -->
             <div class="w3-margin dd-outer" id="tstaff">
-                <i class="fa fa-black-tie w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-black-tie w3-xlarge w3-text-white"></i>
                 <span>Teaching staff</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey tstaff" id="tstaff">
-                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Teaching Staf</a>                    
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Teaching staff</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Teaching Staf</a>                    
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Teaching staff</a>                                                                                            
             </div>
             <!-- employees -->
             <div class="w3-margin dd-outer" id="emps">
-                <i class="fa fa-users w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-users w3-xlarge w3-text-white"></i>
                 <span>employess</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey emps" id="emps">
-                <a class="w3-bar-item w3-button" href="/manage/employees"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Employess</a>                    
-                <a class="w3-bar-item w3-button" href="/add/employee"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Employee</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/employees"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Employess</a>                    
+                <a class="w3-bar-item w3-button" href="/add/employee"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Employee</a>                                                                                            
             </div>
             <!-- students -->
             <div class="w3-margin dd-outer" id="studs">
-                <i class="fa fa-graduation-cap w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-graduation-cap w3-xlarge w3-text-white"></i>
                 <span>students</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey studs" id="studs">
-                <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Students</a>                    
-                <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Student</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Students</a>                    
+                <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Student</a>                                                                                            
             </div>
             <!-- examms -->
             <!-- <div class="w3-margin dd-outer" id="examms">
-                <i class="fa fa-edit w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-edit w3-xlarge w3-text-white"></i>
                 <span>exams</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey exams" id="exams">
-                <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Students</a>                    
-                <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Student</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-white"></i>&nbsp; Manage Students</a>                    
+                <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-white"></i>&nbsp; Add Student</a>                                                                                            
             </div> -->
             <!-- reports -->
             <div class="w3-margin dd-outer" id="reports">
-                <i class="fa fa-bar-chart w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-bar-chart w3-xlarge w3-text-white"></i>
                 <span>reports</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey reports" id="reports">
-                <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Students</a>                    
-                <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Student</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/students"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Students</a>                    
+                <a class="w3-bar-item w3-button" href="/add/student"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Student</a>                                                                                            
             </div>
             <!-- labs -->
-            <!-- <div class="w3-margin dd-outer" id="labs">
-                <i class="fa fa-laptop w3-xlarge w3-text-blue"></i>
+            <div class="w3-margin dd-outer" id="labs">
+                <i class="fa fa-laptop w3-xlarge w3-text-white"></i>
                 <span>Labs</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey labs" id="labs">
-                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Classes</a>                    
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Class</a>                                                                                            
-            </div> -->
+                <a class="w3-bar-item w3-button" href="/manage/labs"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Labs</a>                    
+                <a class="w3-bar-item w3-button" href="/add/lab"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Lab</a>                                                                                            
+            </div>
             <!-- transport -->
             <div class="w3-margin dd-outer" id="transport">
-                <i class="fa fa-bus w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-bus w3-xlarge w3-text-white"></i>
                 <span>Transport</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey transport" id="transport">                                                 
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Driviers</a>
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Vehicles</a>
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Drivier</a>
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Vehicle</a>                
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Driviers</a>
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-black"></i>&nbsp; Manage Vehicles</a>
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Drivier</a>
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-black"></i>&nbsp; Add Vehicle</a>                
             </div>
             <!-- hostel -->
             {{-- <div class="w3-margin dd-outer" id="hostel">
-                <i class="fa fa-building w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-building w3-xlarge w3-text-white"></i>
                 <span>hostel</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey hostel" id="hostel">
-                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-blue"></i>&nbsp; Manage Classes</a>                    
-                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-blue"></i>&nbsp; Add Class</a>                                                                                            
+                <a class="w3-bar-item w3-button" href="/manage/staff"><i class="fa fa-cogs fa-fw w3-large w3-text-white"></i>&nbsp; Manage Classes</a>                    
+                <a class="w3-bar-item w3-button" href="/add/staff"><i class="fa fa-plus fa-fw w3-large w3-text-white"></i>&nbsp; Add Class</a>                                                                                            
             </div> --}}
             <!-- articles -->
             {{-- <div class="w3-margin dd-outer" id="articles">
-                <i class="fa fa-comments w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-comments w3-xlarge w3-text-white"></i>
                 <span>Articles</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div> --}}
             <!-- data-import -->
             <div class="w3-margin dd-outer" id="data-import">
-                <i class="fa fa-download w3-xlarge w3-text-blue"></i>
+                <i class="fa fa-download w3-xlarge w3-text-white"></i>
                 <span>data import</span>
-                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-dark-grey"></i>
+                <i class="fa fa-chevron-right w3-right w3-margin-right w3-small dd-toggle-icon w3-text-white"></i>
             </div>
             <div class="dd-content w3-light-grey data-import" id="data-import">
-                <a class="w3-bar-item w3-button" href="/import/students"><i class="fa fa-graduation-cap fa-fw w3-large w3-text-blue"></i>&nbsp; Import students</a>                    
-                <a class="w3-bar-item w3-button" href="/import/staff"><i class="fa fa-black-tie fa-fw w3-large w3-text-blue"></i>&nbsp; import teaching staff</a>
-                <a class="w3-bar-item w3-button" href="/import/employees"><i class="fa fa-users fa-fw w3-large w3-text-blue"></i>&nbsp; import employees</a>
+                <a class="w3-bar-item w3-button" href="/import/students"><i class="fa fa-graduation-cap fa-fw w3-large w3-text-black"></i>&nbsp; Import students</a>                    
+                <a class="w3-bar-item w3-button" href="/import/staff"><i class="fa fa-black-tie fa-fw w3-large w3-text-black"></i>&nbsp; import teaching staff</a>
+                <a class="w3-bar-item w3-button" href="/import/employees"><i class="fa fa-users fa-fw w3-large"></i>&nbsp; import employees</a>
             </div>
-            <a href="/permissions" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-user-secret fa-fw w3-xlarge w3-text-blue"></i>&nbsp; <?php echo 'Permissions'?></a>
+            <a href="/permissions" class="w3-bar-item w3-button w3-padding w3-xlarge"><i class="fa fa-user-secret fa-fw w3-xlarge w3-text-white"></i>&nbsp; <?php echo 'Permissions'?></a>
         </div>
     </nav>
     <style>
         .sidenav a{
-            color: #636b6f!important;
+            color: black;
             padding: 0 25px;
-            font-size: 13px!important;
+            font-size: 16px!important;
             font-weight: 600;
             text-decoration: none;
             text-transform: uppercase;
             font-family: 'Nunito', sans-serif;
         }
         .dd-outer span{
-            color: #636b6f!important;
+            color: #fff!important;
             padding: 0 5px;
-            font-size: 17x!important;
+            font-size: 18px!important;
             font-weight: 600;
             text-decoration: none;
             text-transform: uppercase;
@@ -197,7 +197,7 @@
             margin-top:7px;
         }
         .user-nav .fa{
-            color: #636b6f!important;
+            color: #fff!important;
             padding:0 5px;
         }
         .menu-dd{

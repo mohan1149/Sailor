@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Config;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        session_start();
+        //Config::set('database.connections.pgsql.database', 'sailor');
+        //$tz = Config::get('database.connections.pgsql.database');        
     }
 }

@@ -86,15 +86,16 @@
                                                 ?>
                                                     <table class="w3-table w3-bordered">
                                                         <th><i class="w3-text-purple w3-large fa fa-calendar"></i> Grade or Year</th> 
+                                                        <th><i class="w3-text-purple w3-large fa fa-database"></i> Numeric</th> 
                                                         <th><i class="w3-text-purple w3-large fa fa-tag"></i> Grade Id</th>
                                                         <?php
                                                             foreach ($school['schoolGrades'] as $grade) {
                                                                 ?>
                                                                 <tr>
                                                                     <td><?php echo $grade->grade_year?></td>
+                                                                    <td><?php echo $grade->grade_numeric?></td>
                                                                     <td><?php echo $grade->id?></td>
-
-                                                                    <td><a href='/edit/grade/<?php echo base64_encode($grade->id)?>?grade=<?php echo base64_encode($grade->grade_year)?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
+                                                                    <td><a href='/edit/grade/<?php echo base64_encode($grade->id)?>?grade=<?php echo base64_encode($grade->grade_year)?>&num=<?php echo $grade->grade_numeric?>' class='w3-xlarge w3-text-blue' title='Edit'><i class="fa fa-edit"></i></a></td>
                                                                     <td><a href='/list/students/<?php echo base64_encode($grade->id)?> ?grade=<?php echo $grade->grade_year?>' class='w3-xlarge w3-text-purple' title='List Students'><i class="fa fa-users"></i></a></td>                                                                    
                                                                     <td><a href='javascript:void(0)' url = "/delete/grade/<?php echo $grade->id ?>" class='w3-xlarge w3-text-red delete-button' title='Delete'><i class="fa fa-trash"></i></a></td>
                                                                 </tr>

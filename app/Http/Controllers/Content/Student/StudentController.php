@@ -309,7 +309,7 @@ class StudentController extends Controller
 			$school_id = $request['school_id'];
 			$grade     = $request['grade'];			
 			$class_id  = $request['class'];
-			$ins_type = $_SESSION['ins'];			
+			$ins_type = $_SESSION['ins'];				
 			$type = strtolower(pathinfo($_FILES['data_file']['name'],PATHINFO_EXTENSION));
 			if($type ==='xlsx'){
 				$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
@@ -365,7 +365,26 @@ class StudentController extends Controller
 					}
 				}
 			}
-			return redirect('/manage/students');
+			return response()->json(1, 200);
+			//return redirect('/manage/students');
+		}catch(\Exception $e){
+			return response()->json($e->getMessage(), 500);			
+		}
+	}
+
+	public function studentsByIns(Request $request){
+		try{
+			$ins_id    = base64_decode($request['id']);
+			$students  = [];
+			$students['ins_name'] = str_ireplace('_',' ',$request['ins']);
+			$students['students'] = DB::table('student')
+				->join('grades','grades.id','=','student.grade_id')
+				->where('student.school_id',$ins_id)
+				->orderBy('grades.grade_numeric')
+				->orderBy('student.sid')
+				->select(['student.id','student.fname','student.lname','student.sid','grades.grade_year'])
+				->get();
+			return view('student.studentsByIns',['students'=>$students]);
 		}catch(\Exception $e){
 			return $e->getMessage();
 		}

@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/shell','User\SiteCreateController@createSite');
 Route::get('/admin', function () {return view('welcome');});
 Route::get('/', function () {return view('userLogin');});
 //user releated routes
@@ -23,7 +24,7 @@ Route::post('sent/password/reset/link','Mailings\MailController@sendPasswordRese
 
 Route::group(['middleware' => ['app.access']], function() {
     //dashboard related RouteServiceProvider
-    Route::get('/school/dashboard',function(){ return view('school.dashboard');});
+    Route::get('/school/dashboard','Content\DashboardController@getPostsAndNotif');    
     Route::get('/college/dashboard',function(){ return view('college.dashboard');});
     //graph
     Route::get('/get/institute/graph-data','Content\DashboardController@getInstituteGraphData');
@@ -64,7 +65,6 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::post('/update/department/{id}','Content\Departments\DepartmentController@updateDepartment');
     Route::get('/view/department/{id}','Content\Departments\DepartmentController@viewDepartment');
     Route::get('/delete/department/{id}','Content\Departments\DepartmentController@deleteDepartment');
-    
     Route::get('/depts/{ins}/{id}','Content\Departments\DepartmentController@deptsByIns');
 
     //staff releated routes
@@ -75,6 +75,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('view/staff/{id}','Content\TeachingStaff\StaffController@viewStaff');
     Route::get('delete/staff/{id}','Content\TeachingStaff\StaffController@deleteStaff');
     Route::post('update/staff/{id}','Content\TeachingStaff\StaffController@updateStaff');
+    Route::get('staff/{ins}/{id}','Content\TeachingStaff\StaffController@staffByIns');
 
     //grades or studying years related routes
     Route::get('add/studying/year','Content\Grades\GradesController@addYearOfStudy');
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/view/timetable/{id}','Content\InsClass\ClassController@viewTimetable');
     Route::get('/update/syllabus/{class_id}/{subject_index}/{sub_percent}','Content\InsClass\ClassController@updateSyllabus');
     Route::post('/add/chapters/{class_id}/{subject_index}','Content\InsClass\ClassController@addChaptersToSubject');
+    Route::get('/classes/{ins}/{id}','Content\InsClass\ClassController@classesByIns');
 
     //Articles related routes
     Route::get('/add/article',function() {return view('addArticle');});
@@ -114,8 +116,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::post('/update/student/{id}','Content\Student\StudentController@updateStudent');
     Route::get('/view/student/{id}','Content\Student\StudentController@viewStudent');
     Route::get('/delete/student/{id}','Content\Student\StudentController@deleteStudent');
-    
-
+    Route::get('/students/{ins}/{id}','Content\Student\StudentController@studentsByIns');
 
     //routes related to lab
     Route::get('/add/lab','Content\Labs\LabsController@addLab');
@@ -124,6 +125,7 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/manage/labs','Content\Labs\LabsController@manageLabs');
     Route::get('/delete/lab/{id}','Content\Labs\LabsController@deleteLab');
     Route::post('/update/lab/{id}','Content\Labs\LabsController@updateLab');
+    Route::get('/labs/{ins}/{id}','Content\Labs\LabsController@labsByIns');
     //routes related roles and permissions
     Route::get('/permissions','User\UserController@getPermissions');
     Route::post('/assign/user/role','api\User\UserController@assignUserRole');
@@ -132,26 +134,34 @@ Route::group(['middleware' => ['app.access']], function() {
     Route::get('/add/employee','Content\Employee\EmployeeController@addEmployee');
     Route::post('/store/employee','Content\Employee\EmployeeController@storeEmployee');
     Route::get('/manage/employees','Content\Employee\EmployeeController@manageEmployees');
-
     Route::get('/edit/employee/{id}','Content\Employee\EmployeeController@editEmployee');
     Route::post('/update/employee/{id}','Content\Employee\EmployeeController@updateEmployee');
     Route::get('/delete/employee/{id}','Content\Employee\EmployeeController@deleteEmployee');
+    Route::get('/employees/{ins}/{id}','Content\Employee\EmployeeController@employeesByIns');
 
     //data import 
     Route::get('/import/students','Content\Student\StudentController@importStudentView');
     Route::post('/import/students','Content\Student\StudentController@importStudents');
+    Route::get('/import/staff','Content\TeachingStaff\StaffController@importStaffView');
+    Route::post('/import/staff','Content\TeachingStaff\StaffController@importStaff');
 
     Route::get('/manage/leaves',function(){ return view('csoon');});
     Route::get('/coming/soon',function(){ return view('csoon');});
     Route::get('/add/notification','api\Content\NotificationsController@addNotification');
 });
 
+Route::group(['prefix'=>'hod','middleware' => ['HoDAccess']], function() {
+    Route::get('/dashboard',function(){ return view('csoon');});
+});
+Route::group(['prefix'=>'class/teacher','middleware' => ['ClassTeacherAccess']], function() {
+    Route::get('/dashboard',function(){ return view('csoon');});
+});
+Route::group(['prefix'=>'teacher','middleware' => ['TeacherAccess']], function() {
+    Route::get('/dashboard',function(){ return view('csoon');});
+});
+
 
 
 Route::get('db','Content\CommonController@dbtest');
-
-Route::group(['middleware' => ['memberAccess']], function() {
-    Route::get('/hod/{user}',function(){ return view('csoon');});
-});
 
 Route::get('/password/reset/success',function(){ return view('mobileViews.passwordResetSuccess');});

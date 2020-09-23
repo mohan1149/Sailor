@@ -1,6 +1,5 @@
 <?php
     include(app_path().'/translations/strings.php');
-    session_start();
     $lang = 'en';
     if(isset($_GET['lan'])){
         $lang             = $_GET['lan'];

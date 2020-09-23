@@ -44,6 +44,14 @@ Route::get('/app/user/leaves/{uid}','api\Leaves\LeavesController@getUserLeaves')
 Route::get('/app/user/delete/leave/{id}','api\Leaves\LeavesController@deleteLeave');
 Route::post('/app/post/homework','api\Homework\HomeworkController@postHomework');
 Route::get('/app/user/reports/{uid}/{sid}','api\Reports\ReportsController@getUserSyllabus');
+Route::post('/app/create/exam','api\Exams\ExamsController@createExam');
+Route::get('/app/get/exams/{uid}','api\Exams\ExamsController@getExams');
+Route::get('/app/get/class/students/{cid}','api\Exams\ExamsController@getClassStudents');
+Route::post('/app/post/studennts/marks','api\Exams\ExamsController@saveExamMarks');
+Route::post('/app/user/add/notifications','api\Notifications\NotificationsController@addNotifcation');
+Route::get('/app/get/my/notifications/{uid}','api\Notifications\NotificationsController@getMyNotifications');
+Route::get('/app/delete/notification/{nid}','api\Notifications\NotificationsController@deleteNotification');
+Route::get('/app/get/notifications/{sid}','api\Notifications\NotificationsController@getNotifications');
 
 
 Route::get('/test','api\Homework\HomeworkController@test');

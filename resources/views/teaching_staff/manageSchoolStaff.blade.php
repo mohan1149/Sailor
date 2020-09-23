@@ -96,7 +96,8 @@
                                                       </div>
                                                       <table style='text-align:center;width:90%' class="w3-table w3-bordered searchable">
                                                           <tr class="w3-white">
-                                                              <th><i class='fa fa-black-tie w3-text-purple w3-xlarge'></i> Name</th>
+                                                              <th><i class='fa fa-black-tie w3-text-purple w3-xlarge'></i> Reg ID</th>
+                                                              <th><i class='fa fa-user w3-text-purple w3-xlarge'></i> Name</th>
                                                               <th><i class='fa fa-phone w3-text-purple w3-xlarge'></i> Phone</th>
                                                               <th><i class='fa fa-envelope w3-text-purple w3-xlarge'></i> Email</th>
                                                               <th><i class='fa fa-graduation-cap w3-text-purple w3-xlarge'></i> Designation</th>
@@ -116,6 +117,7 @@
                                                                       foreach($dept['staff_data'] as $key => $staff){
                                                                           ?>
                                                                               <tr>
+                                                                                  <td><?php echo $staff->teacher_reg_id?></td>
                                                                                   <td><?php echo $staff->teacher_name?></td>
                                                                                   <td><?php echo $staff->teacher_phone?></td>
                                                                                   <td><?php echo $staff->teacher_email?></td>

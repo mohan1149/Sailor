@@ -138,7 +138,7 @@
                                 ?>
                                     <tr>
                                         <td><?php echo $key?></td>
-                                        <td><?php echo $weekday->subject?></td>
+                                        <td><?php echo $weekday->subject->subject?></td>
                                         <td><?php echo $weekday->staff?></td>
                                     </tr>
                                 <?php

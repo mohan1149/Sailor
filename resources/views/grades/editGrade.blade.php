@@ -79,8 +79,9 @@
     <div class="w3-main"  style="margin-left:310px;margin-top:43px;margin-right:10px;">
         <header class="w3-container" style="padding-top:22px">
         <ul class="breadcrumb">
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="">Add Grade To School</a></li>
+            <li><a href="/school/dashboard">Dashboard</a></li>
+            <li><a href="/manage/years">Manage Grades or Years</a></li>
+            <li><a href="">Edit <?php echo base64_decode($_GET['grade']); ?> </a></li>
           </ul> 
         </header>
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
@@ -91,7 +92,10 @@
                         <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
                         <input value ="<?php echo base64_decode($_GET['grade']); ?>" required type='text' class="form-input"autofocus name='year_value' placeholder='Eg: IV Grade' >
                     </div>
-
+                    <div class='form-group'>
+                        <span><i class='fa fa-pencil w3-xlarge w3-text-blue'></i></span>
+                        <input required type='number' class="form-input" name='year_numeric'value="<?php echo $_GET['num'];?>" >
+                    </div>
                     <input type ="hidden" name="type" value="school">
                     <div class='form-group w3-center' >
                         <input class="w3-button form-input form-submit"type='submit' value="Save">

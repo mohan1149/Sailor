@@ -83,6 +83,7 @@
                 let year_key = $($('.grade')[0].selectedOptions[0]).attr('id');                
                 let classes = window.school_data[ins_key].school_years[year_key].year_classes;
                 let class_select = "<select class='form-input classes-by-year' name='class'>";
+                class_select += "<option value=0>Student Class</option>";
                 classes.map(function(class_data){
                     class_select += "<option value="+class_data.id+">"+class_data.class_name+"</option>";
                 });
@@ -107,7 +108,6 @@
         <div class="w3-row-padding w3-margin-bottom w3-white w3-card">
             <div class="add-institute">                
                 <form action='/import/students' method="POST" enctype="multipart/form-data">
-                    @csrf
                         <div id = "data-import">
                             <div class='form-group'>
                                 <span><i class='fa fa-bank w3-xlarge w3-text-blue'></i></span>
@@ -130,22 +130,68 @@
                           </div>
                           <div class='form-group'>
                               <span><i class='fa fa-book w3-xlarge w3-text-blue'></i></span>
-                              <select  class="form-input classes-by-year" name='class'>
-                                  <option>Student Class</option>
+                              <select  class="form-input classes-by-year s_class" name='class'>
+                                  <option value="0">Student Class</option>
                               </select>
                           </div>
                           <div class='form-group'>
                             <span><i class='fa fa-upload w3-text-blue w3-xlarge'></i></span>
-                            <input type='file' name='data_file' class="form-input">
+                            <input type='file' name='data_file' class="form-input data_file">
                             <span><i class='fa fa-refresh w3-hide loader w3-spin w3-text-blue w3-xlarge'></i></span>                        
                         </div>                          
                           <div class='form-group' style='text-align:center'>
-                              <input class="w3-button  form-input form-submit" type='submit' value="Import">
+                              <input class="w3-button form-input form-submit" type='button' value="Import">
                           </div>
                         </div>
                     </form>
             </div>
         </div>
     </div>
+    <div class="w3-modal delete-modal" id="show_modal">
+            <div class="w3-modal-content w3-center w3-animate-top w3-card-4">
+                <header class="w3-container w3-indigo">
+                    <h2>Please wait..</h2>
+                </header>
+                <div class="w3-container">
+                    <p class="w3-dark-text-grey w3-xlarge">Data is importing into student database. Please wait while importing.</p>
+                    <span class="w3-margin"><i class='w3-margin fa fa-refresh w3-spin w3-text-blue w3-jumbo'></i></span>                        
+                </div>
+                <footer class="w3-container w3-dark-grey">
+                    <p>@Sailor Sytem </p>
+                </footer>
+            </div>
+        </div>
     </body>
+    <script>
+        $('.form-submit').click(function (){
+            let fd = new FormData();
+            $('#show_modal').show();
+            let data_file = $('.data_file')[0].files[0];
+            let school_id = $('.school_change').val();
+            let grade     = $('.grade').val();
+            let class_id  = $('.classes-by-year').val();
+            fd.append('data_file',data_file);
+            fd.append('school_id',school_id);
+            fd.append('grade',grade);
+            fd.append('class',class_id);
+            fd.append('_token','{{ csrf_token() }}');
+            $.ajax({
+                url:'/import/students',
+                type:'post',
+                data :fd,
+                contentType:false,
+                processData:false,
+                success:(response)=>{                                        
+                    $('#show_modal').hide();
+                    location.assign('/manage/students');
+                    console.log(response);
+                },
+                error:(error)=>{
+                    console.log(error);
+                    $('#show_modal').hide();
+                    alert('Unable to Import Data. Please re-check the source file');
+                }
+            });            
+        });
+    </script>
 </html>

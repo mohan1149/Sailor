@@ -124,7 +124,7 @@ class DepartmentController extends Controller
     public function deptsByIns(Request $request){
         $depts  = [];
         $type   = $_SESSION['ins'];
-        $ins_id = $request['id'];
+        $ins_id = base64_decode($request['id']);
         $depts['ins_name'] = str_ireplace('_',' ',$request['ins']);
         if($type == 'college'){
             $depts['ins'] = $this->getDeptsByCollegeId($ins_id);

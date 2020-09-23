@@ -40,8 +40,10 @@
                 text-transform: uppercase;
                 font-family: 'Nunito', sans-serif;
                 letter-spacing: .1rem;
-                font-weight: 600;
-                /* cursor: pointer; */
+                font-weight: 600;                
+            }
+            .count-text a{
+                text-decoration: none;
             }
             .inner-content table{
               display: none;
@@ -87,33 +89,33 @@
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-share-alt w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['deps']) ?></span>
-                                        <div class="w3-xlarge count-text depts">Departments</div>
-                                    </div>
+                                        <div class="w3-xlarge count-text depts"><a href="/depts/<?php echo str_ireplace(' ','_',$responseData['school']->school_name) ?>/<?php echo base64_encode($responseData['schoolId'])?>">Departments</a></div>
+                                    </div>                                    
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-book w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['classes']) ?></span>
-                                        <div class="w3-xlarge count-text">Classes</div>
+                                        <div class="w3-xlarge count-text"> <div class="w3-xlarge count-text depts"><a href="/classes/<?php echo str_ireplace(' ','_',$responseData['school']->school_name) ?>/<?php echo base64_encode($responseData['schoolId'])?>">Classes</a></div></div>
                                     </div>
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-black-tie w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['staff']) ?></span>
-                                        <div class="w3-xlarge count-text">Staff</div>
+                                        <div class="w3-xlarge count-text"> <div class="w3-xlarge count-text depts"><a href="/staff/<?php echo str_ireplace(' ','_',$responseData['school']->school_name) ?>/<?php echo base64_encode($responseData['schoolId'])?>">Staff</a></div></div>
                                     </div>
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-graduation-cap w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['students']) ?></span>
-                                        <div class="w3-xlarge count-text">Students</div>
+                                        <div class="w3-xlarge count-text"> <div class="w3-xlarge count-text depts"><a href="/students/<?php echo str_ireplace(' ','_',$responseData['school']->school_name) ?>/<?php echo base64_encode($responseData['schoolId'])?>">Students</a></div></div>
                                     </div>
                                     <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-users w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['emps']) ?></span>
-                                        <div class="w3-xlarge count-text">employees</div>
+                                        <div class="w3-xlarge count-text"> <div class="w3-xlarge count-text depts"><a href="/employees/<?php echo str_ireplace(' ','_',$responseData['school']->school_name) ?>/<?php echo base64_encode($responseData['schoolId'])?>">employees</a></div></div>
                                     </div>
-                                    <!-- <div class="w3-quarter w3-col w3-center">
+                                    <div class="w3-quarter w3-col w3-center">
                                         <div class="w3-margin-top"><i class="fa fa-laptop w3-jumbo w3-text-blue"></i></div>
                                         <span class="w3-xxxlarge count"><?php echo count($responseData['labs']) ?></span>
-                                        <div class="w3-xlarge count-text">labs</div>
-                                    </div> -->
+                                        <div class="w3-xlarge count-text"> <div class="w3-xlarge count-text depts"><a href="/labs/<?php echo str_ireplace(' ','_',$responseData['school']->school_name) ?>/<?php echo base64_encode($responseData['schoolId'])?>">labs</a></div></div>
+                                    </div>                                    
                                 </div>                                
                             </div>
                         </div>

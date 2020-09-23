@@ -115,14 +115,66 @@ class EmployeeController extends Controller
 	  }
 	  
 	public function editEmployee(Request $request){
-		return view('csoon');
+		try{
+			$id = base64_decode($request['id']);
+			$return_data = DB::table('emplyoee')
+				->where('id',$id)
+				->first();
+			return view('employee.editEmployee',['return_data'=>$return_data]);
+		}catch(\Exception $e){
+			return view('excep',['error'=>$e->getMessage()]);
+		}
 	}
 
 	public function updateEmployee(Request $request){
-		return view('csoon');
+		try{
+			$emp_reg_num      = strip_tags($request['staff_id']);
+			$emp_username     = strip_tags($request['staffname']);
+			$emp_phone        = strip_tags($request['phone']);
+			$emp_email        = strip_tags($request['email']);
+			$emp_designation  = strip_tags($request['designation']);
+			$emp_join_date    = $request['doj'];
+			$query = DB::table('emplyoee')
+				->where('id',$request['id'])
+				->update(
+				[
+					'emp_reg_num'      => $emp_reg_num,
+					'emp_username'     => $emp_username,
+					'emp_phone'        => $emp_phone,
+					'emp_email'        => $emp_email,
+					'emp_designation'  => $emp_designation,
+					'emp_photo'        => $request['image_url'],//$request->getSchemeAndHttpHost().Storage::url('emp_images/'.$hex.'.'.$type),
+					'emp_join_date'    => $emp_join_date,
+				]
+			);
+			return redirect('/manage/employees');
+		}catch(\Exception $e){		
+			return view('excep',['error'=>$e->getMessage()]);
+		}
 	}
 
 	public function deleteEmployee(Request $request){
-		return view('csoon');
+		try{
+			$id = $request['id'];
+			$del = DB::table('emplyoee')
+				->where('id',$id)
+				->delete();
+			return redirect('/manage/employees');
+		}catch(\Exception $e){
+			return view('excep',['error'=>$e->getMessage()]);
+		}
+	}
+
+	public function employeesByIns(Request $request){
+		try{
+			$ins_id = base64_decode($request['id']);
+			$emps['ins_name'] = str_ireplace('_',' ',$request['ins']);
+			$emps['emps'] = DB::table('emplyoee')
+				->where('emp_institute',$ins_id)
+				->get();
+			return view('employee.empsByIns',['emps'=>$emps]);    
+		}catch(\Exception $e){
+			return $e->getMessage();
+		}
 	}
 }

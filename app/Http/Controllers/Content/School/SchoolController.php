@@ -114,6 +114,7 @@ class SchoolController extends Controller
         $responseData['students'] = $students;
         $responseData['labs']     = $labs;
         $responseData['emps']     = $emps;
+        $responseData['schoolId'] = $school_id;
         return view('school.viewSchool',['responseData'=>$responseData]);
     }
 
