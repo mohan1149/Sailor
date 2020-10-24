@@ -1,0 +1,1706 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: class; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.class (
+    id integer NOT NULL,
+    class_name character varying,
+    class_ins_id integer,
+    class_num_subjects integer,
+    class_dept_id integer,
+    class_ins_type character varying,
+    class_year integer,
+    class_teacher integer
+);
+
+
+ALTER TABLE public.class OWNER TO sailor;
+
+--
+-- Name: class_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.class_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.class_id_seq OWNER TO sailor;
+
+--
+-- Name: class_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.class_id_seq OWNED BY public.class.id;
+
+
+--
+-- Name: college; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.college (
+    id integer NOT NULL,
+    clg_name character varying,
+    clg_address text,
+    clg_owner integer,
+    clg_phone character varying,
+    clg_email character varying,
+    clg_website character varying,
+    clg_logo character varying,
+    clg_periods integer,
+    clg_period_len integer,
+    clg_reg_num character varying
+);
+
+
+ALTER TABLE public.college OWNER TO sailor;
+
+--
+-- Name: college_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.college_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.college_id_seq OWNER TO sailor;
+
+--
+-- Name: college_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.college_id_seq OWNED BY public.college.id;
+
+
+--
+-- Name: departments; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.departments (
+    id integer NOT NULL,
+    dept_name character varying,
+    dept_ins_id integer,
+    dept_email character varying,
+    dept_website character varying,
+    dept_logo character varying,
+    dept_ins_type character varying
+);
+
+
+ALTER TABLE public.departments OWNER TO sailor;
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.departments_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.departments_id_seq OWNER TO sailor;
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.departments_id_seq OWNED BY public.departments.id;
+
+
+--
+-- Name: emplyoee; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.emplyoee (
+    id integer NOT NULL,
+    emp_username character varying,
+    emp_reg_num character varying,
+    emp_institute integer,
+    emp_depart integer,
+    emp_join_date date,
+    emp_phone character varying,
+    emp_email character varying,
+    emp_photo character varying,
+    emp_password character varying,
+    emp_owner integer,
+    emp_designation character varying,
+    emp_device_token character varying,
+    emp_ins_type character varying,
+    teacher_foriegn_key integer
+);
+
+
+ALTER TABLE public.emplyoee OWNER TO sailor;
+
+--
+-- Name: emplyoee_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.emplyoee_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.emplyoee_id_seq OWNER TO sailor;
+
+--
+-- Name: emplyoee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.emplyoee_id_seq OWNED BY public.emplyoee.id;
+
+
+--
+-- Name: exam_marks; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.exam_marks (
+    id integer NOT NULL,
+    exam_id integer,
+    exam_class integer,
+    exam_students json
+);
+
+
+ALTER TABLE public.exam_marks OWNER TO sailor;
+
+--
+-- Name: exam_marks_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.exam_marks_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.exam_marks_id_seq OWNER TO sailor;
+
+--
+-- Name: exam_marks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.exam_marks_id_seq OWNED BY public.exam_marks.id;
+
+
+--
+-- Name: exams; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.exams (
+    id integer NOT NULL,
+    ex_title text,
+    ex_desc text,
+    ex_maxmarks integer,
+    ex_qualifymarks integer,
+    ex_date date,
+    ex_time character varying,
+    ex_attachments json,
+    ex_class integer,
+    ex_subject character varying,
+    ex_uid integer,
+    is_marks_assigned integer
+);
+
+
+ALTER TABLE public.exams OWNER TO sailor;
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.exams_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.exams_id_seq OWNER TO sailor;
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.exams_id_seq OWNED BY public.exams.id;
+
+
+--
+-- Name: grades; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.grades (
+    id integer NOT NULL,
+    grade_ins_id integer,
+    grade_year character varying,
+    grade_ins_type character varying,
+    grade_numeric integer
+);
+
+
+ALTER TABLE public.grades OWNER TO sailor;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.grades_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grades_id_seq OWNER TO sailor;
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.grades_id_seq OWNED BY public.grades.id;
+
+
+--
+-- Name: homeworks; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.homeworks (
+    id integer NOT NULL,
+    hw_uid integer,
+    hw_class integer,
+    hw_title text,
+    hw_desc text,
+    hw_attachments json,
+    hw_date date,
+    hw_subject character varying,
+    hw_images json
+);
+
+
+ALTER TABLE public.homeworks OWNER TO sailor;
+
+--
+-- Name: homeworks_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.homeworks_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.homeworks_id_seq OWNER TO sailor;
+
+--
+-- Name: homeworks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.homeworks_id_seq OWNED BY public.homeworks.id;
+
+
+--
+-- Name: labs; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.labs (
+    id integer NOT NULL,
+    name character varying,
+    school_id integer,
+    dept_id integer,
+    machines integer
+);
+
+
+ALTER TABLE public.labs OWNER TO sailor;
+
+--
+-- Name: labs_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.labs_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.labs_id_seq OWNER TO sailor;
+
+--
+-- Name: labs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.labs_id_seq OWNED BY public.labs.id;
+
+
+--
+-- Name: leaves; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.leaves (
+    id integer NOT NULL,
+    leave_uid integer,
+    leave_reason text,
+    leave_from date,
+    leave_to date,
+    leave_status integer,
+    leave_applied_on date
+);
+
+
+ALTER TABLE public.leaves OWNER TO sailor;
+
+--
+-- Name: leaves_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.leaves_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.leaves_id_seq OWNER TO sailor;
+
+--
+-- Name: leaves_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.leaves_id_seq OWNED BY public.leaves.id;
+
+
+--
+-- Name: notifications; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.notifications (
+    id integer NOT NULL,
+    notif_uid integer,
+    notif_title text,
+    notif_desc text,
+    notif_target_classes json,
+    notif_attachments json,
+    notif_date date,
+    notif_target_all character varying,
+    notif_all_staff character varying,
+    notif_all_students character varying,
+    notif_sid integer
+);
+
+
+ALTER TABLE public.notifications OWNER TO sailor;
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.notifications_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notifications_id_seq OWNER TO sailor;
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.notifications_id_seq OWNED BY public.notifications.id;
+
+
+--
+-- Name: posts; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.posts (
+    id integer NOT NULL,
+    ins_id integer,
+    ins_type character varying,
+    poster_id integer,
+    poster_name character varying,
+    post_title character varying,
+    post_desc text,
+    post_thumbnail character varying,
+    post_date date,
+    post_day character varying,
+    poster_image character varying
+);
+
+
+ALTER TABLE public.posts OWNER TO sailor;
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.posts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.posts_id_seq OWNER TO sailor;
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
+-- Name: school; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.school (
+    id integer NOT NULL,
+    school_name character varying,
+    school_address text,
+    school_owner character varying,
+    school_phone character varying,
+    school_email character varying,
+    school_website character varying,
+    school_logo character varying,
+    school_periods integer,
+    school_period_length integer,
+    school_reg_num character varying
+);
+
+
+ALTER TABLE public.school OWNER TO sailor;
+
+--
+-- Name: school_attendence; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.school_attendence (
+    id integer NOT NULL,
+    attend_class_id integer,
+    attend_session character varying,
+    attend_date date,
+    attend_poster integer,
+    attend_students json
+);
+
+
+ALTER TABLE public.school_attendence OWNER TO sailor;
+
+--
+-- Name: school_attendence_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.school_attendence_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.school_attendence_id_seq OWNER TO sailor;
+
+--
+-- Name: school_attendence_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.school_attendence_id_seq OWNED BY public.school_attendence.id;
+
+
+--
+-- Name: school_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.school_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.school_id_seq OWNER TO sailor;
+
+--
+-- Name: school_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.school_id_seq OWNED BY public.school.id;
+
+
+--
+-- Name: school_meta; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.school_meta (
+    id integer NOT NULL,
+    suid character varying,
+    url character varying,
+    s_owner_id integer
+);
+
+
+ALTER TABLE public.school_meta OWNER TO sailor;
+
+--
+-- Name: school_meta_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.school_meta_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.school_meta_id_seq OWNER TO sailor;
+
+--
+-- Name: school_meta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.school_meta_id_seq OWNED BY public.school_meta.id;
+
+
+--
+-- Name: student; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.student (
+    id integer NOT NULL,
+    fname character varying,
+    lname character varying,
+    father_name character varying,
+    mother_name character varying,
+    phone character varying,
+    email character varying,
+    address text,
+    school_id integer,
+    grade_id integer,
+    dept_id integer,
+    class_id integer,
+    photo character varying,
+    sid character varying,
+    gender character varying,
+    ins_type character varying
+);
+
+
+ALTER TABLE public.student OWNER TO sailor;
+
+--
+-- Name: student_attendence; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.student_attendence (
+    id integer NOT NULL,
+    sid integer,
+    percentage integer DEFAULT 0,
+    month integer
+);
+
+
+ALTER TABLE public.student_attendence OWNER TO sailor;
+
+--
+-- Name: student_attendence_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.student_attendence_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.student_attendence_id_seq OWNER TO sailor;
+
+--
+-- Name: student_attendence_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.student_attendence_id_seq OWNED BY public.student_attendence.id;
+
+
+--
+-- Name: student_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.student_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.student_id_seq OWNER TO sailor;
+
+--
+-- Name: student_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.student_id_seq OWNED BY public.student.id;
+
+
+--
+-- Name: subjects; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.subjects (
+    id integer NOT NULL,
+    class_id integer,
+    subjects_list json
+);
+
+
+ALTER TABLE public.subjects OWNER TO sailor;
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.subjects_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.subjects_id_seq OWNER TO sailor;
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.subjects_id_seq OWNED BY public.subjects.id;
+
+
+--
+-- Name: teacher; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.teacher (
+    id integer NOT NULL,
+    teacher_name character varying,
+    teacher_phone character varying,
+    teacher_email character varying,
+    teacher_ins_id integer,
+    teacher_designation character varying,
+    teacher_dept integer,
+    teacher_profile character varying,
+    teacher_reg_id character varying,
+    teacher_join_date date,
+    teacher_ins_type character varying,
+    teacher_role integer
+);
+
+
+ALTER TABLE public.teacher OWNER TO sailor;
+
+--
+-- Name: teacher_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.teacher_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.teacher_id_seq OWNER TO sailor;
+
+--
+-- Name: teacher_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.teacher_id_seq OWNED BY public.teacher.id;
+
+
+--
+-- Name: timetable; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.timetable (
+    id integer NOT NULL,
+    class_id integer,
+    sunday json,
+    monday json,
+    tuesday json,
+    wednesday json,
+    thursday json,
+    friday json,
+    saturday json
+);
+
+
+ALTER TABLE public.timetable OWNER TO sailor;
+
+--
+-- Name: timetable_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.timetable_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.timetable_id_seq OWNER TO sailor;
+
+--
+-- Name: timetable_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.timetable_id_seq OWNED BY public.timetable.id;
+
+
+--
+-- Name: transport_driver; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.transport_driver (
+    id integer NOT NULL,
+    driver_name character varying,
+    driver_id character varying,
+    driver_phone character varying,
+    driver_password character varying,
+    driver_device_token character varying,
+    driver_photo character varying
+);
+
+
+ALTER TABLE public.transport_driver OWNER TO sailor;
+
+--
+-- Name: transport_driver_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.transport_driver_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.transport_driver_id_seq OWNER TO sailor;
+
+--
+-- Name: transport_driver_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.transport_driver_id_seq OWNED BY public.transport_driver.id;
+
+
+--
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.user_roles (
+    id integer NOT NULL,
+    role_name character varying,
+    role_id integer
+);
+
+
+ALTER TABLE public.user_roles OWNER TO sailor;
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.user_roles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.user_roles_id_seq OWNER TO sailor;
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.user_roles_id_seq OWNED BY public.user_roles.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: sailor
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    username character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    phone character varying,
+    profile character varying,
+    app_for character varying,
+    user_currency character varying,
+    cost_per_studuent integer
+);
+
+
+ALTER TABLE public.users OWNER TO sailor;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: sailor
+--
+
+CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO sailor;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sailor
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: class id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.class ALTER COLUMN id SET DEFAULT nextval('public.class_id_seq'::regclass);
+
+
+--
+-- Name: college id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.college ALTER COLUMN id SET DEFAULT nextval('public.college_id_seq'::regclass);
+
+
+--
+-- Name: departments id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.departments ALTER COLUMN id SET DEFAULT nextval('public.departments_id_seq'::regclass);
+
+
+--
+-- Name: emplyoee id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.emplyoee ALTER COLUMN id SET DEFAULT nextval('public.emplyoee_id_seq'::regclass);
+
+
+--
+-- Name: exam_marks id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.exam_marks ALTER COLUMN id SET DEFAULT nextval('public.exam_marks_id_seq'::regclass);
+
+
+--
+-- Name: exams id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.exams ALTER COLUMN id SET DEFAULT nextval('public.exams_id_seq'::regclass);
+
+
+--
+-- Name: grades id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.grades ALTER COLUMN id SET DEFAULT nextval('public.grades_id_seq'::regclass);
+
+
+--
+-- Name: homeworks id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.homeworks ALTER COLUMN id SET DEFAULT nextval('public.homeworks_id_seq'::regclass);
+
+
+--
+-- Name: labs id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.labs ALTER COLUMN id SET DEFAULT nextval('public.labs_id_seq'::regclass);
+
+
+--
+-- Name: leaves id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.leaves ALTER COLUMN id SET DEFAULT nextval('public.leaves_id_seq'::regclass);
+
+
+--
+-- Name: notifications id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.notifications ALTER COLUMN id SET DEFAULT nextval('public.notifications_id_seq'::regclass);
+
+
+--
+-- Name: posts id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
+
+
+--
+-- Name: school id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.school ALTER COLUMN id SET DEFAULT nextval('public.school_id_seq'::regclass);
+
+
+--
+-- Name: school_attendence id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.school_attendence ALTER COLUMN id SET DEFAULT nextval('public.school_attendence_id_seq'::regclass);
+
+
+--
+-- Name: school_meta id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.school_meta ALTER COLUMN id SET DEFAULT nextval('public.school_meta_id_seq'::regclass);
+
+
+--
+-- Name: student id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.student ALTER COLUMN id SET DEFAULT nextval('public.student_id_seq'::regclass);
+
+
+--
+-- Name: student_attendence id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.student_attendence ALTER COLUMN id SET DEFAULT nextval('public.student_attendence_id_seq'::regclass);
+
+
+--
+-- Name: subjects id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.subjects ALTER COLUMN id SET DEFAULT nextval('public.subjects_id_seq'::regclass);
+
+
+--
+-- Name: teacher id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.teacher ALTER COLUMN id SET DEFAULT nextval('public.teacher_id_seq'::regclass);
+
+
+--
+-- Name: timetable id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.timetable ALTER COLUMN id SET DEFAULT nextval('public.timetable_id_seq'::regclass);
+
+
+--
+-- Name: transport_driver id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.transport_driver ALTER COLUMN id SET DEFAULT nextval('public.transport_driver_id_seq'::regclass);
+
+
+--
+-- Name: user_roles id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.user_roles ALTER COLUMN id SET DEFAULT nextval('public.user_roles_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: class; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.class (id, class_name, class_ins_id, class_num_subjects, class_dept_id, class_ins_type, class_year, class_teacher) FROM stdin;
+119	Section A	32	6	0	school	24	512
+\.
+
+
+--
+-- Data for Name: college; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.college (id, clg_name, clg_address, clg_owner, clg_phone, clg_email, clg_website, clg_logo, clg_periods, clg_period_len, clg_reg_num) FROM stdin;
+\.
+
+
+--
+-- Data for Name: departments; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.departments (id, dept_name, dept_ins_id, dept_email, dept_website, dept_logo, dept_ins_type) FROM stdin;
+32	Department of Maths	32	dept.maths@sshe.com	https://math.sshe.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/dept_images%2F1592911467626.png?alt=media&token=a47ed406-d499-4ae2-a141-4a60125065c2	school
+33	Department of Science	32	dept.science@sshe.com	https://science.sshe.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/dept_images%2F1592911544736.png?alt=media&token=e9d72855-4be5-49ad-b80d-21c357f61296	school
+34	Department of Social	32	dept.social@sshe.com	https://sshe.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/dept_images%2F1592911585737.png?alt=media&token=ca7600a5-d517-4993-a739-6f5602580767	school
+29	Department of Telugu	32	dept.telugu@sshe.com	http://sailor.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/dept_images%2F1592911304725.png?alt=media&token=b4e59a0a-c674-4059-86ba-b3a1c73bdd1c	school
+30	Department of English	32	dept.english@sshe.com	https://english.sshe.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/dept_images%2F1592911357335.png?alt=media&token=0e3bdff1-ae5c-4939-badf-b61bdb82d64b	school
+31	Department of Hindi	32	dept.hindi@sshe.com	https://sshe.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/dept_images%2F1592911423457.png?alt=media&token=41842779-f22f-4391-80b2-0ef10d529c31	school
+\.
+
+
+--
+-- Data for Name: emplyoee; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.emplyoee (id, emp_username, emp_reg_num, emp_institute, emp_depart, emp_join_date, emp_phone, emp_email, emp_photo, emp_password, emp_owner, emp_designation, emp_device_token, emp_ins_type, teacher_foriegn_key) FROM stdin;
+437	Dulce	1562	32	29	2020-06-23	98653968	tristan@outlook.com	\N	$2y$10$en0HFkHpDByZIzUphmwP.eoQhCUHiRw.sAE0y2vaJOpbH0SKTsYCi	16	MS 	token	school	470
+438	Mara	1582	32	29	2020-06-23	4055805444	rogerspl@live.com	\N	$2y$10$BUJHBCjotmnCpZAUR6SfQeArJc5vPJWm.ezaN7xxUhQjzOEvzxHCa	16	BS	token	school	471
+439	Philip	2587	32	29	2020-06-23	1123260907	sjava@outlook.com	\N	$2y$10$LR831lTrjFtziOdC1G0GI.gizNjennDg0eQKnH95Pf1BwwNsr9ZvG	16	BE	token	school	472
+440	Kathleen	3549	32	29	2020-06-23	4055805444	meder@msn.com	\N	$2y$10$2pnKFFnbiGnYJdD7LzMKJeTW2A49GvnWeZJ4AS9AkwoPCL5iAdBs2	16	MA	token	school	473
+441	Nereida	2468	32	29	2020-06-23	2224943436	monopole@icloud.com	\N	$2y$10$11lWIa4LGt8JuOCJ4/QWxegP7MshQwsm3ZHM8j9DPNI6foj229Ube	16	CA	token	school	474
+442	Gaston	2554	32	29	2020-06-23	2225284308	pthomsen@sbcglobal.net	\N	$2y$10$yVGQE1o8T8nTJ4numbymveNSxsLZRDP4n/rdw0HhJZB5vlDBzCsBm	16	MS 	token	school	475
+443	Etta	3598	32	29	2020-06-23	2334528	johnbob@aol.com	\N	$2y$10$IX4za1zBrsPOj.SlpViXWeLRufiefzMsE20R5HiBsZQTAgVvMUa.a	16	BS	token	school	476
+444	Earlean	2456	32	29	2020-06-23	2225423229	speeves@me.com	\N	$2y$10$cFqwhGdnsk3CFeBW7u7LpOnax9vA1q6GPdw7gRMSebg6wgd3MjgXm	16	BE	token	school	477
+445	Vincenza	6548	32	29	2020-06-23	2228760839	fudrucker@hotmail.com	\N	$2y$10$W8Qi8/GM42vfjarKI9eeuuCyri91HoDWP2SGOFk.ZMEyiaMZ7kNSO	16	MA	token	school	478
+446	Fallon	5486	32	29	2020-06-23	95124409300	vertigo@verizon.net	\N	$2y$10$XdUh1E.UxdgkqQ9sU9vl5u6RWQ1EjzI7Nnc8k7GV4QKEIp7hptV4.	16	CA	token	school	479
+447	Arcelia	1258	32	31	2020-06-23	2222679814	duncand@yahoo.com	\N	$2y$10$ytu82JyFmPQzKXD6Mi4rAuWWP48OvzOoRaiyBkmODoXJXne/xjTUu	16	MS 	token	school	480
+448	Franklyn	2579	32	31	2020-06-23	2226495147	ccohen@icloud.com	\N	$2y$10$WSUQgmQi5imzTMu6EemA7.37VyV9ft2I2E.v4.1x18wB6cjv20Ooq	16	BS	token	school	481
+449	Sherron	3256	32	31	2020-06-23	2223426123	harpes@verizon.net	\N	$2y$10$3FjZAYo8rva.expowinKIOMqs9ul.xYm7xwr8fOaxS3i4xGLo5vy6	16	BE	token	school	482
+450	Marcel	258798	32	31	2020-06-23	2227467277	imightb@yahoo.com	\N	$2y$10$pw7UPUBCjxf1fZDp.d/Nfexx2IE7rEyiEBMWaO6HvsST6rfxFLkw2	16	MA	token	school	483
+451	Kina	3259	32	31	2020-06-23	2227481010	jugalator@comcast.net	\N	$2y$10$mVFrsAcgAGirZIhbazaaa.2mgHkjeBTj572xRsDdhlYjRNUbl.oOy	16	CA	token	school	484
+452	Shavonne	1546	32	31	2020-06-23	2224035455	smcnabb@comcast.net	\N	$2y$10$Fc2uThXK5EQZ0NecY6Zwm.DOsmpBIbuSvuJelR4P/je2q7bylECSG	16	MS 	token	school	485
+453	Shavon	3579	32	31	2020-06-23	23253409	crusader@live.com	\N	$2y$10$ujrxc.j76nWC063CcLyIf.dSwX.nfGC67q/jnekdvkRFOS9vK5yQK	16	BS	token	school	486
+454	Lauralee	6597	32	31	2020-06-23	1202850122	mglee@outlook.com	\N	$2y$10$svMnZOrnNVs7o2buSkiuOu7IUXKos6FHsRRF5Ak4fSOQhrDUCcAza	16	BE	token	school	487
+455	Loreta	9654	32	31	2020-06-23	1123955532	rwelty@comcast.net	\N	$2y$10$qu4F.GtECwT6WXq.dmY0yed7goqkxFiCtzUos3zo7dNyBnwvYcvvy	16	MA	token	school	488
+456	Teresa	3569	32	31	2020-06-23	4027120001	keijser@optonline.net	\N	$2y$10$entV516Xkl9JFsk2AsvO/OBydzSS9NY6DAuAnPnyh5q7mu1P4iigC	16	CA	token	school	489
+457	Belinda	2564	32	30	2020-06-23	2224112393	drjlaw@yahoo.ca	\N	$2y$10$GLeGiFANrQ7uo45MbfX3le.0lPF0v2yvGSLmwR4p/N29OA9lVzoAe	16	MS 	token	school	490
+458	Holly	85611	32	30	2020-06-23	98653968	dwheeler@outlook.com	\N	$2y$10$9eFTYiy9FYRquq9sEZYolOgslMRFl.fvNKxpKJ6xp0nqgivBeVjWW	16	BS	token	school	491
+459	Many	54892	32	30	2020-06-23	4055805444	sequin@icloud.com	\N	$2y$10$fGgWGPgeN1Y9/ntFCkfJu.VkFhnQT7ncAp2TscLh05Cz2pSsd7fly	16	BE	token	school	492
+460	Libbie	5489289	32	30	2020-06-23	1123260907	jgoerzen@comcast.net	\N	$2y$10$A7k2wV5QMcObwsMMK7YK5e3hpc1zcW5MeS8g.AI5meft1ysxiorzG	16	MA	token	school	493
+461	Lester	65744	32	30	2020-06-23	4055805444	jaesenj@yahoo.com	\N	$2y$10$cM/.LIcdGZ824wZqUiNL/eSPFon/vI34D9Pziri1j1joAFunAq1T6	16	CA	token	school	494
+462	Marvel	55554	32	30	2020-06-23	2224943436	jipsen@sbcglobal.net	\N	$2y$10$RMfiArGlZxaauINCiAWTz.TpE3JYjjSnMm/4sDyJ2CTTEtCey3Ppe	16	MS 	token	school	495
+463	Angelyn	26125	32	30	2020-06-23	2225284308	wbarker@verizon.net	\N	$2y$10$TCrRe4BPSeaPvQp/LF/lCeSQV2ed5yJH9ExH6.yHXDvPCfMJ7yj/2	16	BS	token	school	496
+464	Francesca	5412	32	30	2020-06-23	2334528	chrisj@msn.com	\N	$2y$10$xjs8OtOc1KfeAyVuuSMWo.EWRYeu5ryBwv5zrgStSWv9DTkyGfrum	16	BE	token	school	497
+465	Garth	32565	32	30	2020-06-23	2225423229	mgreen@outlook.com	\N	$2y$10$xtE4rOKYCM4bPNwS8Yn7Zu5pWY7d20R54EgF/qoHPc0oQi2woGla2	16	MA	token	school	498
+466	Carla	32647	32	30	2020-06-23	2228760839	daveewart@mac.com	\N	$2y$10$m.Rsuj.QqF5oKo7YZdrqH.5.x3JGjUuzoezXDv8JGAlGGHP6zYZNa	16	CA	token	school	499
+477	Tommie	32658963	32	33	2020-06-23	4027120001	guialbu@mac.com	\N	$2y$10$UqTHyV38CLcWkkBKlNURY.LyPqalINqGtHdfa9QrQvVxx5OErJLa6	16	MS 	token	school	510
+480	Willodean	356714	32	33	2020-06-23	4055805444	pthomsen@yahoo.com	\N	$2y$10$D/oFr6tdF8VlnBtd1PCX3eTRuAltLRBGqG5QrQnePEJlLZacJSpZ.	16	MA	token	school	513
+478	Dorcas	14701A0550	32	33	2020-06-23	2224112393	dkrishna@att.net	\N	$2y$10$1W6AyALD3P/g9T23VGlAruwIcEfMlSNfl/h.st/NyqRviiMH2kSqu	16	BS	emOykmgzRDCrb3WXhQB_lp:APA91bEyb0GUl-HCbT0Dcz9Ry_VBPKW5Yde0rwRrAHi4dgFd0tL4-i01iROijJPf5InSyrm-3Y2egSYgD72jZ-G5r7Fz1XFKC2VitVi-04a7iZfaugxgYHLlFYq2whuqXv5rdJ8Cqip4	school	511
+481	Weston	654079	32	33	2020-06-23	1123260907	cliffordj@mac.com	\N	$2y$10$R4Me.jJk6SA8FwTzv/BLq./4YYL7tjk9c7Zpq2xTkN7bp8tSG5Nbm	16	CA	token	school	514
+482	Roma	2654892	32	34	2020-06-23	4055805444	dpitts@verizon.net	\N	$2y$10$nXBLFLcs9XSfg0gj9mjdKOvzfp5mJ4sOysYMwOKWirzhvWIR3rXNW	16	MS 	token	school	515
+483	Felisa	652963	32	34	2020-06-23	2224943436	jimmichie@yahoo.com	\N	$2y$10$j/YpLfBlq6iZBmA9G2e9DOLwXGBE4GzJQYoJ44KLSuZuprlhKjA9W	16	BS	token	school	516
+484	Demetria	3265555	32	34	2020-06-23	2225284308	hamilton@msn.com	\N	$2y$10$1TsWjsnIjQWjsvY7MEqvze69ySXbhKWNLtW.cha2Io3k7zuATib/G	16	BE	token	school	517
+485	Jeromy	3265111	32	34	2020-06-23	2334528	wojciech@att.net	\N	$2y$10$kpukaR9ODAj3tYEJrBExdOGSb.nWLNPJisSlJcIc8XQpc4xtxyP2G	16	MA	token	school	518
+486	Rasheeda	612666	32	34	2020-06-23	2225423229	kobayasi@yahoo.com	\N	$2y$10$wzfE2vV8om/uRGLqIQs1fOS6r.9B.P6Zk63CC3iJ/ZdjJBsAJuzkC	16	CA	token	school	519
+487	Veta	45696	32	32	2020-06-23	95124409300	jfmulder@outlook.com	\N	$2y$10$vAxuoS27CVW0yH1U5Ag/TukhLEfP0uIemZdBMRnxI0fYRmR7ZM3ZC	16	MS 	token	school	520
+488	Stasia	752189	32	32	2020-06-23	2222679814	eabrown@me.com	\N	$2y$10$Q2rs3/j.VoSlv.ZqDxiCWOvblFADIkkCV7C72RpR8xCrFdanIsWc6	16	BS	token	school	521
+489	Jona	64586	32	32	2020-06-23	2226495147	luvirini@sbcglobal.net	\N	$2y$10$OP2jA8GnIKtShdV7v7XpROHPt54EH4qpD14Rd9mzErARmz..RZ8Qy	16	BE	token	school	522
+490	Judie	75696	32	32	2020-06-23	2223426123	sethbrown@optonline.net	\N	$2y$10$qb.Cb1md.ogZuNDbk/eXlOCvgTq40y1rR9PhWLpL0HlmJQF7lfjo2	16	MA	token	school	523
+491	Dewitt	85145	32	32	2020-06-23	2227467277	brbarret@icloud.com	\N	$2y$10$OUX4LVGAv.WbDpyBM/p6auitIH9xt/L8yDiX46slq23URwldQu1Lm	16	CA	token	school	524
+492	Nena	569665	32	32	2020-06-23	2227481010	cvrcek@icloud.com	\N	$2y$10$nTjnyZ05ipMhbPHxic1deei7V9miaTywPsawQG/tHHFgvsMACPMgm	16	MS 	token	school	525
+493	Kelsie	86426	32	32	2020-06-23	2224035455	stellaau@hotmail.com	\N	$2y$10$.4wQSAthEwleSZDjYrSO2OjjWpEr8xjUvG9bOV0wVshd9/9i9UzVe	16	BS	token	school	526
+494	Sau	9536897	32	32	2020-06-23	23253409	shazow@optonline.net	\N	$2y$10$KIjM/75ArHZXAjn9hLglgelCp02wbeyXaAoLLeWaR8QwZEFYKOq6a	16	BE	token	school	527
+495	Shanice	256778	32	32	2020-06-23	1202850122	jorgb@live.com	\N	$2y$10$9bNMxggYSXOKKkM9ficxJert.BN97mf7JeaYh4QUkxkaTpAJfq0TO	16	MA	token	school	528
+496	Chase	2154899	32	32	2020-06-23	1123955532	afifi@live.com	\N	$2y$10$e/EN7sjysyCBTtUCoSKIWenJtiKa.t3tfzO5QA97cxxaJPq6PB9sO	16	CA	token	school	529
+479	Mohan	14701A0549	32	33	2020-06-23	98653968	mohan.velegacherla@gmail.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/staff_images%2F1592913614992.JPG?alt=media&token=36dcd379-9942-4006-8e24-c4dd34d899af	$2y$10$YrDEh1.CO7OVtzQ1XCr6KORnWkGm88dDyaxzYwwAaa24FLdjCeDYa	16	BE	cU4D4RBfwE6ns8WmSve2Ks:APA91bEa0LtgazodopBFRmDHn91ta3T4oZ3PhUYsD-TyeRj2EDTzLw-EC1v8lfrMsgzPnyD2c4JA4a0kH-iK3hftAowqHgiOpNctla7DSInISwgwTv5b9ZiADydCcGswxeuODKGDYVjn	school	512
+\.
+
+
+--
+-- Data for Name: exam_marks; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.exam_marks (id, exam_id, exam_class, exam_students) FROM stdin;
+12	3	119	{"14701Z0101":{"id":"14701Z0101","marks":"20"},"14701Z0102":{"id":"14701Z0102","marks":"20"},"14701Z0103":{"id":"14701Z0103","marks":"22"},"14701Z0104":{"id":"14701Z0104","marks":"22"},"14701Z0105":{"id":"14701Z0105","marks":"15"},"14701Z0106":{"id":"14701Z0106","marks":"14"},"14701Z0107":{"id":"14701Z0107","marks":"16"},"14701Z0108":{"id":"14701Z0108","marks":"17"},"14701Z0109":{"id":"14701Z0109","marks":"18"},"14701Z0110":{"id":"14701Z0110","marks":"20"}}
+\.
+
+
+--
+-- Data for Name: exams; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.exams (id, ex_title, ex_desc, ex_maxmarks, ex_qualifymarks, ex_date, ex_time, ex_attachments, ex_class, ex_subject, ex_uid, is_marks_assigned) FROM stdin;
+3	Unit Test	First 2 chapters	25	13	2020-07-24	14:10	[]	119	Science	512	0
+\.
+
+
+--
+-- Data for Name: grades; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.grades (id, grade_ins_id, grade_year, grade_ins_type, grade_numeric) FROM stdin;
+24	32	10th Class	school	10
+25	32	9th Class	school	9
+26	32	8th Class	school	8
+\.
+
+
+--
+-- Data for Name: homeworks; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.homeworks (id, hw_uid, hw_class, hw_title, hw_desc, hw_attachments, hw_date, hw_subject, hw_images) FROM stdin;
+\.
+
+
+--
+-- Data for Name: labs; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.labs (id, name, school_id, dept_id, machines) FROM stdin;
+6	LSRW Lab	32	30	60
+\.
+
+
+--
+-- Data for Name: leaves; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.leaves (id, leave_uid, leave_reason, leave_from, leave_to, leave_status, leave_applied_on) FROM stdin;
+9	479	Test Leave	2020-06-24	2020-06-26	0	2020-07-24
+\.
+
+
+--
+-- Data for Name: notifications; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.notifications (id, notif_uid, notif_title, notif_desc, notif_target_classes, notif_attachments, notif_date, notif_target_all, notif_all_staff, notif_all_students, notif_sid) FROM stdin;
+15	512	All students	All students	[]	[]	2020-06-24	0	0	1	32
+16	512	All	All	[]	[]	2020-06-24	1	1	1	32
+17	512	Specifically class	SecA	[119]	[]	2020-06-24	0	0	0	32
+18	512	Test	Rests8d vuy8owu o	[]	[]	2020-07-24	1	1	1	32
+\.
+
+
+--
+-- Data for Name: posts; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.posts (id, ins_id, ins_type, poster_id, poster_name, post_title, post_desc, post_thumbnail, post_date, post_day, poster_image) FROM stdin;
+32	32	school	479	Mohan	This is a dummy post	<p>The time is now for a couple to be able and they you can do that i can get the same number and the best way of getting them is not there in&nbsp;</p><p><br></p><p><img src="data:image/jpeg;base64,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" data-filename="1edadca7-ddeb-4419-ae28-f9350946380f.jpg" style="width: 50%;"></p><p>The new job will come from the reason for the rise of my relatives to come and get a new life has come.&nbsp;</p>	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/posts%2F1593428137806.jpg?alt=media&token=79e7adac-9c91-4f92-87d3-f32fd44f6417	2020-06-29	MON	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/staff_images%2F1592913614992.JPG?alt=media&token=36dcd379-9942-4006-8e24-c4dd34d899af
+33	32	school	478	Dorcas	It's my first post🎷🎸🤩	<p>The new Zealand international was his last time signing in his career and has been in charge for you and his team have to do more than just that you can get the best of players and they are making a big impact in their individuality but we have a great squad for you to win the league this year and you can do that in a good.&nbsp;</p><p>He will also have to be a bit more than just an not in depression and you can get a bit more attention on his wife than that in a way that you can see phone numbers&nbsp;</p><p><br></p>	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/posts%2F1593622288953.jpg?alt=media&token=9a3f20f1-e9a8-4988-91ca-f449a9e4a980	2020-07-01	WED	\N
+34	32	school	478	Dorcas	Second post 🎷😞🙏	<p>This is the most common type in which you are not in a position where I am sorry 6th or second day and I have 6AM and you can get the best out from washroom and I have a great time and hope you have a good day to be able and happy with the help of your family to get a better life has to do in present life has to do in your own way.&nbsp;</p><p>The new Zealand international was the only player in his squad for a match in which he had been a big hit.&nbsp;</p><p><br></p><p>You can do it for the sake and 7 year.&nbsp;</p>	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/posts%2F1593622462598.jpg?alt=media&token=0a65079f-782e-4cf7-812c-f6efa5841047	2020-07-01	WED	\N
+35	32	school	478	Dorcas	3rd post 😎😃🙂😶☺😚😋😗	<p>Rhkk was hated for the best y la is the only one that I have to be happy.&nbsp;</p>	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/posts%2F1593622555023.jpg?alt=media&token=bd15e604-1d00-4b2a-872a-bf963003b026	2020-07-01	WED	\N
+\.
+
+
+--
+-- Data for Name: school; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.school (id, school_name, school_address, school_owner, school_phone, school_email, school_website, school_logo, school_periods, school_period_length, school_reg_num) FROM stdin;
+32	Sailor School of Higher Education	Street 214, Trinity Square, Banglore	16	987654321	mohan@sailor.com	https://sshe.com	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/school_images%2F1592911200200.png?alt=media&token=c82d0ec8-44ba-4a77-b8a9-99fe6a25b19a	6	40	IN2020SSHE
+\.
+
+
+--
+-- Data for Name: school_attendence; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.school_attendence (id, attend_class_id, attend_session, attend_date, attend_poster, attend_students) FROM stdin;
+40	117	PM	2020-06-14	54	{"14701Z0101":{"sid":"14701Z0101","status":false},"14701Z0102":{"sid":"14701Z0102","status":false},"14701Z0103":{"sid":"14701Z0103","status":false},"14701Z0104":{"sid":"14701Z0104","status":false},"14701Z0105":{"sid":"14701Z0105","status":false},"14701Z0106":{"sid":"14701Z0106","status":false},"14701Z0107":{"sid":"14701Z0107","status":false},"14701Z0108":{"sid":"14701Z0108","status":false},"14701Z0109":{"sid":"14701Z0109","status":false},"14701Z0110":{"sid":"14701Z0110","status":false}}
+41	117	PM	2020-05-14	54	{"14701Z0101":{"sid":"14701Z0101","status":false},"14701Z0102":{"sid":"14701Z0102","status":true},"14701Z0103":{"sid":"14701Z0103","status":false},"14701Z0104":{"sid":"14701Z0104","status":false},"14701Z0105":{"sid":"14701Z0105","status":false},"14701Z0106":{"sid":"14701Z0106","status":true},"14701Z0107":{"sid":"14701Z0107","status":false},"14701Z0108":{"sid":"14701Z0108","status":true},"14701Z0109":{"sid":"14701Z0109","status":true},"14701Z0110":{"sid":"14701Z0110","status":false}}
+42	117	PM	2020-06-15	54	{"14701Z0101":{"sid":"14701Z0101","status":true},"14701Z0102":{"sid":"14701Z0102","status":true},"14701Z0103":{"sid":"14701Z0103","status":true},"14701Z0104":{"sid":"14701Z0104","status":true},"14701Z0105":{"sid":"14701Z0105","status":true},"14701Z0106":{"sid":"14701Z0106","status":true},"14701Z0107":{"sid":"14701Z0107","status":true},"14701Z0108":{"sid":"14701Z0108","status":true},"14701Z0109":{"sid":"14701Z0109","status":true},"14701Z0110":{"sid":"14701Z0110","status":true}}
+43	119	PM	2020-06-29	512	{"14701Z0101":{"sid":"14701Z0101","status":true},"14701Z0102":{"sid":"14701Z0102","status":true},"14701Z0103":{"sid":"14701Z0103","status":true},"14701Z0104":{"sid":"14701Z0104","status":true},"14701Z0105":{"sid":"14701Z0105","status":true},"14701Z0106":{"sid":"14701Z0106","status":true},"14701Z0107":{"sid":"14701Z0107","status":true},"14701Z0108":{"sid":"14701Z0108","status":true},"14701Z0109":{"sid":"14701Z0109","status":true},"14701Z0110":{"sid":"14701Z0110","status":true}}
+44	119	AM	2020-07-02	512	{"14701Z0101":{"sid":"14701Z0101","status":true},"14701Z0102":{"sid":"14701Z0102","status":true},"14701Z0103":{"sid":"14701Z0103","status":true},"14701Z0104":{"sid":"14701Z0104","status":true},"14701Z0105":{"sid":"14701Z0105","status":true},"14701Z0106":{"sid":"14701Z0106","status":false},"14701Z0107":{"sid":"14701Z0107","status":true},"14701Z0108":{"sid":"14701Z0108","status":true},"14701Z0109":{"sid":"14701Z0109","status":true},"14701Z0110":{"sid":"14701Z0110","status":true}}
+\.
+
+
+--
+-- Data for Name: school_meta; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.school_meta (id, suid, url, s_owner_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.student (id, fname, lname, father_name, mother_name, phone, email, address, school_id, grade_id, dept_id, class_id, photo, sid, gender, ins_type) FROM stdin;
+98	Praveen	Reddy	Raja Reddy	Nagaveni	9876543216	praveenreddy@gnail.com	Rajampet,Sai Nagar	32	24	0	119	\N	14701Z0101	Male	school
+99	Aparna	Kumari	Surendra	Usha	9876351685	aparna@gmail.com	Nandalur, RS Road.	32	24	0	119	\N	14701Z0102	Female	school
+100	Sivaji	qwertyu	ertyuio	edfghj	9876351688	sivaji@gmail.com	Pulllampet	32	24	0	119	\N	14701Z0103	Male	school
+101	Kalyan	krishna	Rama Rao	Gita	9876351677	kalyan@gmail.com	Kodur	32	24	0	119	\N	14701Z0104	Male	school
+102	Balaji	Naidu	Chandra Naidu	Vani	9658746325	balagi@gmail.com	Rajampet,Sai Nagar	32	24	0	119	\N	14701Z0105	Male	school
+103	Hari	Krishna	Ravi Kumar	Kalpana	9875634974	harik@gmail.com	Kadapa	32	24	0	119	\N	14701Z0106	Male	school
+104	Vasu	Kumari	Bala	Sugana	9866655722	vasun@gmail.com	Nandalur, RS Road.	32	24	0	119	\N	14701Z0107	Male	school
+105	Shanker	Nailk	Gangadhar	Suhasini	6678965586	shanker@gmail.com	Kodur	32	24	0	119	\N	14701Z0108	Male	school
+106	Asif	Ali	Noor Bash	Ayesha	9876351685	aali@gmail.com	Nandalur, RS Road.	32	24	0	119	\N	14701Z0109	Male	school
+107	Ventak	Kuamr	Siva Ram	Rani	7964213682	vkumar@gmail.com	Kadapa, Koti Reddy Circle	32	24	0	119	\N	14701Z0110	Male	school
+\.
+
+
+--
+-- Data for Name: student_attendence; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.student_attendence (id, sid, percentage, month) FROM stdin;
+127	98	1	6
+128	99	1	6
+129	100	1	6
+130	101	1	6
+131	102	1	6
+132	103	1	6
+133	104	1	6
+134	105	1	6
+135	106	1	6
+136	107	1	6
+137	98	1	7
+138	99	1	7
+139	100	1	7
+140	101	1	7
+141	102	1	7
+142	103	0	7
+143	104	1	7
+144	105	1	7
+145	106	1	7
+146	107	1	7
+\.
+
+
+--
+-- Data for Name: subjects; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.subjects (id, class_id, subjects_list) FROM stdin;
+130	119	{"1": {"subject_name": "Telugu", "subject_chapters": {"1": {"chapter_name": "Poems", "chapter_compltion": 0}, "2": {"chapter_name": "Stories", "chapter_compltion": 0}, "3": {"chapter_name": "Non-Detailed", "chapter_compltion": 0}, "4": {"chapter_name": "Grammer", "chapter_compltion": 0}}, "subject_completion": "50"}, "2": {"subject_name": "Hindi", "subject_chapters": {"1": {"chapter_name": "Poems", "chapter_compltion": 0}, "2": {"chapter_name": "Stories", "chapter_compltion": 0}, "3": {"chapter_name": "Non-Detailed", "chapter_compltion": 0}, "4": {"chapter_name": "Grammer", "chapter_compltion": 0}}, "subject_completion": 0}, "3": {"subject_name": "English", "subject_chapters": {"1": {"chapter_name": "Poems", "chapter_compltion": 0}, "2": {"chapter_name": "Stories", "chapter_compltion": 0}, "3": {"chapter_name": "Non-Detailed", "chapter_compltion": 0}, "4": {"chapter_name": "Grammer", "chapter_compltion": 0}}, "subject_completion": 0}, "4": {"subject_name": "Maths", "subject_chapters": {"1": {"chapter_name": "Trignometry", "chapter_compltion": 0}, "2": {"chapter_name": "Algebra", "chapter_compltion": 0}, "3": {"chapter_name": "Statistics", "chapter_compltion": 0}, "4": {"chapter_name": "Graph Theory", "chapter_compltion": 0}}, "subject_completion": 0}, "5": {"subject_name": "Science", "subject_chapters": {"1": {"chapter_name": "Plant & Animal Science", "chapter_compltion": 50}, "2": {"chapter_name": "Human Body Science", "chapter_compltion": 60}, "3": {"chapter_name": "Thermo Dynamics", "chapter_compltion": 0}, "4": {"chapter_name": "Gravity", "chapter_compltion": 0}}, "subject_completion": 28}, "6": {"subject_name": "Social", "subject_chapters": {"1": {"chapter_name": "Geography", "chapter_compltion": 0}, "2": {"chapter_name": "History", "chapter_compltion": 0}, "3": {"chapter_name": "Civics", "chapter_compltion": 0}, "4": {"chapter_name": "Economics", "chapter_compltion": 0}}, "subject_completion": 0}}
+\.
+
+
+--
+-- Data for Name: teacher; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.teacher (id, teacher_name, teacher_phone, teacher_email, teacher_ins_id, teacher_designation, teacher_dept, teacher_profile, teacher_reg_id, teacher_join_date, teacher_ins_type, teacher_role) FROM stdin;
+470	Dulce	98653968	tristan@outlook.com	32	MS 	29	\N	1562	2020-06-23	school	3
+471	Mara	4055805444	rogerspl@live.com	32	BS	29	\N	1582	2020-06-23	school	3
+472	Philip	1123260907	sjava@outlook.com	32	BE	29	\N	2587	2020-06-23	school	3
+473	Kathleen	4055805444	meder@msn.com	32	MA	29	\N	3549	2020-06-23	school	3
+474	Nereida	2224943436	monopole@icloud.com	32	CA	29	\N	2468	2020-06-23	school	3
+475	Gaston	2225284308	pthomsen@sbcglobal.net	32	MS 	29	\N	2554	2020-06-23	school	3
+476	Etta	2334528	johnbob@aol.com	32	BS	29	\N	3598	2020-06-23	school	3
+477	Earlean	2225423229	speeves@me.com	32	BE	29	\N	2456	2020-06-23	school	3
+478	Vincenza	2228760839	fudrucker@hotmail.com	32	MA	29	\N	6548	2020-06-23	school	3
+479	Fallon	95124409300	vertigo@verizon.net	32	CA	29	\N	5486	2020-06-23	school	3
+480	Arcelia	2222679814	duncand@yahoo.com	32	MS 	31	\N	1258	2020-06-23	school	3
+481	Franklyn	2226495147	ccohen@icloud.com	32	BS	31	\N	2579	2020-06-23	school	3
+482	Sherron	2223426123	harpes@verizon.net	32	BE	31	\N	3256	2020-06-23	school	3
+483	Marcel	2227467277	imightb@yahoo.com	32	MA	31	\N	258798	2020-06-23	school	3
+484	Kina	2227481010	jugalator@comcast.net	32	CA	31	\N	3259	2020-06-23	school	3
+485	Shavonne	2224035455	smcnabb@comcast.net	32	MS 	31	\N	1546	2020-06-23	school	3
+486	Shavon	23253409	crusader@live.com	32	BS	31	\N	3579	2020-06-23	school	3
+487	Lauralee	1202850122	mglee@outlook.com	32	BE	31	\N	6597	2020-06-23	school	3
+488	Loreta	1123955532	rwelty@comcast.net	32	MA	31	\N	9654	2020-06-23	school	3
+489	Teresa	4027120001	keijser@optonline.net	32	CA	31	\N	3569	2020-06-23	school	3
+490	Belinda	2224112393	drjlaw@yahoo.ca	32	MS 	30	\N	2564	2020-06-23	school	3
+491	Holly	98653968	dwheeler@outlook.com	32	BS	30	\N	85611	2020-06-23	school	3
+492	Many	4055805444	sequin@icloud.com	32	BE	30	\N	54892	2020-06-23	school	3
+493	Libbie	1123260907	jgoerzen@comcast.net	32	MA	30	\N	5489289	2020-06-23	school	3
+494	Lester	4055805444	jaesenj@yahoo.com	32	CA	30	\N	65744	2020-06-23	school	3
+495	Marvel	2224943436	jipsen@sbcglobal.net	32	MS 	30	\N	55554	2020-06-23	school	3
+496	Angelyn	2225284308	wbarker@verizon.net	32	BS	30	\N	26125	2020-06-23	school	3
+497	Francesca	2334528	chrisj@msn.com	32	BE	30	\N	5412	2020-06-23	school	3
+498	Garth	2225423229	mgreen@outlook.com	32	MA	30	\N	32565	2020-06-23	school	3
+499	Carla	2228760839	daveewart@mac.com	32	CA	30	\N	32647	2020-06-23	school	3
+510	Tommie	4027120001	guialbu@mac.com	32	MS 	33	\N	32658963	2020-06-23	school	3
+513	Willodean	4055805444	pthomsen@yahoo.com	32	MA	33	\N	356714	2020-06-23	school	3
+514	Weston	1123260907	cliffordj@mac.com	32	CA	33	\N	654079	2020-06-23	school	3
+515	Roma	4055805444	dpitts@verizon.net	32	MS 	34	\N	2654892	2020-06-23	school	3
+516	Felisa	2224943436	jimmichie@yahoo.com	32	BS	34	\N	652963	2020-06-23	school	3
+517	Demetria	2225284308	hamilton@msn.com	32	BE	34	\N	3265555	2020-06-23	school	3
+518	Jeromy	2334528	wojciech@att.net	32	MA	34	\N	3265111	2020-06-23	school	3
+520	Veta	95124409300	jfmulder@outlook.com	32	MS 	32	\N	45696	2020-06-23	school	3
+521	Stasia	2222679814	eabrown@me.com	32	BS	32	\N	752189	2020-06-23	school	3
+522	Jona	2226495147	luvirini@sbcglobal.net	32	BE	32	\N	64586	2020-06-23	school	3
+523	Judie	2223426123	sethbrown@optonline.net	32	MA	32	\N	75696	2020-06-23	school	3
+524	Dewitt	2227467277	brbarret@icloud.com	32	CA	32	\N	85145	2020-06-23	school	3
+525	Nena	2227481010	cvrcek@icloud.com	32	MS 	32	\N	569665	2020-06-23	school	3
+526	Kelsie	2224035455	stellaau@hotmail.com	32	BS	32	\N	86426	2020-06-23	school	3
+527	Sau	23253409	shazow@optonline.net	32	BE	32	\N	9536897	2020-06-23	school	3
+528	Shanice	1202850122	jorgb@live.com	32	MA	32	\N	256778	2020-06-23	school	3
+529	Chase	1123955532	afifi@live.com	32	CA	32	\N	2154899	2020-06-23	school	3
+511	Dorcas	2224112393	dkrishna@att.net	32	BS	33	\N	14701A0550	2020-06-23	school	3
+519	Rasheeda	2225423229	kobayasi@yahoo.com	32	CA	34	\N	612666	2020-06-23	school	2
+512	Mohan	98653968	mohan.velegacherla@gmail.com	32	BE	33	https://firebasestorage.googleapis.com/v0/b/sailor-server.appspot.com/o/staff_images%2F1592913614992.JPG?alt=media&token=36dcd379-9942-4006-8e24-c4dd34d899af	14701A0549	2020-06-23	school	2
+\.
+
+
+--
+-- Data for Name: timetable; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.timetable (id, class_id, sunday, monday, tuesday, wednesday, thursday, friday, saturday) FROM stdin;
+16	119	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}	{"1":{"staff_id":"470","staff":"Dulce","subject":{"key":1,"subject":"Hindi"}},"2":{"staff_id":"471","staff":"Mara","subject":{"key":2,"subject":"Telugu"}},"3":{"staff_id":"472","staff":"Philip","subject":{"key":3,"subject":"English"}},"4":{"staff_id":"473","staff":"Kathleen","subject":{"key":4,"subject":"Maths"}},"5":{"staff_id":"474","staff":"Nereida","subject":{"key":5,"subject":"Social"}},"6":{"staff_id":"512","staff":"Angel","subject":{"key":6,"subject":"Science"}}}
+\.
+
+
+--
+-- Data for Name: transport_driver; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.transport_driver (id, driver_name, driver_id, driver_phone, driver_password, driver_device_token, driver_photo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: user_roles; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.user_roles (id, role_name, role_id) FROM stdin;
+1	HOD	1
+3	Teacher	3
+2	Class Teacher	2
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: sailor
+--
+
+COPY public.users (id, username, email, password, phone, profile, app_for, user_currency, cost_per_studuent) FROM stdin;
+16	mohan1149	mohan.velegacherla@gmail.com	$2y$10$A28JAxZU3ZNtCg5txd31DOpgoOHtSx2sKOJYQbFi27tmNGpvvyIOi	8074966828	http://127.0.0.1:8000/storage/user_profiles/f27263755a04351d67e44e2fe550a311.jpg	school	\N	\N
+\.
+
+
+--
+-- Name: class_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.class_id_seq', 119, true);
+
+
+--
+-- Name: college_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.college_id_seq', 4, true);
+
+
+--
+-- Name: departments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.departments_id_seq', 34, true);
+
+
+--
+-- Name: emplyoee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.emplyoee_id_seq', 496, true);
+
+
+--
+-- Name: exam_marks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.exam_marks_id_seq', 12, true);
+
+
+--
+-- Name: exams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.exams_id_seq', 3, true);
+
+
+--
+-- Name: grades_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.grades_id_seq', 26, true);
+
+
+--
+-- Name: homeworks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.homeworks_id_seq', 22, true);
+
+
+--
+-- Name: labs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.labs_id_seq', 6, true);
+
+
+--
+-- Name: leaves_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.leaves_id_seq', 9, true);
+
+
+--
+-- Name: notifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.notifications_id_seq', 18, true);
+
+
+--
+-- Name: posts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.posts_id_seq', 35, true);
+
+
+--
+-- Name: school_attendence_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.school_attendence_id_seq', 44, true);
+
+
+--
+-- Name: school_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.school_id_seq', 32, true);
+
+
+--
+-- Name: school_meta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.school_meta_id_seq', 1, false);
+
+
+--
+-- Name: student_attendence_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.student_attendence_id_seq', 146, true);
+
+
+--
+-- Name: student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.student_id_seq', 107, true);
+
+
+--
+-- Name: subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.subjects_id_seq', 130, true);
+
+
+--
+-- Name: teacher_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.teacher_id_seq', 529, true);
+
+
+--
+-- Name: timetable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.timetable_id_seq', 16, true);
+
+
+--
+-- Name: transport_driver_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.transport_driver_id_seq', 1, false);
+
+
+--
+-- Name: user_roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.user_roles_id_seq', 1, false);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sailor
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 16, true);
+
+
+--
+-- Name: class class_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.class
+    ADD CONSTRAINT class_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: school_meta school_meta_suid_key; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.school_meta
+    ADD CONSTRAINT school_meta_suid_key UNIQUE (suid);
+
+
+--
+-- Name: school school_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.school
+    ADD CONSTRAINT school_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: teacher teacher_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.teacher
+    ADD CONSTRAINT teacher_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: emplyoee unique_emp_reg_num; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.emplyoee
+    ADD CONSTRAINT unique_emp_reg_num UNIQUE (emp_reg_num);
+
+
+--
+-- Name: student unique_sid; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.student
+    ADD CONSTRAINT unique_sid UNIQUE (sid);
+
+
+--
+-- Name: teacher unique_staff_id; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.teacher
+    ADD CONSTRAINT unique_staff_id UNIQUE (teacher_reg_id);
+
+
+--
+-- Name: users users_email_unique; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_unique UNIQUE (email);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: sailor
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
